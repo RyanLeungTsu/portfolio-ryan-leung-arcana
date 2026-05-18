@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 19 23" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1,0,0,1,-2307.163572,-232.383827)">
+        <g transform="matrix(1,0,0,1,879.396774,112.553615)">
+            <g id="Layer-5:-Moon-Icon" serif:id="Layer 5: Moon Icon" transform="matrix(0.471463,-0.219847,0.17725,0.380114,635.267124,416.263425)">
+                <path d="M1631.331,167.634C1631.986,167.517 1632.622,167.963 1632.878,168.72C1633.135,169.478 1632.946,170.354 1632.419,170.851C1627.173,176.346 1623.425,184.957 1623.425,194.437C1623.425,204.431 1627.59,213.459 1633.286,218.887C1633.719,219.257 1633.894,219.944 1633.71,220.555C1633.526,221.166 1633.03,221.543 1632.508,221.469C1619.575,219.266 1609.715,207.994 1609.715,194.437C1609.715,181.295 1618.981,170.3 1631.331,167.634Z" style="fill:rgb(105,109,255);"/>
+            </g>
+        </g>
+    </g>
+</svg>
