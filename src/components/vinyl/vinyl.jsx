@@ -14,7 +14,7 @@ const MAX_TILT    = 12;
 const SHADOW_MAX  = 20;
 // shadow hardness with 0 being sharpest
 const SHADOW_BLUR = 2;   
-const EXPAND   = "1rem";  
+// const EXPAND   = "1rem";  
 
 function getTheme() {
   return document.documentElement.dataset.theme || "day";
@@ -32,7 +32,7 @@ function VinylWidget() {
   // expanded mouse paralax area of effect
   const hitAreaRef                = useRef(null); 
   const resetRafRef               = useRef(null);
-
+ 
   const isListening = Boolean(nowPlaying);
 
   // theme observer
@@ -68,7 +68,7 @@ function VinylWidget() {
     const newY = Math.max(-1, Math.min(1, -dx)) * MAX_TILT;
     const sx   = (-newY / MAX_TILT) * SHADOW_MAX;
     const sy   = ( newX / MAX_TILT) * SHADOW_MAX;
-
+ 
     currentTilt.current   = { x: newX, y: newY };
     currentShadow.current = { x: sx, y: sy, opacity: 0.7 };
     setTilt({ x: newX, y: newY });
@@ -88,15 +88,15 @@ function VinylWidget() {
     const ease = () => {
       const { x, y }                  = currentTilt.current;
       const { x: sx, y: sy, opacity } = currentShadow.current;
-
-      const nx  = x       * 0.82;
-      const ny  = y       * 0.82;
-      const nsx = sx      * 0.82;
-      const nsy = sy      * 0.82;
-      const nop = opacity * 0.82;
-
+ 
+      const nx  = x       * 0.95;
+      const ny  = y       * 0.95;
+      const nsx = sx      * 0.95;
+      const nsy = sy      * 0.95;
+      const nop = opacity * 0.95;
+ 
       const done = Math.abs(nx) < 0.08 && Math.abs(ny) < 0.08;
-
+ 
       if (done) {
         currentTilt.current   = { x: 0, y: 0 };
         currentShadow.current = { x: 0, y: 0, opacity: 0 };
@@ -105,67 +105,54 @@ function VinylWidget() {
         resetRafRef.current = null;
         return;
       }
-
+ 
       currentTilt.current   = { x: nx, y: ny };
       currentShadow.current = { x: nsx, y: nsy, opacity: nop };
       setTilt({ x: nx, y: ny });
       setShadow({ x: nsx, y: nsy, opacity: nop });
       resetRafRef.current = requestAnimationFrame(ease);
     };
-
+ 
     resetRafRef.current = requestAnimationFrame(ease);
   };
 
-  // cleanup rAF on unmount
+// cleanup rAF on unmount
   useEffect(() => {
     return () => {
       if (resetRafRef.current) cancelAnimationFrame(resetRafRef.current);
     };
   }, []);
-
+ 
   const baseSVG    = theme === "day" ? sunBase : moonBase;
   const trackName  = nowPlaying?.trackName  ?? "Not playing";
   const artistName = nowPlaying?.artistName ?? "";
   const albumArt   = nowPlaying?.albumArt   ?? null;
-
+ 
   const dropShadow = `drop-shadow(${shadow.x}px ${shadow.y}px ${SHADOW_BLUR}px rgba(0,0,0,${shadow.opacity}))`;
-
+ 
   const wrapperStyle = {
     transform:  `perspective(600px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
     filter:     dropShadow,
     willChange: "transform, filter",
     transition: "none",
   };
-
-// helpers for the area that is affected by the paralax
-  const hitAreaStyle = {
-    position: "absolute",
-    top:      `-${EXPAND}`,
-    left:     `-${EXPAND}`,
-    right:    `-${EXPAND}`,
-    bottom:   `-${EXPAND}`,
-    zIndex:   10,
-  };
-
+ 
   return (
-    <div className="vinyl-widget">
-
+    <div
+      className="vinyl-widget"
+      ref={hitAreaRef}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
+ 
       <div style={{ position: "relative" }}>
-
-        {/* invisible expanded hit area for the paralax effect */}
-        <div
-          ref={hitAreaRef}
-          style={hitAreaStyle}
-          onMouseMove={handleMouseMove}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
-        />
-
+ 
         <div className="vinyl-wrapper" style={wrapperStyle}>
-
+ 
           {/* base svg */}
           <img src={baseSVG} alt="" aria-hidden="true" className="vinyl-base" />
-
+ 
           {/* disc */}
           <div className={`vinyl-disc-group${isPlaying ? " vinyl-disc-group--spinning" : ""}`}>
             <img src={vinylDisc}   alt="" aria-hidden="true" className="vinyl-disc-img" />
@@ -177,7 +164,7 @@ function VinylWidget() {
             </div>
             <img src={vinylAccent} alt="" aria-hidden="true" className="vinyl-accent-img" />
           </div>
-
+ 
           {/* album cover */}
           <div
             className="vinyl-album-cover"
@@ -192,17 +179,17 @@ function VinylWidget() {
               : <div className="vinyl-album-placeholder" />
             }
           </div>
-
+ 
           {/* track title */}
           {isListening && (
             <div className="vinyl-track-info">
               <p className="vinyl-track-title">{trackName}</p>
             </div>
           )}
-
+ 
         </div>
       </div>
-
+ 
       {/* popup */}
       {showPopup && (
         isListening ? (
@@ -234,9 +221,9 @@ function VinylWidget() {
           </div>
         )
       )}
-
+ 
     </div>
   );
 }
-
+ 
 export default VinylWidget;

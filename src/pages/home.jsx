@@ -1,18 +1,16 @@
 import TarotCards from "../components/tarotCards";
 import ThemeToggle from "../components/themeToggle";
 import VinylWidget from "../components/vinyl/vinyl";
-import "../styles/assets.css";
+import CelestialBackground from "../components/background";
 
 function Home () {
     return (
         <section id="projects">
+            <h1>Ryan Leung</h1>
+            <CelestialBackground />
             <ThemeToggle />
             <TarotCards />
-            <VinylWidget
-  trackName="Track Name"
-  artistName="Artist"
-  isPlaying={false}
-/>
+            <VinylWidget />
         </section>
     )
 }

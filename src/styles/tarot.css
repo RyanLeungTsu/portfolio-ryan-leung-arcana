@@ -1,26 +1,3 @@
-/* Theme toggle colors */
-:root[data-theme="day"] {
-  --arc-card-bg:      #fdf3dc;
-  --arc-border:       #8b3a1a;
-  --arc-ink:          #2a1800;
-  --arc-gold:         #e7a52c;
-  --arc-gold-light:   #e8b84b;
-  --arc-number:       #805812;
-  --arc-filter-frame: none;       
-  --arc-filter-icon:  none;
-}
-
-:root[data-theme="night"] {
-  --arc-card-bg:      #090e24;
-  --arc-border:       #3a4a8a;
-  --arc-ink:          #b8c8ff;
-  --arc-gold:         #8aacff;
-  --arc-gold-light:   #aac4ff;
-  --arc-number:       #6080d0;
-  --arc-filter-frame: none;      
-  --arc-filter-icon:  none;
-}
-
 /* Tarot card wrapping */
 .tarot-wrap {
   --card-w: 75vw;
@@ -199,8 +176,7 @@
 }
 
 .tarot-title-text h3 {
-  font-family: "Georgia", serif;
-  font-size: clamp(7px, 3.5vw, 11px);
+  font-size: clamp(1rem, 3.5vw, 1.3rem);
   font-weight: 700;
   color: var(--arc-gold);
   letter-spacing: 0.08em;

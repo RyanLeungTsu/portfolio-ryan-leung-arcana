@@ -6,7 +6,7 @@
   width: 4rem;
   height: 4rem;
   border-radius: 50%;
-  border: 2px solid var(--text);
+  border: 1px solid var(--text);
   background-color: transparent;
   color: var(--text);
   display: flex;

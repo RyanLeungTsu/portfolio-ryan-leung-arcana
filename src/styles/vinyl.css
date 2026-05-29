@@ -15,6 +15,9 @@
     margin: 0;
     z-index: 100;
     align-items: flex-start;
+    padding: 2rem;
+    bottom: calc(1.5rem - 1rem);
+    left: calc(1.5rem - 1rem);
   }
 }
 
@@ -41,9 +44,13 @@
   height: 10rem;
   object-fit: fill;
   display: block;
-  z-index: 1;
+  z-index: 2;
   pointer-events: none;
   transition: transform 0.08s ease-out;
+}
+
+.vinyl-base:hover {
+  filter: brightness(0.65);
 }
 
 @media (min-width: 1024px) {
@@ -171,12 +178,6 @@
   filter: brightness(0.65);
 }
 
-.vinyl-album-placeholder {
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(135deg, #1a0535, #090e24);
-}
-
 /* track title */
 .vinyl-track-info {
   position: absolute;
@@ -197,8 +198,7 @@
 }
 
 .vinyl-track-title {
-  font-family: "Georgia", serif;
-  font-size: 0.65rem;
+  font-size: 1.5rem;
   font-weight: 700;
   color: #ffffff;
   letter-spacing: 0.06em;
@@ -206,12 +206,12 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  text-shadow:
+  /* text-shadow:
     0.04rem  0.04rem 0rem rgba(0, 0, 0, 1),
     0.08rem  0.08rem 0rem rgba(0, 0, 0, 0.9),
     0.13rem  0.13rem 0rem rgba(0, 0, 0, 0.7),
     0.18rem  0.18rem 0rem rgba(0, 0, 0, 0.5),
-    0.22rem  0.22rem 0rem rgba(0, 0, 0, 0.3);
+    0.22rem  0.22rem 0rem rgba(0, 0, 0, 0.3); */
 }
 
 /* listen along popup */
