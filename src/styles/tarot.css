@@ -171,7 +171,7 @@
 /* Tarot title banenr */
 .tarot-title {
   position: absolute;
-  bottom: 10%;
+  bottom: 7%;
   left: 0;
   right: 0;
   z-index: 6;
@@ -180,7 +180,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 18%;
+  min-height: 15%;
   padding: 4% 8% 3%;
 }
 
