@@ -6,20 +6,21 @@
   width: 4rem;
   height: 4rem;
   border-radius: 50%;
-  border: 1px solid var(--text);
+  border: 1px solid var(--arc-primary);
   background-color: transparent;
-  color: var(--text);
+  color: var(--arc-primary);;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   z-index: 1000;
-  transition: all 0.3s ease;
+  transition: all 0.9s ease;
   animation: bounce 4s infinite;
 }
 
 .toggleBtn:hover {
   box-shadow: 0 0 10px var(--accent);
+  background-color: (--arc-secondary);
   background-color: rgba(255, 255, 255, 0.05);
 }
 

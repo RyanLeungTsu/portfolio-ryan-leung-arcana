@@ -178,7 +178,7 @@
 .tarot-title-text h3 {
   font-size: clamp(1rem, 3.5vw, 1.3rem);
   font-weight: 700;
-  color: var(--arc-gold);
+  color: var(--text);
   letter-spacing: 0.08em;
   text-transform: uppercase;
   line-height: 1.3;
