@@ -6,7 +6,7 @@ import CelestialBackground from "../components/background";
 function Home () {
     return (
         <section id="projects">
-            <h1>Ryan Leung</h1>
+            {/* <h1 className="header">ya Leung</h1> */}
             <CelestialBackground />
             <ThemeToggle />
             <TarotCards />

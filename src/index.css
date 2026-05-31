@@ -50,3 +50,7 @@ body {
   --arc-filter-frame: none;
   --arc-filter-icon: none;
 }
+
+.header {
+  font-size: 10rem;
+}
