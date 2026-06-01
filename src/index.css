@@ -40,7 +40,7 @@ body {
 }
 
 :root[data-theme="night"] {
-  --text:              #fdf3dc;
+  --text:              #fbf7ef;
   --arc-base:          #090e24;
   --arc-primary:       #8aacff;
   --arc-secondary:     #aac4ff;

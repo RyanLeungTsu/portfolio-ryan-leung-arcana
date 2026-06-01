@@ -203,8 +203,8 @@
 
 .vinyl-track-title {
   font-size: 3rem;
+  color: var(--text);
   font-weight: 700;
-  color: #ffffff;
   letter-spacing: 0.06em;
   margin: 0;
   white-space: nowrap;

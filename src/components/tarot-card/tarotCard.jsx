@@ -25,25 +25,19 @@ import moonCardTitle from "../../assets/svg-components/arcana-moon-front/moon-ca
 const VARIATIONS = {
   1: {
     clouds: [
-      { width: 130, height: 28, top: "14%", duration: 20, delay: 0 },
-      { width: 90, height: 20, top: "26%", duration: 28, delay: -9 },
-      { width: 110, height: 24, top: "8%", duration: 24, delay: -5 },
+      { width: 500, height: 50, top: "14%", duration: 20, delay: 0 },
     ],
     starCount: 65,
   },
   2: {
     clouds: [
-      { width: 160, height: 32, top: "6%", duration: 15, delay: -3 },
-      { width: 80, height: 18, top: "16%", duration: 20, delay: -7 },
-      { width: 120, height: 26, top: "22%", duration: 17, delay: -12 },
+      { width: 400, height: 40, top: "10%", duration: 15, delay: -3 },
     ],
     starCount: 90,
   },
   3: {
     clouds: [
-      { width: 180, height: 38, top: "10%", duration: 25, delay: -6 },
-      { width: 70, height: 16, top: "28%", duration: 32, delay: -15 },
-      { width: 100, height: 22, top: "4%", duration: 18, delay: -2 },
+      { width: 350, height: 50, top: "10%", duration: 25, delay: -5 },
     ],
     starCount: 75,
   },

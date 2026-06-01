@@ -65,12 +65,12 @@ const PALETTES = {
 
 const BASE_COLORS = {
   night: [0, 0, 60],
-  day: [80, 130, 170],
+  day: [80, 180, 170],
 };
 
 const VIGNETTE_COLORS = {
   night: [15,   0,   0],
-  day:   [240, 100,  20],
+  day:   [250, 170,  95],
 };
 
 const BLOB_COUNT = 9;
