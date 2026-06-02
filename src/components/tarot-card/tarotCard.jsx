@@ -17,31 +17,89 @@ import moonCardBackBase from "../../assets/svg-components/arcana-moon-back/moon-
 import moonCardBackIcons from "../../assets/svg-components/arcana-moon-back/moon-cardback-icons.svg";
 
 import moonCardBase from "../../assets/svg-components/arcana-moon-front/moon-card-base.svg";
-// import moonWaves from "../../assets/svg-components/arcana-moon-front/moon-card-waves.svg";
 import moonCardFrame from "../../assets/svg-components/arcana-moon-front/moon-card-frame.svg";
 import moonCardMoon from "../../assets/svg-components/arcana-moon-front/moon-card-moon.svg";
 import moonCardTitle from "../../assets/svg-components/arcana-moon-front/moon-card-title.svg";
 
 const VARIATIONS = {
   1: {
-    clouds: [
-      { width: 500, height: 50, top: "14%", duration: 20, delay: 0 },
-    ],
+    clouds: [{ width: 500, height: 50, top: "14%", duration: 40, delay: 0 }],
     starCount: 65,
   },
   2: {
-    clouds: [
-      { width: 400, height: 40, top: "10%", duration: 15, delay: -3 },
-    ],
+    clouds: [{ width: 400, height: 40, top: "10%", duration: 35, delay: -3 }],
     starCount: 90,
   },
   3: {
-    clouds: [
-      { width: 350, height: 50, top: "10%", duration: 25, delay: -5 },
-    ],
+    clouds: [{ width: 350, height: 50, top: "10%", duration: 25, delay: -5 }],
     starCount: 75,
   },
 };
+
+const GINKGO_COLORS = [
+  "rgba(200, 140, 20, 0.35)",
+  "rgba(180, 120, 15, 0.3)",
+  "rgba(220, 160, 30, 0.28)",
+  "rgba(190, 130, 10, 0.32)",
+  "rgba(210, 150, 25, 0.25)",
+];
+
+function drawGinkgoLeaf(ctx, x, y, size, angle, color) {
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.rotate(angle);
+  const s = size;
+  ctx.fillStyle = color;
+  ctx.strokeStyle = color.replace(/[\d.]+\)$/, "0.15)");
+  ctx.lineWidth = 0.5;
+  ctx.beginPath();
+  ctx.moveTo(0, 0);
+  ctx.bezierCurveTo(
+    -s * 0.9,
+    -s * 0.3,
+    -s * 1.1,
+    -s * 1.0,
+    -s * 0.15,
+    -s * 1.1,
+  );
+  ctx.bezierCurveTo(
+    -s * 0.1,
+    -s * 0.85,
+    s * 0.1,
+    -s * 0.85,
+    s * 0.15,
+    -s * 1.1,
+  );
+  ctx.bezierCurveTo(s * 1.1, -s * 1.0, s * 0.9, -s * 0.3, 0, 0);
+  ctx.fill();
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.strokeStyle = color.replace(/[\d.]+\)$/, "0.2)");
+  ctx.lineWidth = 0.8;
+  ctx.moveTo(0, 0);
+  ctx.lineTo(0, s * 0.55);
+  ctx.stroke();
+  ctx.restore();
+}
+
+function makeLeaf(W, H) {
+  const side = Math.random() < 0.7 ? "left" : "top";
+  return {
+    x: side === "left" ? -30 : Math.random() * W * 0.6,
+    y: side === "left" ? Math.random() * H * 0.8 : -30,
+    size: 6 + Math.random() * 10,
+    vx: 0.4 + Math.random() * 0.5,
+    vy: 0.1 + Math.random() * 0.25,
+    wobbleAmp: Math.random() * 0.18 + 0.05,
+    wobbleFreq: Math.random() * 0.04 + 0.02,
+    wobbleT: Math.random() * Math.PI * 2,
+    angle: Math.random() * Math.PI * 2,
+    rotSpd: (Math.random() - 0.5) * 0.018,
+    color: GINKGO_COLORS[Math.floor(Math.random() * GINKGO_COLORS.length)],
+    alpha: 0,
+    alphaTarget: 0.85 + Math.random() * 0.15,
+  };
+}
 
 function getTheme() {
   return document.documentElement.dataset.theme || "day";
@@ -72,13 +130,13 @@ function MoonWaves() {
           <stop offset="50%" stopColor="#3dcca0" />
           <stop offset="100%" stopColor="#9b6bef" />
           <animateTransform
-  attributeName="gradientTransform"
-  type="translate"
-  from="-1521 0"
-  to="1521 0"
-  dur="3s"
-  repeatCount="indefinite"
-/>
+            attributeName="gradientTransform"
+            type="translate"
+            from="-1521 0"
+            to="1521 0"
+            dur="3s"
+            repeatCount="indefinite"
+          />
         </linearGradient>
       </defs>
       <g transform="matrix(0.295942,0,0,0.295942,-620.078,-220.806)">
@@ -105,6 +163,9 @@ function TarotCard({
   const canvasRef = useRef(null);
   const starsRef = useRef([]);
   const animRef = useRef(null);
+  const ginkgoCanvasRef = useRef(null);
+  const ginkgoAnimRef = useRef(null);
+  const gingkoLeavesRef = useRef([]);
 
   const [flipped, setFlipped] = useState(false);
   const [theme, setTheme] = useState(getTheme);
@@ -185,6 +246,56 @@ function TarotCard({
     return () => cancelAnimationFrame(animRef.current);
   }, [theme]);
 
+  useEffect(() => {
+    const canvas = ginkgoCanvasRef.current;
+    if (!canvas || !isDay) return;
+    canvas.width = canvas.offsetWidth || 220;
+    canvas.height = canvas.offsetHeight || 380;
+    const W = canvas.width;
+    const H = canvas.height;
+    gingkoLeavesRef.current = Array.from({ length: 20 }, () => {
+      const l = makeLeaf(W, H);
+      l.x = Math.random() * W;
+      l.y = Math.random() * H;
+      l.alpha = l.alphaTarget;
+      return l;
+    });
+  }, [theme]);
+
+  // ginkgo leaves anim loop
+  useEffect(() => {
+    const canvas = ginkgoCanvasRef.current;
+    if (!canvas || !isDay) return;
+    const ctx = canvas.getContext("2d");
+    const W = canvas.width;
+    const H = canvas.height;
+
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+      gingkoLeavesRef.current.forEach((leaf, i) => {
+        leaf.wobbleT += leaf.wobbleFreq;
+        leaf.x += leaf.vx + Math.sin(leaf.wobbleT) * leaf.wobbleAmp;
+        leaf.y += leaf.vy + Math.cos(leaf.wobbleT * 0.7) * leaf.wobbleAmp * 0.4;
+        leaf.angle += leaf.rotSpd;
+        const edgeDist = Math.min(leaf.x / 40, (W - leaf.x) / 40, 1);
+        leaf.alpha = Math.min(leaf.alphaTarget, Math.max(0, edgeDist));
+        if (leaf.x > W + 40 || leaf.y > H + 40) {
+          gingkoLeavesRef.current[i] = makeLeaf(W, H);
+          return;
+        }
+        ctx.save();
+        ctx.globalAlpha = leaf.alpha;
+        drawGinkgoLeaf(ctx, leaf.x, leaf.y, leaf.size, leaf.angle, leaf.color);
+        ctx.restore();
+      });
+      ctx.globalAlpha = 1;
+      ginkgoAnimRef.current = requestAnimationFrame(draw);
+    }
+
+    draw();
+    return () => cancelAnimationFrame(ginkgoAnimRef.current);
+  }, [theme]);
+
   // Mouse Parallax: Tilts the whole card. Each data-depth layer shifts independently so layers feel like they r floating
   const handleMouseMove = useCallback((e) => {
     const wrap = wrapRef.current;
@@ -228,7 +339,7 @@ function TarotCard({
     }, 650);
   }, []);
 
-    return (
+  return (
     <div
       ref={wrapRef}
       className={`tarot-wrap${flipped ? " is-flipped" : ""}`}
@@ -243,9 +354,9 @@ function TarotCard({
       {/*Tarot front
           Layer order if form the bottom → top:
             1  card base SVG      (z-index 1)
-            2a  canvas stars       (z-index 2, night only)
-            2b  cloud imgs         (z-index 2, day only, drift animation)
-            2c  wave SVG           (z-index 2, night only, gradient animation)
+            2a  clouds       (z-index 2, day)
+            2b  gingko leave         (z-index 2, day)
+            2c  stars           (z-index 2, night)
             3  project image      (z-index 3, object-fit:cover, no warp)
             4  frame SVG          (z-index 4, sits on top of image)
             5  sun/moon icon      (z-index 5)
@@ -266,22 +377,7 @@ function TarotCard({
           />
         </div>
 
-        {/* 2a:star canvas (night) */}
-        <canvas
-          ref={canvasRef}
-          data-depth="1"
-          aria-hidden="true"
-          style={{
-            position: "absolute",
-            inset: 0,
-            width: "100%",
-            height: "100%",
-            zIndex: 2,
-            pointerEvents: "none",
-          }}
-        />
-
-        {/* 2b: drifting clouds (day) */}
+        {/* 2a: drifting clouds (day) */}
         {isDay && (
           <div className="tarot-bg" data-depth="2">
             {config.clouds.map((cloud, i) => (
@@ -304,24 +400,39 @@ function TarotCard({
           </div>
         )}
 
-        {/* 2c: wave accent (night), inline SVG for animated gradient */}
-        {!isDay && (
-          <div
-            data-depth="2"
-            style={{
-              position: "absolute",
-              bottom: 0,
-              left: 0,
-              right: 0,
-              zIndex: 2,
-              pointerEvents: "none",
-              height: "30%",
-              overflow: "hidden",
-            }}
-          >
-            <MoonWaves />
+        {/* 2b: gingko leaves anim (day) */}
+        {isDay && (
+          <div className="tarot-canvas-clip">
+            <canvas
+              ref={ginkgoCanvasRef}
+              data-depth="1"
+              aria-hidden="true"
+              style={{
+                position: "absolute",
+                inset: 0,
+                width: "100%",
+                height: "100%",
+                pointerEvents: "none",
+              }}
+            />
           </div>
         )}
+
+        {/* 2c:star canvas (night) */}
+        <div className="tarot-canvas-clip">
+          <canvas
+            ref={canvasRef}
+            data-depth="1"
+            aria-hidden="true"
+            style={{
+              position: "absolute",
+              inset: 0,
+              width: "100%",
+              height: "100%",
+              pointerEvents: "none",
+            }}
+          />
+        </div>
 
         {/* 3: project image */}
         <div className="tarot-image" data-depth="3">

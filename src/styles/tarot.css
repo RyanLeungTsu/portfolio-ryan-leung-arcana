@@ -11,6 +11,19 @@
   flex-shrink: 0;
 }
 
+/* wrapper for effects from cavnases in tarotCard.jsx */
+.tarot-canvas-clip {
+  position: absolute;
+  top: 1%;
+  left: 1%;
+  right: 1%;
+  bottom: 1%;
+  z-index: 2;
+  overflow: hidden;
+  pointer-events: none;
+  border-radius: 0.1rem;
+}
+
 @media (min-width: 480px) {
   .tarot-wrap {
     --card-w: 55vw;
