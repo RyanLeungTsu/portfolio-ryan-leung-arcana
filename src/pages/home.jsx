@@ -3,6 +3,7 @@ import ThemeToggle from "../components/themeToggle";
 import VinylWidget from "../components/vinyl/vinyl";
 import CelestialBackground from "../components/background";
 import Sidebar from "../components/sideScrollIndicator";
+import "../styles/home.css"
 
 function Home () {
     return (
@@ -17,8 +18,8 @@ function Home () {
                 <TarotCards />
             </section>
 
-            <section className="about-me" id="about">
-
+            <section className="contact" id="contact">
+                {/*  */}
             </section>
 
             <CelestialBackground />

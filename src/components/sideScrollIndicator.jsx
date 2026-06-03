@@ -60,7 +60,7 @@ function Sidebar() {
           ref={sectionRefs.about}
           className={activeSection === "about" ? "active" : ""}
         >
-          <a href="#about" aria-label="Go to About section">About</a>
+          <a href="#contact" aria-label="Go to Contact section">Contact</a>
         </li>
       </ul>
       <div className="scroll-arrow" style={{ top: `${arrowTop}px` }} aria-hidden="true">

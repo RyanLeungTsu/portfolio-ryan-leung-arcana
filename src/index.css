@@ -15,6 +15,7 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
 
   @media (max-width: 1024px) {
     font-size: 16px;
@@ -22,40 +23,55 @@
 }
 
 body {
-  margin: 0;
+  margin: 0 auto;
   font-family: "StarlightRune", serif;
+  max-width: 90vw;
+}
+
+@media (min-width: 60rem) {
+  body {
+    max-width: 75vw;
+    min-height: 100vh;
+  }
 }
 
 /* Theme toggle colors */
 :root[data-theme="day"] {
-  --text:              #090e24;
-  --arc-base:          #fdf3dc;
-  --arc-primary:       #e7a52c;
-  --arc-secondary:     #e8b84b;
-  --arc-tertiary:      #805812;
-  --arc-border:        #8b3a1a;
-  --arc-ink:           #2a1800;
-  --arc-filter-frame:  none;
-  --arc-filter-icon:   none;
+  --text: #090e24;
+  --arc-base: #fdf3dc;
+  --arc-primary: #e7a52c;
+  --arc-secondary: #e8b84b;
+  --arc-tertiary: #805812;
+  --arc-quaternary: #50C892;
+  --arc-border: #8b3a1a;
+  --arc-ink: #2a1800;
+  --arc-filter-frame: none;
+  --arc-filter-icon: none;
 }
 
 :root[data-theme="night"] {
-  --text:              #fbf7ef;
-  --arc-base:          #090e24;
-  --arc-primary:       #8aacff;
-  --arc-secondary:     #aac4ff;
-  --arc-tertiary:      #6080d0;
-  --arc-border:        #3a4a8a;
-  --arc-ink:           #b8c8ff;
-  --arc-filter-frame:  none;
-  --arc-filter-icon:   none;
+  --text: #fbf7ef;
+  --arc-base: #090e24;
+  --arc-primary: #8aacff;
+  --arc-secondary: #aac4ff;
+  --arc-tertiary: #6080d0;
+  --arc-border: #3a4a8a;
+  --arc-ink: #b8c8ff;
+  --arc-filter-frame: none;
+  --arc-filter-icon: none;
 }
 
-*, *::before, *::after, svg, svg * {
-  transition: background-color 1.5s ease, color 1.5s ease, border-color 1.5s ease, filter 1s ease, fill 1.5s ease, stroke 1.5s ease, opacity 1s ease;;
-}
-
-/* Testing, to delete later */
-.hero-name {
-  font-size: 10rem;
+*,
+*::before,
+*::after,
+svg,
+svg * {
+  transition:
+    background-color 1.5s ease,
+    color 1.5s ease,
+    border-color 1.5s ease,
+    filter 1s ease,
+    fill 1.5s ease,
+    stroke 1.5s ease,
+    opacity 1s ease;
 }

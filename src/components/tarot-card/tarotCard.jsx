@@ -21,6 +21,10 @@ import moonCardFrame from "../../assets/svg-components/arcana-moon-front/moon-ca
 import moonCardMoon from "../../assets/svg-components/arcana-moon-front/moon-card-moon.svg";
 import moonCardTitle from "../../assets/svg-components/arcana-moon-front/moon-card-title.svg";
 
+// Other assets
+import arcSunEye from "../../assets/svg-components/misc/arc-sun-eye.svg";
+import arcMoonEye from "../../assets/svg-components/misc/arc-moon-eye.svg";
+
 const VARIATIONS = {
   1: {
     clouds: [{ width: 500, height: 50, top: "14%", duration: 40, delay: 0 }],
@@ -155,7 +159,7 @@ function TarotCard({
   subtitle = "",
   // description = "",
   // tags        = [],
-  // link        = "/",
+  link = "/",
   image = {},
   variation = 1,
 }) {
@@ -168,6 +172,7 @@ function TarotCard({
   const gingkoLeavesRef = useRef([]);
 
   const [flipped, setFlipped] = useState(false);
+  const [hovered, setHovered] = useState(false);
   const [theme, setTheme] = useState(getTheme);
 
   const config = VARIATIONS[variation] || VARIATIONS[1];
@@ -313,13 +318,15 @@ function TarotCard({
 
     wrap.querySelectorAll("[data-depth]").forEach((layer) => {
       const d = parseFloat(layer.dataset.depth) || 1;
-      layer.style.transform = `translate(${dx * d * 2.8}px, ${dy * d * 2.8}px)`;
+      // depth in cards while in paralax
+      layer.style.transform = `translate(${dx * d * 6}px, ${dy * d * 6}px)`;
     });
   }, []);
 
   const handleMouseLeave = useCallback(() => {
     const wrap = wrapRef.current;
     if (!wrap) return;
+    setHovered(false);
 
     // restors thee transitiosn so card eases back smoothly
     wrap.style.transition = "";
@@ -339,18 +346,42 @@ function TarotCard({
     }, 650);
   }, []);
 
+  const handleMouseEnter = useCallback(() => {
+    setHovered(true);
+  }, []);
+
   return (
     <div
       ref={wrapRef}
       className={`tarot-wrap${flipped ? " is-flipped" : ""}`}
-      onClick={() => setFlipped((f) => !f)}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      role="button"
-      tabIndex={0}
-      aria-label={`${title} — click to flip`}
-      onKeyDown={(e) => e.key === "Enter" && setFlipped((f) => !f)}
+      onMouseEnter={handleMouseEnter}
+      role="group"
+      aria-label={title}
     >
+      {/* eye icon for flipping card */}
+      <button
+        className={`tarot-eye-btn${hovered ? " tarot-eye-btn--visible" : ""}`}
+        onClick={(e) => {
+          e.stopPropagation();
+          setFlipped((f) => !f);
+        }}
+        aria-label={flipped ? "Show front" : "Show back"}
+      >
+        <img
+          src={isDay ? arcSunEye : arcMoonEye}
+          alt=""
+          aria-hidden="true"
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "contain",
+            display: "block",
+          }}
+        />
+      </button>
+
       {/*Tarot front
           Layer order if form the bottom → top:
             1  card base SVG      (z-index 1)
@@ -361,7 +392,12 @@ function TarotCard({
             4  frame SVG          (z-index 4, sits on top of image)
             5  sun/moon icon      (z-index 5)
             6  title banner SVG + html text (z-index 6)*/}
-      <div className="tarot-face tarot-front">
+      <Link
+        to={link}
+        className="tarot-face tarot-front"
+        aria-label={`View ${title} project`}
+        tabIndex={flipped ? -1 : 0}
+      >
         {/* 1: card base */}
         <div className="tarot-base" data-depth="1">
           <img
@@ -494,13 +530,20 @@ function TarotCard({
             {subtitle && <p>{subtitle}</p>}
           </div>
         </div>
-      </div>
+      </Link>
 
       {/* Tarot Back
           Layer order if form the bottom → top:
             1  back base SVG        (z-index 1)
             2  moon/sun phase icons (z-index 2, night only) */}
-      <div className="tarot-face tarot-back-face">
+      <div
+        className="tarot-face tarot-back-face"
+        onClick={() => setFlipped(false)}
+        role="button"
+        tabIndex={flipped ? 0 : -1}
+        aria-label="Flip back"
+        onKeyDown={(e) => e.key === "Enter" && setFlipped(false)}
+      >
         {/* 1: back base */}
         <div className="tarot-base" data-depth="1">
           <img

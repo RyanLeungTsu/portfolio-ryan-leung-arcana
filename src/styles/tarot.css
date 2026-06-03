@@ -77,6 +77,12 @@
   z-index: 1;
 }
 
+a.tarot-front {
+  text-decoration: none;
+  display: block;
+  cursor: pointer;
+}
+
 /* background effects clouds/stars/waves */
 .tarot-bg {
   position: absolute;
@@ -228,7 +234,7 @@
 }
 
 /* tarot night: wave effects */
-.tarot-wave-gradient {
+/* .tarot-wave-gradient {
   position: absolute;
   inset: 0;
   background: linear-gradient(90deg, #9b6bef 0%, #3dcca0 50%, #9b6bef 100%);
@@ -246,7 +252,7 @@
   to {
     background-position: 200% 0%;
   }
-}
+} */
 
 /* tarot card back */
 .tarot-back-icons-wrapper {
@@ -279,4 +285,36 @@
   justify-content: center;
   perspective: 1400px;
   padding: clamp(16px, 4vw, 40px);
+}
+
+/* tarot flip icon */
+.tarot-eye-btn {
+  position: absolute;
+  top: -3rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  z-index: 20;
+  background: none;
+  border: none;
+  border-radius: 50%;
+  width: 4rem;
+  height: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+ 
+.tarot-eye-btn--visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+ 
+.tarot-eye-btn:hover {
+  background: rgba(191, 191, 191, 0.15);
 }

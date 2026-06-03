@@ -1,38 +1,52 @@
 import React, { useEffect, useRef, useState } from "react";
 import "../styles/background.css";
- 
+
 function getTheme() {
   return document.documentElement.dataset.theme || "day";
 }
-// using perm for smoother noise 
-function fade(t) { return t * t * t * (t * (t * 6 - 15) + 10); }
-function lerp(a, b, t) { return a + t * (b - a); }
+// using perm for smoother noise
+function fade(t) {
+  return t * t * t * (t * (t * 6 - 15) + 10);
+}
+function lerp(a, b, t) {
+  return a + t * (b - a);
+}
 function lerpColor(a, b, t) {
   return [lerp(a[0], b[0], t), lerp(a[1], b[1], t), lerp(a[2], b[2], t)];
 }
- 
+
 const PERM = Array.from({ length: 512 }, (_, i) => i % 256);
 for (let i = 255; i > 0; i--) {
   const j = Math.floor(Math.random() * (i + 1));
   [PERM[i], PERM[j]] = [PERM[j], PERM[i]];
   PERM[i + 256] = PERM[i];
 }
- 
+
 function noise2D(x, y) {
   const X = Math.floor(x) & 255;
   const Y = Math.floor(y) & 255;
   const xf = x - Math.floor(x);
   const yf = y - Math.floor(y);
-  const u = fade(xf), v = fade(yf);
-  const a = PERM[X] + Y, b = PERM[X + 1] + Y;
+  const u = fade(xf),
+    v = fade(yf);
+  const a = PERM[X] + Y,
+    b = PERM[X + 1] + Y;
   return (
     lerp(
-      lerp((((PERM[a]     * 127.1 + PERM[a + 1] * 311.7) % 1) + 1) % 1,
-           (((PERM[b]     * 127.1 + PERM[b + 1] * 311.7) % 1) + 1) % 1, u),
-      lerp((((PERM[a + 1] * 127.1 + PERM[a + 2] * 311.7) % 1) + 1) % 1,
-           (((PERM[b + 1] * 127.1 + PERM[b + 2] * 311.7) % 1) + 1) % 1, u),
+      lerp(
+        (((PERM[a] * 127.1 + PERM[a + 1] * 311.7) % 1) + 1) % 1,
+        (((PERM[b] * 127.1 + PERM[b + 1] * 311.7) % 1) + 1) % 1,
+        u,
+      ),
+      lerp(
+        (((PERM[a + 1] * 127.1 + PERM[a + 2] * 311.7) % 1) + 1) % 1,
+        (((PERM[b + 1] * 127.1 + PERM[b + 2] * 311.7) % 1) + 1) % 1,
+        u,
+      ),
       v,
-    ) * 2 - 1
+    ) *
+      2 -
+    1
   );
 }
 
@@ -44,6 +58,7 @@ const PALETTES = {
     [231, 165, 44], // --arc-primary
     [232, 184, 75], // --arc-secondary
     [128, 88, 18], // --arc-tertiary
+    [80, 200, 145], // --arc-quaternary
     [255, 200, 80], // light gold variant
     [180, 80, 10], // dark amber
     [255, 220, 120], // pale gold
@@ -65,12 +80,12 @@ const PALETTES = {
 
 const BASE_COLORS = {
   night: [0, 0, 60],
-  day: [80, 180, 170],
+  day: [230, 170, 95],
 };
 
 const VIGNETTE_COLORS = {
-  night: [15,   0,   0],
-  day:   [250, 170,  95],
+  night: [15, 0, 0],
+  day: [80, 190, 170],
 };
 
 const BLOB_COUNT = 9;
@@ -110,9 +125,9 @@ function CelestialBackground() {
   const timeRef = useRef(0);
   const [, setTheme] = useState(getTheme);
 
-  const currentPaletteRef  = useRef(PALETTES[getTheme()].map(c => [...c]));
-  const currentBaseRef     = useRef([...BASE_COLORS[getTheme()]]);
-  const currentVigRef      = useRef([...VIGNETTE_COLORS[getTheme()]]);
+  const currentPaletteRef = useRef(PALETTES[getTheme()].map((c) => [...c]));
+  const currentBaseRef = useRef([...BASE_COLORS[getTheme()]]);
+  const currentVigRef = useRef([...VIGNETTE_COLORS[getTheme()]]);
 
   useEffect(() => {
     const observer = new MutationObserver(() => {
@@ -126,17 +141,17 @@ function CelestialBackground() {
     });
     return () => observer.disconnect();
   }, []);
- 
+
   useEffect(() => {
     const canvas = canvasRef.current;
-    const ctx    = canvas.getContext("2d");
+    const ctx = canvas.getContext("2d");
     let W, H;
- 
+
     function resize() {
-      W = canvas.width  = window.innerWidth;
+      W = canvas.width = window.innerWidth;
       H = canvas.height = window.innerHeight;
-      blobsRef.current  = Array.from({ length: BLOB_COUNT }, (_, i) =>
-        makeBlob(W, H, i, BLOB_COUNT)
+      blobsRef.current = Array.from({ length: BLOB_COUNT }, (_, i) =>
+        makeBlob(W, H, i, BLOB_COUNT),
       );
     }
 
@@ -179,43 +194,51 @@ function CelestialBackground() {
       const targetVig = VIGNETTE_COLORS[theme];
       const transitionSpeed = TRANSITION_SPEED;
 
-     currentPaletteRef.current = currentPaletteRef.current.map((c, i) =>
-        lerpColor(c, targetPalette[i], transitionSpeed)
+      currentPaletteRef.current = currentPaletteRef.current.map((c, i) =>
+        lerpColor(c, targetPalette[i], transitionSpeed),
       );
-      currentBaseRef.current = lerpColor(currentBaseRef.current, targetBase, transitionSpeed);
-      currentVigRef.current  = lerpColor(currentVigRef.current,  targetVig,  VIG_TRANSITION_SPEED);
- 
+      currentBaseRef.current = lerpColor(
+        currentBaseRef.current,
+        targetBase,
+        transitionSpeed,
+      );
+      currentVigRef.current = lerpColor(
+        currentVigRef.current,
+        targetVig,
+        VIG_TRANSITION_SPEED,
+      );
+
       const palette = currentPaletteRef.current;
-      const base    = currentBaseRef.current;
-      const vc      = currentVigRef.current;
-      const isDay   = theme === "day";
- 
+      const base = currentBaseRef.current;
+      const vc = currentVigRef.current;
+      const isDay = theme === "day";
+
       ctx.fillStyle = `rgb(${base[0]},${base[1]},${base[2]})`;
       ctx.fillRect(0, 0, W, H);
 
       // glow behind the blobs
-ctx.globalCompositeOperation = "source-over";
+      ctx.globalCompositeOperation = "source-over";
       blobs.forEach((b) => {
         const [r, g, bl] = palette[b.colorIndex % palette.length];
         const { cx, cy } = buildShapePath(b, t);
         const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, b.r * 2);
-        grad.addColorStop(0,   `rgba(${r},${g},${bl},0.18)`);
+        grad.addColorStop(0, `rgba(${r},${g},${bl},0.18)`);
         grad.addColorStop(0.5, `rgba(${r},${g},${bl},0.07)`);
-        grad.addColorStop(1,   `rgba(${r},${g},${bl},0)`);
+        grad.addColorStop(1, `rgba(${r},${g},${bl},0)`);
         ctx.fillStyle = grad;
         ctx.fill();
       });
 
       // blobs
-ctx.globalCompositeOperation = "screen";
+      ctx.globalCompositeOperation = "screen";
       blobs.forEach((b) => {
         const [r, g, bl] = palette[b.colorIndex % palette.length];
         const { cx, cy } = buildShapePath(b, t);
         const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, b.r);
-        grad.addColorStop(0,    `rgba(${r},${g},${bl},0.25)`);
-        grad.addColorStop(0.3,  `rgba(${r},${g},${bl},0.1)`);
+        grad.addColorStop(0, `rgba(${r},${g},${bl},0.25)`);
+        grad.addColorStop(0.3, `rgba(${r},${g},${bl},0.1)`);
         grad.addColorStop(0.65, `rgba(${r},${g},${bl},0.1)`);
-        grad.addColorStop(1,    `rgba(${r},${g},${bl},0)`);
+        grad.addColorStop(1, `rgba(${r},${g},${bl},0)`);
         ctx.fillStyle = grad;
         ctx.fill();
       });
@@ -223,38 +246,58 @@ ctx.globalCompositeOperation = "screen";
       ctx.globalCompositeOperation = "source-over";
 
       // vignette
-const vig1 = ctx.createRadialGradient(W/2, H/2, 0, W/2, H/2, Math.max(W, H) * 0.7);
-      vig1.addColorStop(0,   `rgba(${vc[0]},${vc[1]},${vc[2]},0)`);
+      const vig1 = ctx.createRadialGradient(
+        W / 2,
+        H / 2,
+        0,
+        W / 2,
+        H / 2,
+        Math.max(W, H) * 0.7,
+      );
+      vig1.addColorStop(0, `rgba(${vc[0]},${vc[1]},${vc[2]},0)`);
       vig1.addColorStop(0.4, `rgba(${vc[0]},${vc[1]},${vc[2]},0)`);
-      vig1.addColorStop(1,   `rgba(${vc[0]},${vc[1]},${vc[2]},${isDay ? 0.5 : 0.85})`);
+      vig1.addColorStop(
+        1,
+        `rgba(${vc[0]},${vc[1]},${vc[2]},${isDay ? 0.5 : 0.85})`,
+      );
       ctx.fillStyle = vig1;
       ctx.fillRect(0, 0, W, H);
- 
-      const vig2 = ctx.createRadialGradient(W/2, H/2, 0, W/2, H/2, Math.max(W, H) * 0.5);
-      vig2.addColorStop(0,   `rgba(${vc[0]},${vc[1]},${vc[2]},0)`);
+
+      const vig2 = ctx.createRadialGradient(
+        W / 2,
+        H / 2,
+        0,
+        W / 2,
+        H / 2,
+        Math.max(W, H) * 0.5,
+      );
+      vig2.addColorStop(0, `rgba(${vc[0]},${vc[1]},${vc[2]},0)`);
       vig2.addColorStop(0.6, `rgba(${vc[0]},${vc[1]},${vc[2]},0)`);
-      vig2.addColorStop(1,   `rgba(${vc[0]},${vc[1]},${vc[2]},${isDay ? 0.25 : 0.5})`);
+      vig2.addColorStop(
+        1,
+        `rgba(${vc[0]},${vc[1]},${vc[2]},${isDay ? 0.25 : 0.5})`,
+      );
       ctx.fillStyle = vig2;
       ctx.fillRect(0, 0, W, H);
     }
- 
+
     function loopEffect() {
       timeRef.current += 0.003;
       drawShapes();
       rafRef.current = requestAnimationFrame(loopEffect);
     }
- 
+
     resize();
     window.addEventListener("resize", resize);
     rafRef.current = requestAnimationFrame(loopEffect);
- 
+
     return () => {
       cancelAnimationFrame(rafRef.current);
       window.removeEventListener("resize", resize);
     };
   }, []);
- 
+
   return <canvas ref={canvasRef} className="celestial-bg" aria-hidden="true" />;
 }
- 
+
 export default CelestialBackground;
