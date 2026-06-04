@@ -6,9 +6,15 @@
   height: var(--card-h);
   position: relative;
   transform-style: preserve-3d;
+  padding-top: 3rem;   
+  margin-top: -3rem;
   transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
   cursor: pointer;
   flex-shrink: 0;
+}
+
+.tarot-base, .tarot-bg, .tarot-image, .tarot-frame, .tarot-icon-inner, .tarot-title {
+  will-change: transform;
 }
 
 /* wrapper for effects from cavnases in tarotCard.jsx */
@@ -145,7 +151,7 @@ a.tarot-front {
 /* tarot icons for sun/moon */
 .tarot-icon-wrapper {
   position: absolute;
-  top: 7%;
+  top: 10%;
   left: 50%;
   transform: translateX(-50%);
   width: 8%;

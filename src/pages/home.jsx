@@ -1,4 +1,5 @@
 import TarotCards from "../components/tarotCards";
+import HeroCard from "../components/heroCard";
 import ThemeToggle from "../components/themeToggle";
 import VinylWidget from "../components/vinyl/vinyl";
 import CelestialBackground from "../components/background";
@@ -12,6 +13,7 @@ function Home () {
                 <h1 className="hero-name">ya Leung</h1>
                 <sub>Web & Software Developer</sub>
                 <button>Contact Me</button>
+                <HeroCard />
             </section>
 
             <section className="projects" id="projects">

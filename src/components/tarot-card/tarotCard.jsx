@@ -162,6 +162,13 @@ function TarotCard({
   link = "/",
   image = {},
   variation = 1,
+  // universal props for tarotCard
+  // replaces the image slot with anything
+  frontContent = null,
+  // skips the <Link> wrapper on the front
+  disableLink = false,
+  // custom click handler for the front
+  onFrontClick = null,
 }) {
   const wrapRef = useRef(null);
   const canvasRef = useRef(null);
@@ -302,24 +309,26 @@ function TarotCard({
   }, [theme]);
 
   // Mouse Parallax: Tilts the whole card. Each data-depth layer shifts independently so layers feel like they r floating
+  const rafParallaxRef = useRef(null);
+
   const handleMouseMove = useCallback((e) => {
     const wrap = wrapRef.current;
     if (!wrap) return;
-
-    // disables transition while actively moving so tilt can track instantly
-    wrap.style.transition = "none";
-
-    const rect = wrap.getBoundingClientRect();
-    const dx = (e.clientX - (rect.left + rect.width / 2)) / (rect.width / 2);
-    const dy = (e.clientY - (rect.top + rect.height / 2)) / (rect.height / 2);
-
-    // tilts the card
-    wrap.style.transform = `translateY(-8px) rotateY(${dx * 12}deg) rotateX(${-dy * 8}deg)`;
-
-    wrap.querySelectorAll("[data-depth]").forEach((layer) => {
-      const d = parseFloat(layer.dataset.depth) || 1;
-      // depth in cards while in paralax
-      layer.style.transform = `translate(${dx * d * 6}px, ${dy * d * 6}px)`;
+    if (rafParallaxRef.current) return;
+    rafParallaxRef.current = requestAnimationFrame(() => {
+      rafParallaxRef.current = null;
+      // disables transition while actively moving so tilt can track instantly
+      wrap.style.transition = "none";
+      const rect = wrap.getBoundingClientRect();
+      const dx = (e.clientX - (rect.left + rect.width / 2)) / (rect.width / 2);
+      const dy = (e.clientY - (rect.top + rect.height / 2)) / (rect.height / 2);
+      // tilts the card
+      wrap.style.transform = `translateY(-8px) rotateY(${dx * 12}deg) rotateX(${-dy * 8}deg)`;
+      wrap.querySelectorAll("[data-depth]").forEach((layer) => {
+        const d = parseFloat(layer.dataset.depth) || 1;
+        // depth in cards while in paralax
+        layer.style.transform = `translate(${dx * d * 2.8}px, ${dy * d * 2.8}px)`;
+      });
     });
   }, []);
 
@@ -349,6 +358,163 @@ function TarotCard({
   const handleMouseEnter = useCallback(() => {
     setHovered(true);
   }, []);
+
+  const imageSlot = frontContent ? (
+    <div className="tarot-image" data-depth="3">
+      {frontContent}
+    </div>
+  ) : (
+    <div className="tarot-image" data-depth="3">
+      {image.src ? (
+        <img
+          src={image.src}
+          srcSet={image.srcSet}
+          sizes={image.sizes}
+          alt={image.alt || title}
+          loading="lazy"
+        />
+      ) : (
+        <div
+          style={{
+            width: "100%",
+            height: "100%",
+            background: "linear-gradient(160deg,#1a0535,#0a2a4a,#0a1a0a)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            color: "rgba(180,160,255,0.15)",
+            fontSize: "clamp(24px,8vw,48px)",
+          }}
+        >
+          ◈
+        </div>
+      )}
+    </div>
+  );
+
+  {
+    /*Tarot front
+          Layer order if form the bottom → top:
+            1  card base SVG      (z-index 1)
+            2a  clouds       (z-index 2, day)
+            2b  gingko leave         (z-index 2, day)
+            2c  stars           (z-index 2, night)
+            3  project image      (z-index 3, object-fit:cover, no warp)
+            4  frame SVG          (z-index 4, sits on top of image)
+            5  sun/moon icon      (z-index 5)
+            6  title banner SVG + html text (z-index 6)*/
+  }
+  const frontInner = (
+    <>
+      {/* 1: card base */}
+      <div className="tarot-base" data-depth="1">
+        <img
+          src={frontAssets.base}
+          alt=""
+          aria-hidden="true"
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "fill",
+            display: "block",
+          }}
+        />
+      </div>
+
+      {/* 2a: drifting clouds (day) */}
+      {isDay && (
+        <div className="tarot-bg" data-depth="2">
+          {config.clouds.map((cloud, i) => (
+            <img
+              key={i}
+              src={sunClouds}
+              alt=""
+              aria-hidden="true"
+              style={{
+                position: "absolute",
+                width: cloud.width,
+                height: "auto",
+                top: cloud.top,
+                left: 0,
+                opacity: 0.7,
+                animation: `tarot-drift ${cloud.duration}s linear ${cloud.delay}s infinite`,
+              }}
+            />
+          ))}
+        </div>
+      )}
+
+      {/* 2b: gingko leaves anim (day) */}
+      {isDay && (
+        <div className="tarot-canvas-clip">
+          <canvas
+            ref={ginkgoCanvasRef}
+            data-depth="1"
+            aria-hidden="true"
+            style={{
+              position: "absolute",
+              inset: 0,
+              width: "100%",
+              height: "100%",
+              pointerEvents: "none",
+            }}
+          />
+        </div>
+      )}
+
+      {/* 2c:star canvas (night) */}
+      <div className="tarot-canvas-clip">
+        <canvas
+          ref={canvasRef}
+          data-depth="1"
+          aria-hidden="true"
+          style={{
+            position: "absolute",
+            inset: 0,
+            width: "100%",
+            height: "100%",
+            pointerEvents: "none",
+          }}
+        />
+      </div>
+
+      {/* 3: image */}
+      {imageSlot}
+
+      {/* 4: frame SVG */}
+      <div className="tarot-frame-wrapper">
+        <div className="tarot-frame" data-depth="3">
+          <img src={frontAssets.frame} alt="" aria-hidden="true" />
+        </div>
+      </div>
+
+      {/* 5: sun/moon icon */}
+      <div className="tarot-icon-wrapper">
+        <div className="tarot-icon-inner" data-depth="2">
+          <img
+            src={frontAssets.icon}
+            alt={isDay ? "sun" : "moon"}
+            aria-hidden="true"
+            className="tarot-icon"
+          />
+        </div>
+      </div>
+
+      {/* 6: title banner */}
+      <div className="tarot-title" data-depth="5">
+        <img
+          src={frontAssets.title}
+          alt=""
+          aria-hidden="true"
+          className="banner-svg"
+        />
+        <div className="tarot-title-text">
+          <h3>{title}</h3>
+          {subtitle && <p>{subtitle}</p>}
+        </div>
+      </div>
+    </>
+  );
 
   return (
     <div
@@ -382,155 +548,26 @@ function TarotCard({
         />
       </button>
 
-      {/*Tarot front
-          Layer order if form the bottom → top:
-            1  card base SVG      (z-index 1)
-            2a  clouds       (z-index 2, day)
-            2b  gingko leave         (z-index 2, day)
-            2c  stars           (z-index 2, night)
-            3  project image      (z-index 3, object-fit:cover, no warp)
-            4  frame SVG          (z-index 4, sits on top of image)
-            5  sun/moon icon      (z-index 5)
-            6  title banner SVG + html text (z-index 6)*/}
-      <Link
-        to={link}
-        className="tarot-face tarot-front"
-        aria-label={`View ${title} project`}
-        tabIndex={flipped ? -1 : 0}
-      >
-        {/* 1: card base */}
-        <div className="tarot-base" data-depth="1">
-          <img
-            src={frontAssets.base}
-            alt=""
-            aria-hidden="true"
-            style={{
-              width: "100%",
-              height: "100%",
-              objectFit: "fill",
-              display: "block",
-            }}
-          />
+      {disableLink ? (
+        <div
+          className="tarot-face tarot-front"
+          onClick={onFrontClick}
+          role={onFrontClick ? "button" : undefined}
+          tabIndex={flipped ? -1 : 0}
+          onKeyDown={(e) => e.key === "Enter" && onFrontClick?.()}
+        >
+          {frontInner}
         </div>
-
-        {/* 2a: drifting clouds (day) */}
-        {isDay && (
-          <div className="tarot-bg" data-depth="2">
-            {config.clouds.map((cloud, i) => (
-              <img
-                key={i}
-                src={sunClouds}
-                alt=""
-                aria-hidden="true"
-                style={{
-                  position: "absolute",
-                  width: cloud.width,
-                  height: "auto",
-                  top: cloud.top,
-                  left: 0,
-                  opacity: 0.7,
-                  animation: `tarot-drift ${cloud.duration}s linear ${cloud.delay}s infinite`,
-                }}
-              />
-            ))}
-          </div>
-        )}
-
-        {/* 2b: gingko leaves anim (day) */}
-        {isDay && (
-          <div className="tarot-canvas-clip">
-            <canvas
-              ref={ginkgoCanvasRef}
-              data-depth="1"
-              aria-hidden="true"
-              style={{
-                position: "absolute",
-                inset: 0,
-                width: "100%",
-                height: "100%",
-                pointerEvents: "none",
-              }}
-            />
-          </div>
-        )}
-
-        {/* 2c:star canvas (night) */}
-        <div className="tarot-canvas-clip">
-          <canvas
-            ref={canvasRef}
-            data-depth="1"
-            aria-hidden="true"
-            style={{
-              position: "absolute",
-              inset: 0,
-              width: "100%",
-              height: "100%",
-              pointerEvents: "none",
-            }}
-          />
-        </div>
-
-        {/* 3: project image */}
-        <div className="tarot-image" data-depth="3">
-          {image.src ? (
-            <img
-              src={image.src}
-              srcSet={image.srcSet}
-              sizes={image.sizes}
-              alt={image.alt || title}
-              loading="lazy"
-            />
-          ) : (
-            <div
-              style={{
-                width: "100%",
-                height: "100%",
-                background: "linear-gradient(160deg,#1a0535,#0a2a4a,#0a1a0a)",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                color: "rgba(180,160,255,0.15)",
-                fontSize: "clamp(24px,8vw,48px)",
-              }}
-            >
-              ◈
-            </div>
-          )}
-        </div>
-
-        {/* 4: frame SVG */}
-        <div className="tarot-frame-wrapper">
-          <div className="tarot-frame" data-depth="3">
-            <img src={frontAssets.frame} alt="" aria-hidden="true" />
-          </div>
-        </div>
-
-        {/* 5: sun/moon icon */}
-        <div className="tarot-icon-wrapper">
-          <div className="tarot-icon-inner" data-depth="2">
-            <img
-              src={frontAssets.icon}
-              alt={isDay ? "sun" : "moon"}
-              aria-hidden="true"
-              className="tarot-icon"
-            />
-          </div>
-        </div>
-
-        {/* 6: title banner */}
-        <div className="tarot-title" data-depth="5">
-          <img
-            src={frontAssets.title}
-            alt=""
-            aria-hidden="true"
-            className="banner-svg"
-          />
-          <div className="tarot-title-text">
-            <h3>{title}</h3>
-            {subtitle && <p>{subtitle}</p>}
-          </div>
-        </div>
-      </Link>
+      ) : (
+        <Link
+          to={link}
+          className="tarot-face tarot-front"
+          aria-label={`View ${title} project`}
+          tabIndex={flipped ? -1 : 0}
+        >
+          {frontInner}
+        </Link>
+      )}
 
       {/* Tarot Back
           Layer order if form the bottom → top:
