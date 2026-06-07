@@ -1,45 +1,76 @@
-/* hero section */
-.hero-section {
-  min-height: 100svh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: clamp(2rem, 6vw, 5rem);
-  box-sizing: border-box;
-}
-
-.hero-layout {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: clamp(3rem, 8vw, 6rem);
-}
-
-@media (min-width: 48rem) {
-  .hero-layout {
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-  }
-}
-
 /* card scene wrapper */
 .hero-card-scene {
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-bottom: 2.5rem;
+  perspective: 75rem;
+  flex-shrink: 0;
 }
 
-/* deck effect */
+.hero-card-positioner {
+  transform-style: preserve-3d;
+  /* tilted forthe  leaning effect */
+  transform: rotate(20deg) rotateX(8deg) translateY(0px);
+  transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+  z-index: 2;
+  position: relative;
+  transform-origin: bottom center;
+  margin-left: -7rem;
+}
+
+/* 360 spin */
+.hero-card-positioner-spinning {
+  animation: hero-card-360 1.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+ 
+@keyframes hero-card-360 {
+  0%   { transform: rotate(20deg) rotateX(8deg) rotateY(0deg)   translateY(0px); }
+  50%  { transform: rotate(20deg) rotateX(8deg) rotateY(180deg) translateY(30px); }
+  100% { transform: rotate(20deg) rotateX(8deg) rotateY(360deg) translateY(0px); }
+}
+
+/* deck wrapper */
+.hero-deck-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 0;
+  position: relative;
+  margin-top: -1.5rem;
+}
+
+/* Icons */
+/* .hero-deck-icons {
+  position: relative;
+  width: 10rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+ 
+@media (min-width: 48rem) {
+  .hero-deck-icons {
+    width: 12rem;
+  }
+}
+ 
+.hero-deck-icons img {
+  width: 30%;
+  height: auto;
+  display: block;
+  opacity: 0.6;
+} */
+ 
+/* deck thickness effect */
 .hero-deck {
-  width: var(--card-w, 12.5rem);
-  height: 1.6rem;  
+  width: 10rem;
+  height: 2rem;
+  margin-bottom: -5rem;
   background: var(--arc-base);
   border-radius: 0.25rem;
   position: relative;
-  margin-top: -0.4rem; 
   z-index: 0;
   box-shadow:
     0  2px 0 var(--deck-edge, rgba(58,74,138,0.5)),
@@ -58,34 +89,9 @@
     0 28px 0 var(--arc-base),
     0 30px 0 var(--deck-edge, rgba(58,74,138,0.1));
 }
-
+ 
 @media (min-width: 48rem) {
   .hero-deck {
-    width: var(--card-w, 15rem);
+    width: 17rem;
   }
-}
-
-/* card positioner wiht the tilt/flip */
-.hero-card-positioner {
-  transform-style: preserve-3d;
-  transform: rotateY(-12deg) rotateX(4deg) translateY(-6px);
-  transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-  z-index: 1;
-}
-
-.hero-card-positioner--spinning {
-  animation: hero-card-360 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-}
-
-@keyframes hero-card-360 {
-  0%   { transform: rotateY(-12deg) rotateX(4deg) translateY(-6px); }
-  50%  { transform: rotateY(192deg) rotateX(0deg) translateY(-24px); }
-  100% { transform: rotateY(-12deg) rotateX(4deg) translateY(-6px); }
-}
-
-/* img */
-.hero-photo-placeholder {
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(160deg, #1a0535, #0a1a3a);
 }

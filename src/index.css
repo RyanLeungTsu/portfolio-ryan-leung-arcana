@@ -30,7 +30,7 @@ body {
 
 @media (min-width: 60rem) {
   body {
-    max-width: 75vw;
+    max-width: 100vw;
     min-height: 100vh;
   }
 }
@@ -38,7 +38,7 @@ body {
 /* Theme toggle colors */
 :root[data-theme="day"] {
   --text: #090e24;
-  --arc-base: #fdf3dc;
+  --arc-base: #FFC78E;
   --arc-primary: #e7a52c;
   --arc-secondary: #e8b84b;
   --arc-tertiary: #805812;
