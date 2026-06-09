@@ -11,7 +11,7 @@ import profile1lrg from "../assets/media/profile1lrg.webp";
 import sunCardBackIcons from "../assets/svg-components/arcana-sun-back/sun-cardback-icons.svg";
 import moonCardBackIcons from "../assets/svg-components/arcana-moon-back/moon-cardback-icons.svg";
  
-const FLIP_INTERVAL = 20000;
+const FLIP_INTERVAL = 7000;
  
 function getTheme() {
   return document.documentElement.dataset.theme || "night";
@@ -43,7 +43,7 @@ function HeroCard() {
       setTimeout(() => {
         isSpinningRef.current = false;
         setIsSpinning(false);
-      }, 1200);
+      }, 1400);
     };
     flipTimerRef.current = setInterval(trigger, FLIP_INTERVAL);
     return () => clearInterval(flipTimerRef.current);

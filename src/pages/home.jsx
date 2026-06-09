@@ -1,5 +1,6 @@
 import TarotCards from "../components/tarotCards";
 import HeroCard from "../components/heroCard";
+import TarotFan from "../components/tarotFan";
 import ThemeToggle from "../components/themeToggle";
 import VinylWidget from "../components/vinyl/vinyl";
 import CelestialBackground from "../components/background";
@@ -21,7 +22,8 @@ function Home() {
       </section>
 
       <section className="projects" id="projects">
-        <TarotCards />
+        {/* <TarotCards /> */}
+        <TarotFan />
       </section>
 
       <section className="contact" id="contact">

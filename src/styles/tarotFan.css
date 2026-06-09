@@ -1,0 +1,251 @@
+:root {
+  --card-height: clamp(12rem, 40vh, 20rem); 
+  --card-width: calc(var(--card-height) * 0.625); 
+}
+
+/* mpobile stylings */
+.tarot-fan-section {
+  width: 100%;
+  padding: 2rem 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: transparent;
+  min-height: auto;
+}
+
+.carousel-container {
+  position: relative;
+  width: 100%;
+  height: var(--card-height);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 2000px;
+  max-width: 100%;
+  overflow: visible;
+}
+
+/* Fan container */
+.carousel-fan {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: grab;
+  user-select: none;
+}
+
+.carousel-fan:active {
+  cursor: grabbing;
+}
+
+/* Individual card wrapper in fan */
+.carousel-card-wrapper {
+  position: absolute;
+  width: var(--card-width);
+  height: var(--card-height);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform-origin: center bottom;
+  will-change: transform;
+}
+
+/* Card flip animation */
+.carousel-card {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.carousel-card.is-flipped {
+  transform: rotateY(180deg);
+}
+
+.carousel-card > div {
+  width: 100%;
+  height: 100%;
+}
+
+/* Scroll buttons (these hid eon mobile) */
+.carousel-scroll-btn {
+  display: none;
+}
+
+.carousel-counter {
+  display: none;
+}
+
+/* tablet stylings */
+@media (min-width: 48rem) {
+  :root {
+    --card-height: clamp(24rem, 75vh, 35rem); 
+  }
+
+  .tarot-fan-section {
+    padding: 3rem 1rem;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .carousel-container {
+    height: var(--card-height);
+    width: 100%;
+    max-width: 100%;
+    overflow: visible;
+  }
+
+  /* Show scroll buttons on tablet and up */
+  .carousel-scroll-btn {
+    display: flex;
+    position: absolute;
+    bottom: 2rem;
+    width: 3.5rem;
+    height: 3.5rem;
+    background: var(--arc-primary);
+    border: 0.15rem solid var(--arc-secondary);
+    border-radius: 50%;
+    color: var(--text);
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    z-index: 20;
+    pointer-events: auto;
+    box-shadow: 0 0.25rem 1rem rgba(0, 0, 0, 0.2);
+  }
+
+  .carousel-scroll-btn:hover {
+    transform: scale(1.1);
+    background: var(--arc-secondary);
+    box-shadow: 0 0.4rem 1.25rem rgba(0, 0, 0, 0.3);
+  }
+
+  .carousel-scroll-btn:active {
+    transform: scale(0.95);
+  }
+
+  .carousel-scroll-btn--next {
+    right: 1rem;
+  }
+
+  .carousel-scroll-btn--prev {
+    left: 1rem;
+  }
+
+  .carousel-scroll-btn svg {
+    filter: drop-shadow(0 0.15rem 0.25rem rgba(0, 0, 0, 0.1));
+    width: 2rem;
+    height: 2rem;
+  }
+
+  /* Show counter on tablets and up */
+  .carousel-counter {
+    display: block;
+    position: absolute;
+    bottom: 3.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text);
+    opacity: 0.7;
+    letter-spacing: 0.05em;
+    pointer-events: auto;
+    text-transform: uppercase;
+  }
+}
+
+/* small desktoip settings */
+@media (min-width: 64rem) {
+  :root {
+    --card-height: clamp(18rem, 50vh, 30rem); 
+  }
+
+  .tarot-fan-section {
+    padding: 3rem 2rem;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .carousel-container {
+    width: 100%;
+    max-width: 100%;
+    overflow: visible;
+  }
+
+  .carousel-scroll-btn {
+    width: 4rem;
+    height: 4rem;
+    bottom: 2.5rem;
+  }
+
+  .carousel-scroll-btn--next {
+    right: 1.5rem;
+  }
+
+  .carousel-scroll-btn--prev {
+    left: 1.5rem;
+  }
+
+  .carousel-scroll-btn svg {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  .carousel-counter {
+    bottom: 4rem;
+    font-size: 1rem;
+  }
+}
+
+/* large desktop settings */
+@media (min-width: 90rem) {
+  :root {
+    --card-height: clamp(22rem, 80vh, 28rem); 
+  }
+
+  .tarot-fan-section {
+    padding: 4rem 3rem;
+  }
+
+  .carousel-container {
+    max-width: 100%;
+  }
+}
+
+/* accessability */
+.carousel-scroll-btn:focus {
+  outline: 0.15rem solid var(--text);
+  outline-offset: 0.25rem;
+}
+
+/* Reduce motion support capabiities */
+@media (prefers-reduced-motion: reduce) {
+  .carousel-card,
+  .carousel-card-wrapper {
+    transition: none !important;
+  }
+
+  .carousel-scroll-btn {
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+}
+
+.carousel-fan {
+  transition: transform 0.3s ease;
+}
+
+/* Ensure cards don't overflow */
+.carousel-container {
+  box-sizing: border-box;
+}

@@ -11,6 +11,9 @@
 
 .hero-section {
   min-height: 100svh;
+  max-width: 90vw;
+  margin: 0 auto;
+  margin: 0rem;
   display: flex;
   align-items: center;
   justify-content: center;
