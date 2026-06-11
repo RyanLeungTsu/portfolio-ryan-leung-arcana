@@ -89,7 +89,7 @@ const VIGNETTE_COLORS = {
 };
 
 const BLOB_COUNT = 9;
-const TRANSITION_SPEED = 0.035;
+const TRANSITION_SPEED = 0.055;
 const VIG_TRANSITION_SPEED = 0.055;
 
 function makeBlob(W, H, index, total) {
@@ -125,15 +125,21 @@ function CelestialBackground() {
   const timeRef = useRef(0);
   const [, setTheme] = useState(getTheme);
 
-  const currentPaletteRef = useRef(PALETTES[getTheme()].map((c) => [...c]));
-  const currentBaseRef = useRef([...BASE_COLORS[getTheme()]]);
-  const currentVigRef = useRef([...VIGNETTE_COLORS[getTheme()]]);
+  // Initialize with correct theme
+  const initialTheme = getTheme();
+  const currentPaletteRef = useRef(PALETTES[initialTheme].map((c) => [...c]));
+  const currentBaseRef = useRef([...BASE_COLORS[initialTheme]]);
+  const currentVigRef = useRef([...VIGNETTE_COLORS[initialTheme]]);
 
+  // theme changes
   useEffect(() => {
     const observer = new MutationObserver(() => {
       const t = getTheme();
-      themeRef.current = t;
-      setTheme(t);
+
+      if (t !== themeRef.current) {
+        themeRef.current = t;
+        setTheme(t);
+      }
     });
     observer.observe(document.documentElement, {
       attributes: true,

@@ -1,6 +1,7 @@
 import TarotCards from "../components/tarotCards";
 import HeroCard from "../components/heroCard";
 import TarotFan from "../components/tarotFan";
+import Contact from "../components/contact";
 import ThemeToggle from "../components/themeToggle";
 import VinylWidget from "../components/vinyl/vinyl";
 import CelestialBackground from "../components/background";
@@ -27,13 +28,12 @@ function Home() {
       </section>
 
       <section className="contact" id="contact">
-        {/*  */}
+        <Contact />
       </section>
 
       <CelestialBackground />
       <ThemeToggle />
       <Sidebar />
-
       <VinylWidget />
     </>
   );

@@ -107,7 +107,7 @@ const CardWrapper = React.memo(({ project, index, getCardStyle, shouldFlipCard }
       >
         <TarotCard
           {...project}
-          disableLink={true}
+          disableLink={false}
           frontContent={null}
         />
       </div>

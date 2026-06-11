@@ -22,6 +22,11 @@
   }
 }
 
+html,
+body {
+  overflow-x: hidden;
+}
+
 body {
   margin: 0 auto;
   font-family: "StarlightRune", serif;
