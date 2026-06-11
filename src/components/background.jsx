@@ -288,7 +288,7 @@ function CelestialBackground() {
     }
 
     function loopEffect() {
-      timeRef.current += 0.003;
+      timeRef.current += 0.006;
       drawShapes();
       rafRef.current = requestAnimationFrame(loopEffect);
     }

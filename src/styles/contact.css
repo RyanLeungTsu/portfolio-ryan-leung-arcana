@@ -1,6 +1,6 @@
 .contact-section {
     min-height: 100vh;
-    background: black;
+    background: var(--arc-base);
     box-sizing: border-box;
     border: 2rem solid white;
 

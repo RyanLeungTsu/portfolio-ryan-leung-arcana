@@ -20,10 +20,11 @@
 /* wrapper for effects from cavnases in tarotCard.jsx */
 .tarot-canvas-clip {
   position: absolute;
-  top: 1%;
-  left: 1%;
-  right: 1%;
-  bottom: 1%;
+  top: 51%;
+  left: 51%;
+  width: 91%;
+  height: 91%;
+  transform: translate(-50%, -50%);
   z-index: 2;
   overflow: hidden;
   pointer-events: none;

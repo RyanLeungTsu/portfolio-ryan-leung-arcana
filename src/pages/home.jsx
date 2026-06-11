@@ -1,4 +1,3 @@
-import TarotCards from "../components/tarotCards";
 import HeroCard from "../components/heroCard";
 import TarotFan from "../components/tarotFan";
 import Contact from "../components/contact";
@@ -23,7 +22,6 @@ function Home() {
       </section>
 
       <section className="projects" id="projects">
-        {/* <TarotCards /> */}
         <TarotFan />
       </section>
 
