@@ -1,69 +1,84 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import "../styles/sideScroll.css";
 
 function Sidebar() {
   const [activeSection, setActiveSection] = useState("home");
   const [arrowTop, setArrowTop] = useState(0);
 
-  const sectionRefs = {
-    home: useRef(null),
-    projects: useRef(null),
-    about: useRef(null),
-    contact: useRef(null),
-  };
-
   useEffect(() => {
-    const sections = document.querySelectorAll("section");
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveSection(entry.target.id);
-          }
-        });
-      },
-      { threshold: 0.5 }
-    );
+    const handleScroll = () => {
+      const sections = Array.from(document.querySelectorAll("section"));
+      let closest = sections[0];
+      let closestDistance = Math.abs(sections[0].getBoundingClientRect().top);
 
-    sections.forEach((section) => observer.observe(section));
+      sections.forEach((section) => {
+        const distance = Math.abs(section.getBoundingClientRect().top);
+        if (distance < closestDistance) {
+          closest = section;
+          closestDistance = distance;
+        }
+      });
 
-    return () => observer.disconnect();
+      if (closest) {
+        setActiveSection(closest.id);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    handleScroll();
+
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   useEffect(() => {
-    const activeRef = sectionRefs[activeSection];
-    if (activeRef?.current) {
-      const rect = activeRef.current.getBoundingClientRect();
-      const sidebarTop =
-        document.querySelector(".sidebar ul")?.getBoundingClientRect().top || 0;
-      const liHeight = rect.height || 0;
-      setArrowTop(rect.top - sidebarTop + liHeight / 4);
-    }
+    const updateArrow = () => {
+      const sidebar = document.querySelector(".sidebar ul");
+      const liElements = Array.from(document.querySelectorAll(".sidebar li"));
+
+      if (!sidebar || !liElements.length) return;
+
+      const sectionIds = ["home", "projects", "contact"];
+      const liIndex = sectionIds.indexOf(activeSection);
+
+      if (liIndex !== -1 && liElements[liIndex]) {
+        const activeLi = liElements[liIndex];
+        const sidebarRect = sidebar.getBoundingClientRect();
+        const liRect = activeLi.getBoundingClientRect();
+        const offset = liRect.top - sidebarRect.top + 15;
+        setArrowTop(offset);
+      }
+    };
+
+    updateArrow();
+    const timeout = setTimeout(updateArrow, 50);
+
+    return () => clearTimeout(timeout);
   }, [activeSection]);
 
   return (
     <nav className="sidebar" aria-label="Main Navigation">
       <ul>
-        <li
-          ref={sectionRefs.home}
-          className={activeSection === "home" ? "active" : ""}
-        >
-          <a href="#home" aria-label="Go to Home section">Home</a>
+        <li className={activeSection === "home" ? "active" : ""}>
+          <a href="#home" aria-label="Go to Home section">
+            Home
+          </a>
         </li>
-        <li
-          ref={sectionRefs.projects}
-          className={activeSection === "projects" ? "active" : ""}
-        >
-          <a href="#projects" aria-label="Go to Projects section">Projects</a>
+        <li className={activeSection === "projects" ? "active" : ""}>
+          <a href="#projects" aria-label="Go to Projects section">
+            Projects
+          </a>
         </li>
-        <li
-          ref={sectionRefs.about}
-          className={activeSection === "about" ? "active" : ""}
-        >
-          <a href="#contact" aria-label="Go to Contact section">Contact</a>
+        <li className={activeSection === "contact" ? "active" : ""}>
+          <a href="#contact" aria-label="Go to Contact section">
+            Contact
+          </a>
         </li>
       </ul>
-      <div className="scroll-arrow" style={{ top: `${arrowTop}px` }} aria-hidden="true">
+      <div
+        className="scroll-arrow"
+        style={{ top: `${arrowTop}px` }}
+        aria-hidden="true"
+      >
         &rarr;
       </div>
     </nav>

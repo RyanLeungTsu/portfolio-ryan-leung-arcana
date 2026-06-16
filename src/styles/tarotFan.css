@@ -14,7 +14,7 @@
   min-height: auto;
 }
 
-.carousel-container {
+.fan-container {
   position: relative;
   width: 100%;
   height: var(--card-height);
@@ -27,7 +27,7 @@
 }
 
 /* Fan container */
-.carousel-fan {
+.fan-fan {
   position: relative;
   width: 100%;
   height: 100%;
@@ -38,12 +38,12 @@
   user-select: none;
 }
 
-.carousel-fan:active {
+.fan-fan:active {
   cursor: grabbing;
 }
 
 /* Individual card wrapper in fan */
-.carousel-card-wrapper {
+.fan-card-wrapper {
   position: absolute;
   width: var(--card-width);
   height: var(--card-height);
@@ -55,7 +55,7 @@
 }
 
 /* Card flip animation */
-.carousel-card {
+.fan-card {
   width: 100%;
   height: 100%;
   position: relative;
@@ -63,21 +63,21 @@
   transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
-.carousel-card.is-flipped {
+.fan-card.is-flipped {
   transform: rotateY(180deg);
 }
 
-.carousel-card > div {
+.fan-card > div {
   width: 100%;
   height: 100%;
 }
 
 /* Scroll buttons (these hid eon mobile) */
-.carousel-scroll-btn {
+.fan-scroll-btn {
   display: none;
 }
 
-.carousel-counter {
+.fan-counter {
   display: none;
 }
 
@@ -95,7 +95,7 @@
     justify-content: center;
   }
 
-  .carousel-container {
+  .fan-container {
     height: var(--card-height);
     width: 100%;
     max-width: 100%;
@@ -103,51 +103,51 @@
   }
 
   /* Show scroll buttons on tablet and up */
-  .carousel-scroll-btn {
-    display: flex;
-    position: absolute;
-    bottom: 2rem;
-    width: 3.5rem;
-    height: 3.5rem;
-    background: var(--arc-primary);
-    border: 0.15rem solid var(--arc-secondary);
-    border-radius: 50%;
-    color: var(--text);
-    cursor: pointer;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-    z-index: 20;
-    pointer-events: auto;
-    box-shadow: 0 0.25rem 1rem rgba(0, 0, 0, 0.2);
-  }
+.fan-scroll-btn {
+  display: flex;
+  position: absolute;
+  top: 1rem;
+  width: 7.5rem;
+  height: 100%;
+  background: none;
+  border: none;
+  border-radius: 50%;
+  color: var(--text);
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  z-index: 50;
+  pointer-events: auto;
+  box-shadow: 0 0.25rem 1rem rgba(0, 0, 0, 0.2);
+}
 
-  .carousel-scroll-btn:hover {
-    transform: scale(1.1);
-    background: var(--arc-secondary);
-    box-shadow: 0 0.4rem 1.25rem rgba(0, 0, 0, 0.3);
-  }
+.fan-scroll-btn:hover {
+  transform: scale(1.1);
+  background: none;
+}
 
-  .carousel-scroll-btn:active {
-    transform: scale(0.95);
-  }
+.fan-scroll-btn:active {
+  transform: scale(0.95);
+}
 
-  .carousel-scroll-btn--next {
-    right: 1rem;
-  }
 
-  .carousel-scroll-btn--prev {
-    left: 1rem;
-  }
+.fan-scroll-btn--prev {
+  left: calc(50% - 20vw); 
+}
 
-  .carousel-scroll-btn svg {
-    filter: drop-shadow(0 0.15rem 0.25rem rgba(0, 0, 0, 0.1));
-    width: 2rem;
-    height: 2rem;
-  }
+.fan-scroll-btn--next {
+  left: calc(50% + 40vw); 
+}
+
+.fan-scroll-btn svg {
+  width: 5rem;   
+  height: 2rem;
+  filter: drop-shadow(0 0.15rem 0.25rem rgba(0, 0, 0, 0.1));
+}
 
   /* Show counter on tablets and up */
-  .carousel-counter {
+  .fan-counter {
     display: block;
     position: absolute;
     bottom: 3.5rem;
@@ -177,32 +177,32 @@
     justify-content: center;
   }
 
-  .carousel-container {
+  .fan-container {
     width: 100%;
     max-width: 100%;
     overflow: visible;
   }
 
-  .carousel-scroll-btn {
+  .fan-scroll-btn {
     width: 4rem;
     height: 4rem;
     bottom: 2.5rem;
   }
 
-  .carousel-scroll-btn--next {
+  .fan-scroll-btn--next {
     right: 1.5rem;
   }
 
-  .carousel-scroll-btn--prev {
+  .fan-scroll-btn--prev {
     left: 1.5rem;
   }
 
-  .carousel-scroll-btn svg {
+  .fan-scroll-btn svg {
     width: 2.5rem;
     height: 2.5rem;
   }
 
-  .carousel-counter {
+  .fan-counter {
     bottom: 4rem;
     font-size: 1rem;
   }
@@ -218,34 +218,34 @@
     padding: 4rem 3rem;
   }
 
-  .carousel-container {
+  .fan-container {
     max-width: 100%;
   }
 }
 
 /* accessability */
-.carousel-scroll-btn:focus {
+.fan-scroll-btn:focus {
   outline: 0.15rem solid var(--text);
   outline-offset: 0.25rem;
 }
 
 /* Reduce motion support capabiities */
 @media (prefers-reduced-motion: reduce) {
-  .carousel-card,
-  .carousel-card-wrapper {
+  .fan-card,
+  .fan-card-wrapper {
     transition: none !important;
   }
 
-  .carousel-scroll-btn {
+  .fan-scroll-btn {
     transition: background-color 0.2s ease, color 0.2s ease;
   }
 }
 
-.carousel-fan {
+.fan-fan {
   transition: transform 0.3s ease;
 }
 
 /* Ensure cards don't overflow */
-.carousel-container {
+.fan-container {
   box-sizing: border-box;
 }

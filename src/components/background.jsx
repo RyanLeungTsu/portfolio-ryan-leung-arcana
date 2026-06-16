@@ -117,7 +117,7 @@ function makeBlob(W, H, index, total) {
   };
 }
 
-function CelestialBackground() {
+function CelestialBackground({ paused = false }) {
   const canvasRef = useRef(null);
   const blobsRef = useRef([]);
   const rafRef = useRef(null);
@@ -287,9 +287,15 @@ function CelestialBackground() {
       ctx.fillRect(0, 0, W, H);
     }
 
+    // for pausing the anim when not in vioewport
+    let paused = false;
+
     function loopEffect() {
-      timeRef.current += 0.006;
-      drawShapes();
+      if (!paused) {
+        timeRef.current += 0.006;
+        drawShapes();
+      }
+
       rafRef.current = requestAnimationFrame(loopEffect);
     }
 
@@ -301,7 +307,7 @@ function CelestialBackground() {
       cancelAnimationFrame(rafRef.current);
       window.removeEventListener("resize", resize);
     };
-  }, []);
+  }, [paused]);
 
   return <canvas ref={canvasRef} className="celestial-bg" aria-hidden="true" />;
 }

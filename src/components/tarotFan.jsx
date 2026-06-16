@@ -1,4 +1,10 @@
-import React, { useRef, useState, useEffect, useCallback, useMemo } from "react";
+import React, {
+  useRef,
+  useState,
+  useEffect,
+  useCallback,
+  useMemo,
+} from "react";
 import TarotCard from "./tarot-card/tarotCard";
 import "../styles/tarotFan.css";
 
@@ -22,7 +28,8 @@ const projectsData = [
     number: "I",
     title: "Trivia App",
     subtitle: "React · 2024",
-    description: "Quiz platform with dynamic categories and real-time leaderboards.",
+    description:
+      "Quiz platform with dynamic categories and real-time leaderboards.",
     tags: ["React", "Node.js", "CSS Modules"],
     link: "/projects/trivia",
     image: {
@@ -38,7 +45,8 @@ const projectsData = [
     number: "II",
     title: "LuxeLine Automotives",
     subtitle: "UI / UX · 2024",
-    description: "Luxury car dealership with vehicle configurator and Stripe checkout.",
+    description:
+      "Luxury car dealership with vehicle configurator and Stripe checkout.",
     tags: ["React", "Stripe", "Figma"],
     link: "/projects/luxeline",
     image: {
@@ -84,47 +92,41 @@ const projectsData = [
 ];
 
 // for looping the array of projects
-const EXTENDED_PROJECTS = [
-  ...projectsData,
-  ...projectsData,
-  ...projectsData,
-];
+const EXTENDED_PROJECTS = [...projectsData, ...projectsData, ...projectsData];
 
 // Memoized card component to remove re-renders. Only renders if props change
-const CardWrapper = React.memo(({ project, index, getCardStyle, shouldFlipCard }) => {
-  const style = getCardStyle(index);
-  
-  return (
-    <div
-      key={`${project.id}-${index}`}
-      className="carousel-card-wrapper"
-      style={style}
-    >
+const CardWrapper = React.memo(
+  ({ project, index, getCardStyle, shouldFlipCard }) => {
+    const style = getCardStyle(index);
+
+    return (
       <div
-        className={`carousel-card${
-          shouldFlipCard(index) ? " is-flipped" : ""
-        }`}
+        key={`${project.id}-${index}`}
+        className="fan-card-wrapper"
+        style={style}
       >
-        <TarotCard
-          {...project}
-          disableLink={false}
-          frontContent={null}
-        />
+        <div
+          className={`fan-card${shouldFlipCard(index) ? " is-flipped" : ""}`}
+        >
+          <TarotCard {...project} disableLink={false} frontContent={null} />
+        </div>
       </div>
-    </div>
-  );
-});
+    );
+  },
+);
 
 CardWrapper.displayName = "CardWrapper";
 
 // fan function
-function TarotFan() {
-  const carouselRef = useRef(null);
+function TarotFan({ paused = false }) {
+  const fanRef = useRef(null);
   const [currentIndex, setCurrentIndex] = useState(projectsData.length);
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState(0);
   const dragOffsetRef = useRef(0);
-  const [windowWidth, setWindowWidth] = useState(typeof window !== "undefined" ? window.innerWidth : 0);
+  const [windowWidth, setWindowWidth] = useState(
+    typeof window !== "undefined" ? window.innerWidth : 0,
+  );
   const mouseMoveTimeoutRef = useRef(null);
 
   const getResponsiveValues = useCallback(() => {
@@ -167,44 +169,52 @@ function TarotFan() {
     };
   }, []);
 
-  const handleScroll = useCallback((direction) => {
-    setCurrentIndex((prev) => {
-      let next = prev + (direction === "next" ? 1 : -1);
+  const handleScroll = useCallback(
+    (direction) => {
+      if (paused) return;
+      setCurrentIndex((prev) => {
+        let next = prev + (direction === "next" ? 1 : -1);
 
-      if (next >= EXTENDED_PROJECTS.length - projectsData.length) {
-        next = projectsData.length;
-      }
-      if (next < projectsData.length) {
-        next = EXTENDED_PROJECTS.length - projectsData.length - 1;
-      }
+        if (next >= EXTENDED_PROJECTS.length - projectsData.length) {
+          next = projectsData.length;
+        }
+        if (next < projectsData.length) {
+          next = EXTENDED_PROJECTS.length - projectsData.length - 1;
+        }
 
-      return next;
-    });
-  }, []);
+        return next;
+      });
+    },
+    [paused],
+  );
 
   const handleMouseDown = (e) => {
+    if (paused) return;
     setIsDragging(true);
     setDragStart(e.clientX);
     dragOffsetRef.current = 0;
   };
 
   // Debounced mouse move for performance
-  const handleMouseMove = useCallback((e) => {
-    if (!isDragging) return;
+  const handleMouseMove = useCallback(
+    (e) => {
+      if (!isDragging) return;
 
-    if (mouseMoveTimeoutRef.current) {
-      cancelAnimationFrame(mouseMoveTimeoutRef.current);
-    }
-
-    mouseMoveTimeoutRef.current = requestAnimationFrame(() => {
-      const diff = e.clientX - dragStart;
-      dragOffsetRef.current = diff;
-
-      if (carouselRef.current) {
-        carouselRef.current.style.transform = `translateX(${diff}px)`;
+      if (mouseMoveTimeoutRef.current) {
+        cancelAnimationFrame(mouseMoveTimeoutRef.current);
       }
-    });
-  }, [isDragging, dragStart]);
+
+      mouseMoveTimeoutRef.current = requestAnimationFrame(() => {
+        const diff = e.clientX - dragStart;
+        dragOffsetRef.current = diff;
+
+        if (fanRef.current) {
+          fanRef.current.style.transform = `translateX(${diff}px)`;
+        }
+      });
+    },
+    [isDragging, dragStart],
+  );
 
   const handleMouseUp = () => {
     if (!isDragging) return;
@@ -221,61 +231,71 @@ function TarotFan() {
       handleScroll("next");
     }
 
-    if (carouselRef.current) {
-      carouselRef.current.style.transform = "";
+    if (fanRef.current) {
+      fanRef.current.style.transform = "";
     }
   };
 
   // Calculates position of cards
-  const getCardStyle = useCallback((index) => {
-    const relativeIndex = index - currentIndex;
-    const { visibleCards, angleSpread } = responsiveValues;
-    const halfVisible = Math.floor(visibleCards / 2);
+  const getCardStyle = useCallback(
+    (index) => {
+      const relativeIndex = index - currentIndex;
+      const { visibleCards, angleSpread } = responsiveValues;
+      const halfVisible = Math.floor(visibleCards / 2);
 
-    if (Math.abs(relativeIndex) > halfVisible) {
-      return { opacity: 0, pointerEvents: "none" };
-    }
+      if (Math.abs(relativeIndex) > halfVisible) {
+        return { opacity: 0, pointerEvents: "none" };
+      }
 
-    // Normalized position: 0 to 1, and 0.5 is the center
-    const normalizedPos = (relativeIndex + halfVisible) / visibleCards;
-    
-    // for creaitng that semi-circle effect, basically moving the end cards down via y
-    const arcDepth = Math.cos((normalizedPos - 0.5) * Math.PI);
-    
-    const angle = relativeIndex * angleSpread;
-    const rotation = angle;
-    
-  
-    const baseTranslateY = Math.abs(relativeIndex) * 0.6;
-    const arcTranslateY = (1 - arcDepth) * 2; // Outer cards dip down more
-    const translateY = baseTranslateY + arcTranslateY;
-    
-    // shorizontal spacing
-    const translateX = relativeIndex * 7;
+      // Normalized position: 0 to 1, and 0.5 is the center
+      const normalizedPos = (relativeIndex + halfVisible) / visibleCards;
 
-    return {
-      transform: `translateX(${translateX}rem) rotateZ(${rotation}deg) translateY(${translateY}rem)`,
-      opacity: 1,
-      transition: isDragging ? "none" : "transform 0.5s cubic-bezier(0.23, 1, 0.32, 1)",
-      zIndex: visibleCards - Math.abs(relativeIndex),
-    };
-  }, [responsiveValues, currentIndex, isDragging]);
+      // for creaitng that semi-circle effect, basically moving the end cards down via y
+      const arcDepth = Math.cos((normalizedPos - 0.5) * Math.PI);
 
-  const shouldFlipCard = useCallback((index) => {
-    const relativeIndex = index - currentIndex;
-    const { visibleCards } = responsiveValues;
-    const halfVisible = Math.floor(visibleCards / 2);
+      const angle = relativeIndex * angleSpread;
+      const rotation = angle;
 
-    return Math.abs(relativeIndex) === halfVisible;
-  }, [responsiveValues, currentIndex]);
+      const baseTranslateY = Math.abs(relativeIndex) * 0.6;
+      const arcTranslateY = (1 - arcDepth) * 2; // Outer cards dip down more
+      const translateY = baseTranslateY + arcTranslateY;
+
+      // shorizontal spacing
+      const translateX = relativeIndex * 7;
+
+      return {
+        transform: `translateX(${translateX}rem) rotateZ(${rotation}deg) translateY(${translateY}rem)`,
+        opacity: 1,
+        transition: isDragging
+          ? "none"
+          : "transform 0.5s cubic-bezier(0.23, 1, 0.32, 1)",
+        zIndex: visibleCards - Math.abs(relativeIndex),
+      };
+    },
+    [responsiveValues, currentIndex, isDragging],
+  );
+
+  const shouldFlipCard = useCallback(
+    (index) => {
+      const relativeIndex = index - currentIndex;
+      const { visibleCards } = responsiveValues;
+      const halfVisible = Math.floor(visibleCards / 2);
+
+      return Math.abs(relativeIndex) === halfVisible;
+    },
+    [responsiveValues, currentIndex],
+  );
 
   // Memoize visible projects for performance
   const visibleProjects = useMemo(() => {
     const { visibleCards } = responsiveValues;
     const halfVisible = Math.floor(visibleCards / 2);
     const start = Math.max(0, currentIndex - halfVisible - 1);
-    const end = Math.min(EXTENDED_PROJECTS.length, currentIndex + halfVisible + 2);
-    
+    const end = Math.min(
+      EXTENDED_PROJECTS.length,
+      currentIndex + halfVisible + 2,
+    );
+
     return EXTENDED_PROJECTS.slice(start, end).map((project, idx) => ({
       project,
       actualIndex: start + idx,
@@ -284,10 +304,10 @@ function TarotFan() {
 
   return (
     <div className="tarot-fan-section">
-      <div className="carousel-container">
+      <div className="fan-container">
         <div
-          ref={carouselRef}
-          className="carousel-fan"
+          ref={fanRef}
+          className="fan-fan"
           onMouseDown={handleMouseDown}
           onMouseMove={handleMouseMove}
           onMouseUp={handleMouseUp}
@@ -308,7 +328,7 @@ function TarotFan() {
         {windowWidth >= 768 && (
           <>
             <button
-              className="carousel-scroll-btn carousel-scroll-btn--next"
+              className="fan-scroll-btn fan-scroll-btn--next"
               onClick={() => handleScroll("next")}
               aria-label="Next project"
             >
@@ -318,6 +338,7 @@ function TarotFan() {
                 stroke="currentColor"
                 strokeWidth="3"
                 strokeLinecap="round"
+                preserveAspectRatio="none"
               >
                 <path d="M 20 50 Q 50 20, 80 50" />
                 <path d="M 70 40 L 80 50 L 70 60" />
@@ -325,7 +346,7 @@ function TarotFan() {
             </button>
 
             <button
-              className="carousel-scroll-btn carousel-scroll-btn--prev"
+              className="fan-scroll-btn fan-scroll-btn--prev"
               onClick={() => handleScroll("prev")}
               aria-label="Previous project"
             >
@@ -335,14 +356,16 @@ function TarotFan() {
                 stroke="currentColor"
                 strokeWidth="3"
                 strokeLinecap="round"
+                preserveAspectRatio="none"
               >
                 <path d="M 80 50 Q 50 20, 20 50" />
                 <path d="M 30 40 L 20 50 L 30 60" />
               </svg>
             </button>
 
-            <div className="carousel-counter">
-              {((currentIndex - projectsData.length) % projectsData.length) + 1} / {projectsData.length}
+            <div className="fan-counter">
+              {((currentIndex - projectsData.length) % projectsData.length) + 1}{" "}
+              / {projectsData.length}
             </div>
           </>
         )}

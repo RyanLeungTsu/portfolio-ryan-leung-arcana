@@ -28,15 +28,15 @@ import arcMoonEye from "../../assets/svg-components/misc/arc-moon-eye.svg";
 const VARIATIONS = {
   1: {
     clouds: [{ width: 500, height: 50, top: "14%", duration: 40, delay: 0 }],
-    starCount: 65,
+    starCount: 45,
   },
   2: {
     clouds: [{ width: 400, height: 40, top: "10%", duration: 35, delay: -3 }],
-    starCount: 90,
+    starCount: 70,
   },
   3: {
     clouds: [{ width: 350, height: 50, top: "10%", duration: 25, delay: -5 }],
-    starCount: 75,
+    starCount: 55,
   },
 };
 
@@ -310,24 +310,36 @@ function TarotCard({
 
   // Mouse Parallax: Tilts the whole card. Each data-depth layer shifts independently so layers feel like they r floating
   const rafParallaxRef = useRef(null);
+  const depthLayersRef = useRef([]);
+
+  useEffect(() => {
+    if (!wrapRef.current) return;
+    depthLayersRef.current = Array.from(
+      wrapRef.current.querySelectorAll("[data-depth]"),
+    );
+  }, []);
 
   const handleMouseMove = useCallback((e) => {
     const wrap = wrapRef.current;
-    if (!wrap) return;
-    if (rafParallaxRef.current) return;
+    if (!wrap || rafParallaxRef.current) return;
+
     rafParallaxRef.current = requestAnimationFrame(() => {
       rafParallaxRef.current = null;
-      // disables transition while actively moving so tilt can track instantly
       wrap.style.transition = "none";
+
       const rect = wrap.getBoundingClientRect();
       const dx = (e.clientX - (rect.left + rect.width / 2)) / (rect.width / 2);
       const dy = (e.clientY - (rect.top + rect.height / 2)) / (rect.height / 2);
-      // tilts the card
-      wrap.style.transform = `translateY(-8px) rotateY(${dx * 12}deg) rotateX(${-dy * 8}deg)`;
-      wrap.querySelectorAll("[data-depth]").forEach((layer) => {
+
+      // uses translate3d for GPU acceleration
+      wrap.style.transform = `translate3d(0, -8px, 0) rotateY(${dx * 12}deg) rotateX(${-dy * 8}deg)`;
+
+      // will update cached elements only
+      depthLayersRef.current.forEach((layer) => {
         const d = parseFloat(layer.dataset.depth) || 1;
-        // depth in cards while in paralax
-        layer.style.transform = `translate(${dx * d * 2.8}px, ${dy * d * 2.8}px)`;
+        const x = dx * d * 2.5;
+        const y = dy * d * 2.5;
+        layer.style.transform = `translate3d(${x}px, ${y}px, 0)`;
       });
     });
   }, []);
@@ -337,19 +349,17 @@ function TarotCard({
     if (!wrap) return;
     setHovered(false);
 
-    // restors thee transitiosn so card eases back smoothly
     wrap.style.transition = "";
     wrap.style.transform = "";
 
-    wrap.querySelectorAll("[data-depth]").forEach((l) => {
+    // Uses cached elements from above
+    depthLayersRef.current.forEach((l) => {
       l.style.transition = "transform 0.6s cubic-bezier(0.23, 1, 0.32, 1)";
       l.style.transform = "";
     });
 
-    // cleans up layer transitions after ease-back completes
     setTimeout(() => {
-      if (!wrapRef.current) return;
-      wrapRef.current.querySelectorAll("[data-depth]").forEach((l) => {
+      depthLayersRef.current.forEach((l) => {
         l.style.transition = "";
       });
     }, 650);

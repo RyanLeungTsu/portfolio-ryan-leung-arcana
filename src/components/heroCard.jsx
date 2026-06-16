@@ -13,7 +13,7 @@ function getTheme() {
   return document.documentElement.dataset.theme || "night";
 }
 
-function HeroCard() {
+function HeroCard({ paused = false }) {
   const [theme, setTheme] = useState(getTheme);
   const [isSpinning, setIsSpinning] = useState(false);
   const flipTimerRef = useRef(null);
@@ -33,6 +33,12 @@ function HeroCard() {
 
   // Periodic 360 flip
   useEffect(() => {
+    if (paused) {
+      if (flipTimerRef.current) clearInterval(flipTimerRef.current);
+      if (animFrameRef.current) clearTimeout(animFrameRef.current);
+      return;
+    }
+
     const trigger = () => {
       if (isSpinningRef.current || isHoveredRef.current) return;
       isSpinningRef.current = true;
@@ -51,7 +57,7 @@ function HeroCard() {
       clearInterval(flipTimerRef.current);
       clearTimeout(animFrameRef.current);
     };
-  }, []);
+  }, [paused]);
 
   const isDay = theme === "day";
   const deckEdgeColor = isDay
