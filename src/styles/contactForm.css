@@ -1,0 +1,92 @@
+.contact-form {
+  max-width: 500px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group label {
+  font-weight: 600;
+  color: var(--text);
+  font-size: 0.95rem;
+}
+
+.form-group input,
+.form-group textarea {
+  padding: 0.75rem;
+  border: 2px solid var(--arc-border);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--arc-primary);
+  box-shadow: 0 0 0 3px rgba(138, 172, 255, 0.1);
+}
+
+.form-group input:disabled,
+.form-group textarea:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.error-text {
+  color: #ef5350;
+  font-size: 0.85rem;
+}
+
+.success-message,
+.error-message {
+  padding: 1rem;
+  border-radius: 6px;
+  font-weight: 500;
+  text-align: center;
+}
+
+.success-message {
+  background: rgba(76, 175, 80, 0.1);
+  color: #4caf50;
+  border: 1px solid #4caf50;
+}
+
+.error-message {
+  background: rgba(239, 83, 80, 0.1);
+  color: #ef5350;
+  border: 1px solid #ef5350;
+}
+
+.submit-btn {
+  padding: 0.85rem 1.5rem;
+  background: var(--arc-primary);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.submit-btn:hover:not(:disabled) {
+  background: var(--arc-secondary);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(138, 172, 255, 0.3);
+}
+
+.submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
