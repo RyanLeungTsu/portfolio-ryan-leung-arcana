@@ -1,7 +1,34 @@
 .contact-section {
-    min-height: 100vh;
-    background: var(--arc-base);
-    box-sizing: border-box;
-    border: 2rem solid white;
+  min-height: 100vh;
+  background: var(--arc-base);
+  box-sizing: border-box;
+  border: clamp(0.5rem, 2vw, 2rem) solid white;
+  margin: 0 auto;
+}
 
+.contact-wrapper {
+  margin: 0 auto;
+}
+
+.contact-title {
+  font-size: clamp(4rem, 8vw, 5rem);
+}
+
+.contact-body {
+  margin: 0 auto;
+  font-size: clamp(2rem, 4vw, 2rem);
+  max-width: 90vw;
+  text-align: center;
+}
+
+@media (min-width: 48rem) {
+  .contact-body {
+    max-width: 70vw;
+  }
+}
+
+@media (min-width: 64rem) {
+  .contact-body {
+    max-width: 40vw;
+  }
 }

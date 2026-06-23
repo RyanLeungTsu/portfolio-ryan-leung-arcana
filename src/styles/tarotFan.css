@@ -1,6 +1,11 @@
 :root {
-  --card-height: clamp(12rem, 40vh, 20rem); 
-  --card-width: calc(var(--card-height) * 0.625); 
+  --card-height: clamp(12rem, 40vh, 20rem);
+  --card-width: calc(var(--card-height) * 0.625);
+}
+
+/* hide flip btn on fan */
+.tarot-fan-section .tarot-eye-btn {
+  display: none;
 }
 
 /* mpobile stylings */
@@ -84,7 +89,7 @@
 /* tablet stylings */
 @media (min-width: 48rem) {
   :root {
-    --card-height: clamp(24rem, 75vh, 35rem); 
+    --card-height: clamp(24rem, 75vh, 35rem);
   }
 
   .tarot-fan-section {
@@ -103,48 +108,47 @@
   }
 
   /* Show scroll buttons on tablet and up */
-.fan-scroll-btn {
-  display: flex;
-  position: absolute;
-  top: 1rem;
-  width: 7.5rem;
-  height: 100%;
-  background: none;
-  border: none;
-  border-radius: 50%;
-  color: var(--text);
-  cursor: pointer;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-  z-index: 50;
-  pointer-events: auto;
-  box-shadow: 0 0.25rem 1rem rgba(0, 0, 0, 0.2);
-}
+  .fan-scroll-btn {
+    display: flex;
+    position: absolute;
+    top: 1rem;
+    width: 7.5rem;
+    height: 100%;
+    background: none;
+    border: none;
+    border-radius: 50%;
+    color: var(--text);
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    z-index: 50;
+    pointer-events: auto;
+    box-shadow: 0 0.25rem 1rem rgba(0, 0, 0, 0.2);
+  }
 
-.fan-scroll-btn:hover {
-  transform: scale(1.1);
-  background: none;
-}
+  .fan-scroll-btn:hover {
+    transform: scale(1.1);
+    background: none;
+  }
 
-.fan-scroll-btn:active {
-  transform: scale(0.95);
-}
+  .fan-scroll-btn:active {
+    transform: scale(0.95);
+  }
 
+  .fan-scroll-btn--prev {
+    left: calc(50% - 20vw);
+  }
 
-.fan-scroll-btn--prev {
-  left: calc(50% - 20vw); 
-}
+  .fan-scroll-btn--next {
+    left: calc(50% + 40vw);
+  }
 
-.fan-scroll-btn--next {
-  left: calc(50% + 40vw); 
-}
-
-.fan-scroll-btn svg {
-  width: 5rem;   
-  height: 2rem;
-  filter: drop-shadow(0 0.15rem 0.25rem rgba(0, 0, 0, 0.1));
-}
+  .fan-scroll-btn svg {
+    width: 5rem;
+    height: 2rem;
+    filter: drop-shadow(0 0.15rem 0.25rem rgba(0, 0, 0, 0.1));
+  }
 
   /* Show counter on tablets and up */
   .fan-counter {
@@ -166,7 +170,7 @@
 /* small desktoip settings */
 @media (min-width: 64rem) {
   :root {
-    --card-height: clamp(18rem, 50vh, 30rem); 
+    --card-height: clamp(18rem, 50vh, 30rem);
   }
 
   .tarot-fan-section {
@@ -211,7 +215,7 @@
 /* large desktop settings */
 @media (min-width: 90rem) {
   :root {
-    --card-height: clamp(22rem, 80vh, 28rem); 
+    --card-height: clamp(22rem, 80vh, 28rem);
   }
 
   .tarot-fan-section {
@@ -237,7 +241,9 @@
   }
 
   .fan-scroll-btn {
-    transition: background-color 0.2s ease, color 0.2s ease;
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease;
   }
 }
 

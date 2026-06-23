@@ -15,12 +15,12 @@ function Home() {
   const projectSection = useInView({ threshold: 0.2 });
   const contactSection = useInView({ threshold: 0.3 });
 
-    const { ref: heroRef, isInView: heroInView } = heroSection;
+  const { ref: heroRef, isInView: heroInView } = heroSection;
   const { ref: projectRef, isInView: projectInView } = projectSection;
   const { ref: contactRef, isInView: contactInView } = contactSection;
 
   // global anim state
- const { shouldAnimate } = useAnim();
+  const { shouldAnimate } = useAnim();
 
   return (
     <>
@@ -29,9 +29,11 @@ function Home() {
         <div className="hero-section-title">
           <h1 className="hero-name">ya Leung</h1>
           <sub className="hero-sub">
-            Hello, my name is Ryan and I am a software developer
+            Hello, my name is Ryan and I am a software developer.
           </sub>
-          <button className="hero-btn">Contact Me</button>
+          <a href="#contact">
+            <button className="hero-btn">Contact Me</button>
+          </a>
         </div>
         {/* hero card */}
         <div className="hero-card">

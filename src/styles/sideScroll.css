@@ -1,47 +1,45 @@
-@media (max-width: 60em) {
-  .sidebar {
-    display: block;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 100;
-
-    padding: 1rem;
-    width: 100%;
-  }
-
-  .sidebar ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    flex-direction: row;
-  }
-
-  .sidebar li {
-    font-size: 1rem;
-    color: white;
-    text-align: center;
-  }
-
-  .sidebar li.active {
-    font-weight: bold;
-    color: var(--primary);
-  }
-
-  .sidebar a {
-    color: white;
-    text-decoration: none;
-  }
-
-  .scroll-arrow {
-    display: none;
-  }
+.sidebar {
+  display: block;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: 1rem;
+  width: 100%;
 }
 
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: row;
+}
+
+.sidebar li {
+  font-size: 1rem;
+  color: var(--arc-quaternary);
+  text-align: center;
+}
+
+.sidebar li.active {
+  font-weight: bold;
+  color: var(--arc-quaternary);
+}
+
+.sidebar a {
+  color: var(--arc-quaternary);
+  text-decoration: none;
+}
+
+.scroll-arrow {
+  display: none;
+}
+
+/* tablet */
 @media (min-width: 40em) {
   .sidebar li {
     font-size: 1.5rem;
@@ -49,44 +47,44 @@
   }
 }
 
+/* desktop */
 @media (min-width: 60em) {
   .sidebar {
-    display: block;
     position: fixed;
     top: 50%;
-    right: 1rem;
+    right: 2.5rem;
+    bottom: auto;
+    left: auto;
     transform: translateY(-50%);
     z-index: 10;
+    padding: 0;
+    width: auto;
   }
 
   .sidebar ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
     position: relative;
+    flex-direction: column;
   }
 
   .sidebar li {
     margin: 2rem 0;
     font-size: 2rem;
-    color: white;
     text-align: left;
   }
 
   .sidebar li.active {
-    font-weight: bold;
-    color: var(--arc-primary);
+    color: var(--arc-quaternary);
   }
 
   .sidebar a {
-    color: white;
-    text-decoration: none;
+    color: var(--text);
   }
 
   .scroll-arrow {
+    display: block;
     position: fixed;
+    transform: translateY(-50%);
     left: -3rem;
-    transform: translateY(30%);
     font-size: 2rem;
     transition: top 0.4s ease-in-out;
     color: var(--arc-primary);

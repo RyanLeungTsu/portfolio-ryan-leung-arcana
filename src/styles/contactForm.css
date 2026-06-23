@@ -1,9 +1,10 @@
 .contact-form {
-  max-width: 500px;
+  max-width: 90vw;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: clamp(1rem, 1.5vw, 1.5rem);
+  padding: clamp(1.5rem, 3vw, 4rem);
 }
 
 .form-group {
@@ -15,7 +16,7 @@
 .form-group label {
   font-weight: 600;
   color: var(--text);
-  font-size: 0.95rem;
+  font-size: clamp(1rem, 2vw, 1.75rem);
 }
 
 .form-group input,
@@ -26,7 +27,7 @@
   background: var(--bg);
   color: var(--text);
   font-family: inherit;
-  font-size: 1rem;
+  font-size: clamp(1rem, 1.5vw, 1.25rem);
   transition: border-color 0.2s;
 }
 
@@ -89,4 +90,18 @@
 .submit-btn:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+}
+
+/* tablet */
+@media (min-width: 48rem) {
+  .contact-form {
+    max-width: 60vw;
+  }
+}
+
+/* desktop */
+@media (min-width: 64rem) {
+  .contact-form {
+    max-width: 40vw;
+  }
 }
