@@ -1,5 +1,5 @@
 :root {
-  --card-height: clamp(12rem, 40vh, 20rem);
+  --card-height: clamp(8rem, 30vh, 16rem);
   --card-width: calc(var(--card-height) * 0.625);
 }
 
@@ -10,13 +10,16 @@
 
 /* mpobile stylings */
 .tarot-fan-section {
-  width: 100%;
-  padding: 2rem 1rem;
+  max-width: 100vw;
+  padding: clamp(1rem, 2vw, 2rem);
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   background: transparent;
   min-height: auto;
+  position: relative;
+  margin: 0 auto;
 }
 
 .fan-container {
@@ -89,15 +92,12 @@
 /* tablet stylings */
 @media (min-width: 48rem) {
   :root {
-    --card-height: clamp(24rem, 75vh, 35rem);
+    --card-height: clamp(16rem, 50vh, 28rem);
   }
 
   .tarot-fan-section {
-    padding: 3rem 1rem;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    padding: clamp(1.5rem, 3vw, 3rem);
+    min-height: auto;
   }
 
   .fan-container {
@@ -106,79 +106,17 @@
     max-width: 100%;
     overflow: visible;
   }
-
-  /* Show scroll buttons on tablet and up */
-  .fan-scroll-btn {
-    display: flex;
-    position: absolute;
-    top: 1rem;
-    width: 7.5rem;
-    height: 100%;
-    background: none;
-    border: none;
-    border-radius: 50%;
-    color: var(--text);
-    cursor: pointer;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-    z-index: 50;
-    pointer-events: auto;
-    box-shadow: 0 0.25rem 1rem rgba(0, 0, 0, 0.2);
-  }
-
-  .fan-scroll-btn:hover {
-    transform: scale(1.1);
-    background: none;
-  }
-
-  .fan-scroll-btn:active {
-    transform: scale(0.95);
-  }
-
-  .fan-scroll-btn--prev {
-    left: calc(50% - 20vw);
-  }
-
-  .fan-scroll-btn--next {
-    left: calc(50% + 40vw);
-  }
-
-  .fan-scroll-btn svg {
-    width: 5rem;
-    height: 2rem;
-    filter: drop-shadow(0 0.15rem 0.25rem rgba(0, 0, 0, 0.1));
-  }
-
-  /* Show counter on tablets and up */
-  .fan-counter {
-    display: block;
-    position: absolute;
-    bottom: 3.5rem;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: var(--text);
-    opacity: 0.7;
-    letter-spacing: 0.05em;
-    pointer-events: auto;
-    text-transform: uppercase;
-  }
 }
 
 /* small desktoip settings */
 @media (min-width: 64rem) {
   :root {
-    --card-height: clamp(18rem, 50vh, 30rem);
+    --card-height: clamp(14rem, 40vh, 24rem);
   }
 
   .tarot-fan-section {
-    padding: 3rem 2rem;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    padding: clamp(2rem, 3vw, 4rem);
+    min-height: auto;
   }
 
   .fan-container {
@@ -186,40 +124,16 @@
     max-width: 100%;
     overflow: visible;
   }
-
-  .fan-scroll-btn {
-    width: 4rem;
-    height: 4rem;
-    bottom: 2.5rem;
-  }
-
-  .fan-scroll-btn--next {
-    right: 1.5rem;
-  }
-
-  .fan-scroll-btn--prev {
-    left: 1.5rem;
-  }
-
-  .fan-scroll-btn svg {
-    width: 2.5rem;
-    height: 2.5rem;
-  }
-
-  .fan-counter {
-    bottom: 4rem;
-    font-size: 1rem;
-  }
 }
 
 /* large desktop settings */
 @media (min-width: 90rem) {
   :root {
-    --card-height: clamp(22rem, 80vh, 28rem);
+    --card-height: clamp(18rem, 45vh, 28rem);
   }
 
   .tarot-fan-section {
-    padding: 4rem 3rem;
+    padding: clamp(2.5rem, 4vw, 4rem);
   }
 
   .fan-container {

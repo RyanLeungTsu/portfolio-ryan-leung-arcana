@@ -6,7 +6,7 @@
   align-items: center;
   perspective: 75rem;
   flex-shrink: 0;
-    transform: scale(1);      
+  transform: scale(1);
   transform-origin: center;
 }
 
@@ -20,13 +20,14 @@
   transform-origin: bottom center;
   margin-left: -7rem;
   /* for gpu accel */
-    will-change: transform;
+  will-change: transform;
   backface-visibility: hidden;
 }
 
 /* Idle anim for some hovering */
 @keyframes hero-card-float {
-  0%, 100% {
+  0%,
+  100% {
     transform: rotate(20deg) rotateX(8deg) translateY(-20px);
   }
   50% {
@@ -36,17 +37,24 @@
 
 .hero-card-positioner {
   animation: hero-card-float 3s ease-in-out infinite;
+  transition: none;
 }
 
 /* 360 spin */
 .hero-card-positioner-spinning {
   animation: hero-card-360 1.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
- 
+
 @keyframes hero-card-360 {
-  0%   { transform: rotate(20deg) rotateX(8deg) rotateY(0deg)   translateY(-20px); }
-  50%  { transform: rotate(20deg) rotateX(8deg) rotateY(180deg) translateY(30px); }
-  100% { transform: rotate(20deg) rotateX(8deg) rotateY(360deg) translateY(-20px); }
+  0% {
+    transform: rotate(20deg) rotateX(8deg) rotateY(0deg) translateY(-20px);
+  }
+  50% {
+    transform: rotate(20deg) rotateX(8deg) rotateY(180deg) translateY(30px);
+  }
+  100% {
+    transform: rotate(20deg) rotateX(8deg) rotateY(360deg) translateY(-20px);
+  }
 }
 
 /* deck wrapper */
@@ -58,7 +66,7 @@
   position: relative;
   margin-top: -1.5rem;
 }
- 
+
 /* deck thickness effect */
 .hero-deck {
   width: 10rem;
@@ -68,34 +76,34 @@
   border-radius: 0.25rem;
   position: absolute;
   z-index: 0;
-    will-change: transform;
+  will-change: transform;
   backface-visibility: hidden;
-    transform: translateX(calc(var(--deck-index, 0) * 0.3rem)) 
-             translateY(calc(var(--deck-index, 0) * 0.4rem));
+  transform: translateX(calc(var(--deck-index, 0) * 0.3rem))
+    translateY(calc(var(--deck-index, 0) * 0.4rem));
   transition: transform 0.3s ease;
   box-shadow:
-    0  2px 0 var(--deck-edge, rgba(58,74,138,0.5)),
-    0  4px 0 var(--arc-base),
-    0  6px 0 var(--deck-edge, rgba(58,74,138,0.4)),
-    0  8px 0 var(--arc-base),
-    0 10px 0 var(--deck-edge, rgba(58,74,138,0.35)),
+    0 2px 0 var(--deck-edge, rgba(58, 74, 138, 0.5)),
+    0 4px 0 var(--arc-base),
+    0 6px 0 var(--deck-edge, rgba(58, 74, 138, 0.4)),
+    0 8px 0 var(--arc-base),
+    0 10px 0 var(--deck-edge, rgba(58, 74, 138, 0.35)),
     0 12px 0 var(--arc-base),
-    0 14px 0 var(--deck-edge, rgba(58,74,138,0.3)),
+    0 14px 0 var(--deck-edge, rgba(58, 74, 138, 0.3)),
     0 16px 0 var(--arc-base),
-    0 18px 0 var(--deck-edge, rgba(58,74,138,0.25)),
+    0 18px 0 var(--deck-edge, rgba(58, 74, 138, 0.25)),
     0 20px 0 var(--arc-base),
-    0 22px 0 var(--deck-edge, rgba(58,74,138,0.2)),
+    0 22px 0 var(--deck-edge, rgba(58, 74, 138, 0.2)),
     0 24px 0 var(--arc-base),
-    0 26px 0 var(--deck-edge, rgba(58,74,138,0.15)),
+    0 26px 0 var(--deck-edge, rgba(58, 74, 138, 0.15)),
     0 28px 0 var(--arc-base),
-    0 30px 0 var(--deck-edge, rgba(58,74,138,0.1));
+    0 30px 0 var(--deck-edge, rgba(58, 74, 138, 0.1));
 }
 
 .hero-deck:hover {
-  transform: translateX(calc(var(--deck-index, 0) * 0.3rem)) 
-             translateY(calc(var(--deck-index, 0) * 0.4rem - 0.5rem));
+  transform: translateX(calc(var(--deck-index, 0) * 0.3rem))
+    translateY(calc(var(--deck-index, 0) * 0.4rem - 0.5rem));
 }
- 
+
 @media (min-width: 48rem) {
   .hero-deck {
     width: 17rem;
@@ -103,7 +111,7 @@
   }
 
   .hero-card-scene {
-    transform: scale(1.1);    
+    transform: scale(1.1);
   }
 }
 
@@ -112,11 +120,11 @@
   .hero-card-positioner {
     transition: none !important;
   }
- 
+
   .hero-deck {
     transition: none !important;
   }
- 
+
   .hero-card-positioner-spinning {
     animation: none !important;
   }

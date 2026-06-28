@@ -1,5 +1,7 @@
+import React, { useRef } from "react";
 import HeroCard from "../components/heroCard";
 import TarotFan from "../components/tarotFan";
+import ZodiacWheel from "../components/zodiacWheel";
 import Contact from "../components/contact";
 import ThemeToggle from "../components/themeToggle";
 import VinylWidget from "../components/vinyl/vinyl";
@@ -21,6 +23,11 @@ function Home() {
 
   // global anim state
   const { shouldAnimate } = useAnim();
+  const tarotFanRef = useRef(null);
+
+  const handleWheelArrowClick = (direction) => {
+    tarotFanRef.current?.scroll(direction);
+  };
 
   return (
     <>
@@ -47,10 +54,11 @@ function Home() {
 
       {/* projects */}
       <section ref={projectRef} className="projects" id="projects">
+        <ZodiacWheel onArrowClick={handleWheelArrowClick} />
         {projectInView && shouldAnimate ? (
-          <TarotFan />
+          <TarotFan ref={tarotFanRef} />
         ) : (
-          <TarotFan paused={true} />
+          <TarotFan ref={tarotFanRef} paused={true} />
         )}
       </section>
 
