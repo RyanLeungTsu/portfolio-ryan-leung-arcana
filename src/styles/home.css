@@ -68,4 +68,31 @@
 /* Project Section */
 .projects {
   margin-bottom: 30rem;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  overflow: visible;
+}
+
+
+/* for zodiac wheel backdrop  */
+.projects > div:last-child {
+  margin-top: clamp(-20vh, -25vw, -15vh);
+  position: relative;
+  z-index: 1;
+}
+
+/* Tablet */
+@media (min-width: 48rem) {
+  .projects > div:last-child {
+    margin-top: clamp(-25vh, -35vw, -20vh);
+  }
+}
+
+/* Desktop */
+@media (min-width: 64rem) {
+  .projects > div:last-child {
+    margin-top: -90vh
+  }
 }

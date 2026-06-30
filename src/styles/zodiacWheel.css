@@ -14,6 +14,7 @@
   width: clamp(15rem, 40vw, 30rem);
   aspect-ratio: 1;
   flex-shrink: 0;
+    padding: 0;
 }
 
 .compass-bg {
@@ -23,6 +24,9 @@
   top: 0;
   left: 0;
   z-index: 1;
+    padding: 0;
+  /* spinning anim */
+  animation: zodiac-wheel-spin 120s linear infinite;
 }
 
 .zodiac-icons-ring {
@@ -32,6 +36,9 @@
   top: 0;
   left: 0;
   z-index: 2;
+    padding: 0;
+  /* spinning anim */
+  animation: zodiac-wheel-spin 120s linear infinite;
 }
 
 .zodiac-icon {
@@ -48,6 +55,66 @@
   width: 100%;
   height: 100%;
 }
+/* for spinning anims */
+@keyframes zodiac-wheel-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* constellations */
+.constellation-wrapper {
+  text-align: center;
+  padding: 0;
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.constellation-title {
+  font-size: clamp(1rem, 4vw, 2rem);
+  margin: 0;
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translateX(-50%);
+  transition: opacity 2s ease-in-out;
+  z-index: -100;
+}
+
+.constellation-svg {
+  width: 100%;
+  height: 100%;
+  transition: opacity 2s ease-in-out;
+}
+
+.constellation-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 0.5rem 0 0 0;
+  justify-content: center;
+}
+
+.constellation-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--arc-primary);
+  font-size: 1.25rem;
+  padding: 0;
+  z-index: 1000;
+}
+
+.constellation-counter {
+  font-size: 0.7rem;
+  color: var(--arc-primary);
+  opacity: 0.6;
+  min-width: 2rem;
+}
 
 .constellation-center {
   position: absolute;
@@ -60,7 +127,6 @@
   align-items: center;
   justify-content: center;
   z-index: 3;
-  padding: 0;
 }
 
 .constellation-center > div {
@@ -73,22 +139,22 @@
 }
 
 .constellation-center h2 {
-  font-size: clamp(0.75rem, 1.8vw, 1.1rem);
+  font-size: clamp(1rem, 1.8vw, 12rem);
   margin: 0;
   text-align: center;
-  width: 90%;
   position: absolute;
-  bottom: clamp(1rem, 3vw, 1.5rem);
 }
 
 .constellation-center svg {
   width: clamp(8rem, 25vw, 14rem) !important;
   height: clamp(8rem, 25vw, 14rem) !important;
+  overflow: visible;
 }
 
 /* arrows for tarotFan.jsx */
 @keyframes zodiac-arrow-bounce {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0);
   }
   50% {
@@ -122,7 +188,7 @@
 .zodiac-arrow-top::after,
 .zodiac-arrow-bottom::after {
   background-color: var(--text);
-  content: '';
+  content: "";
   height: 100%;
   position: absolute;
   top: 0;

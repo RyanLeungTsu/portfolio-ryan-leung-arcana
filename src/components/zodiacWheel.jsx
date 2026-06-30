@@ -88,6 +88,7 @@ function ZodiacWheel({ onArrowClick }) {
                   style={{
                     color: "var(--arc-primary)",
                     filter: "drop-shadow(0 0 1px var(--arc-primary))",
+                    transform: `rotate(-${rotation}deg)`, // ← Counter-rotate
                   }}
                 />
               </div>

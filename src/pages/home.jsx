@@ -54,12 +54,12 @@ function Home() {
 
       {/* projects */}
       <section ref={projectRef} className="projects" id="projects">
-        <ZodiacWheel onArrowClick={handleWheelArrowClick} />
         {projectInView && shouldAnimate ? (
           <TarotFan ref={tarotFanRef} />
         ) : (
           <TarotFan ref={tarotFanRef} paused={true} />
         )}
+        <ZodiacWheel onArrowClick={handleWheelArrowClick} />
       </section>
 
       {/* contact */}
