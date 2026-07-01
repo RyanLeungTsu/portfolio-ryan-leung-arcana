@@ -42,7 +42,7 @@ body {
 
 /* Theme toggle colors */
 :root[data-theme="day"] {
-  --text: #090e24;
+  --text: #411f00;
   --arc-base: #FFC78E;
   --arc-primary: #e7a52c;
   --arc-secondary: #e8b84b;

@@ -402,24 +402,6 @@ function ConstellationsCycle() {
     return () => clearInterval(interval);
   }, []);
 
-  const prev = () => {
-    setFadeIn(false);
-    setTimeout(() => {
-      setCurrentIndex(
-        (i) => (i - 1 + constellations.length) % constellations.length,
-      );
-      setFadeIn(true);
-    }, 2000);
-  };
-
-  const next = () => {
-    setFadeIn(false);
-    setTimeout(() => {
-      setCurrentIndex((i) => (i + 1) % constellations.length);
-      setFadeIn(true);
-    }, 2000);
-  };
-
   const current = constellations[currentIndex];
 
   return (
@@ -459,20 +441,6 @@ function ConstellationsCycle() {
           />
         ))}
       </svg>
-
-      <div className="constellation-controls">
-        <button className="constellation-btn" onClick={prev}>
-          ‹
-        </button>
-
-        <div className="constellation-counter">
-          {currentIndex + 1} / {constellations.length}
-        </div>
-
-        <button className="constellation-btn" onClick={next}>
-          ›
-        </button>
-      </div>
     </div>
   );
 }

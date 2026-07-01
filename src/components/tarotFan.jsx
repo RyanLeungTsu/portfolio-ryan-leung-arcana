@@ -121,6 +121,8 @@ CardWrapper.displayName = "CardWrapper";
 const TarotFan = React.forwardRef(({ paused = false }, ref) => {
   const fanRef = useRef(null);
   const [currentIndex, setCurrentIndex] = useState(projectsData.length);
+  const [isAnimating, setIsAnimating] = useState(false);
+    const [scrollDirection, setScrollDirection] = useState(null);
   const [windowWidth, setWindowWidth] = useState(
     typeof window !== "undefined" ? window.innerWidth : 0,
   );
@@ -169,18 +171,16 @@ const TarotFan = React.forwardRef(({ paused = false }, ref) => {
   const handleScroll = useCallback(
     (direction) => {
       if (paused) return;
+      setIsAnimating(true);
+      setScrollDirection(direction);
       setCurrentIndex((prev) => {
-        let next = prev + (direction === "next" ? 1 : -1);
-
-        if (next >= EXTENDED_PROJECTS.length - projectsData.length) {
-          next = projectsData.length;
+        if (direction === "next") {
+          return prev + 1;
+        } else {
+          return prev - 1;
         }
-        if (next < projectsData.length) {
-          next = EXTENDED_PROJECTS.length - projectsData.length - 1;
-        }
-
-        return next;
       });
+      setTimeout(() => setIsAnimating(false), 500);
     },
     [paused],
   );
@@ -211,42 +211,56 @@ const TarotFan = React.forwardRef(({ paused = false }, ref) => {
     }
   };
 
-  const getCardStyle = useCallback(
-    (index) => {
-      const relativeIndex = index - currentIndex;
-      const { visibleCards, angleSpread } = responsiveValues;
-      const halfVisible = Math.floor(visibleCards / 2);
+const getCardStyle = useCallback(
+  (index) => {
+    const relativeIndex = index - currentIndex;
+    const { visibleCards, angleSpread } = responsiveValues;
+    const halfVisible = Math.floor(visibleCards / 2);
 
-      let normalizedIndex = relativeIndex;
-      if (normalizedIndex > halfVisible) {
-        normalizedIndex -= visibleCards;
+    let normalizedIndex = relativeIndex;
+    if (normalizedIndex > halfVisible) {
+      normalizedIndex -= visibleCards;
+    }
+    if (normalizedIndex < -halfVisible) {
+      normalizedIndex += visibleCards;
+    }
+
+    if (Math.abs(normalizedIndex) > halfVisible) {
+      return { opacity: 0, pointerEvents: "none" };
+    }
+
+    let opacity = 1;
+    let opacityDelay = "0s";
+    
+    if (isAnimating) {
+      if (scrollDirection === "next" && normalizedIndex === -halfVisible) {
+        opacity = 0;
+        opacityDelay = "0.5s";
       }
-      if (normalizedIndex < -halfVisible) {
-        normalizedIndex += visibleCards;
+      if (scrollDirection === "prev" && normalizedIndex === halfVisible) {
+        opacity = 0;
+        opacityDelay = "0.5s";
       }
+    }
 
-      if (Math.abs(normalizedIndex) > halfVisible) {
-        return { opacity: 0, pointerEvents: "none" };
-      }
+    const normalizedPos = (normalizedIndex + halfVisible) / visibleCards;
+    const arcDepth = Math.cos((normalizedPos - 0.5) * Math.PI);
+    const angle = normalizedIndex * angleSpread;
+    const rotation = angle;
+    const baseTranslateY = Math.abs(normalizedIndex) * 0.6;
+    const arcTranslateY = (1 - arcDepth) * 2;
+    const translateY = baseTranslateY + arcTranslateY;
+    const translateX = normalizedIndex * 7;
 
-      const normalizedPos = (normalizedIndex + halfVisible) / visibleCards;
-      const arcDepth = Math.cos((normalizedPos - 0.5) * Math.PI);
-      const angle = normalizedIndex * angleSpread;
-      const rotation = angle;
-      const baseTranslateY = Math.abs(normalizedIndex) * 0.6;
-      const arcTranslateY = (1 - arcDepth) * 2;
-      const translateY = baseTranslateY + arcTranslateY;
-      const translateX = normalizedIndex * 7;
-
-      return {
-        transform: `translateX(${translateX}rem) rotateZ(${rotation}deg) translateY(${translateY}rem)`,
-        opacity: 1,
-        transition: "transform 0.5s cubic-bezier(0.23, 1, 0.32, 1)",
-        zIndex: visibleCards - Math.abs(normalizedIndex),
-      };
-    },
-    [responsiveValues, currentIndex],
-  );
+    return {
+      transform: `translateX(${translateX}rem) rotateZ(${rotation}deg) translateY(${translateY}rem)`,
+      opacity: opacity,
+      transition: `transform 0.5s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.01s ${opacityDelay}`,
+      zIndex: visibleCards - Math.abs(normalizedIndex),
+    };
+  },
+  [responsiveValues, currentIndex, isAnimating, scrollDirection],
+);
 
   const shouldFlipCard = useCallback(
     (index) => {
@@ -270,16 +284,18 @@ const TarotFan = React.forwardRef(({ paused = false }, ref) => {
   const visibleProjects = useMemo(() => {
     const { visibleCards } = responsiveValues;
     const halfVisible = Math.floor(visibleCards / 2);
-    const start = Math.max(0, currentIndex - halfVisible - 1);
-    const end = Math.min(
-      EXTENDED_PROJECTS.length,
-      currentIndex + halfVisible + 2,
-    );
 
-    return EXTENDED_PROJECTS.slice(start, end).map((project, idx) => ({
-      project,
-      actualIndex: start + idx,
-    }));
+    const projects = [];
+    for (let i = -halfVisible - 1; i <= halfVisible + 1; i++) {
+      const idx =
+        (((currentIndex + i) % projectsData.length) + projectsData.length) %
+        projectsData.length;
+      projects.push({
+        project: projectsData[idx],
+        actualIndex: currentIndex + i,
+      });
+    }
+    return projects;
   }, [currentIndex, responsiveValues]);
 
   return (

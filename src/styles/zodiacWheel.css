@@ -6,7 +6,7 @@
   gap: clamp(1rem, 3vw, 2rem);
   padding: clamp(1rem, 2vw, 2rem) 0;
   position: relative;
-  z-index: 1;
+  z-index: 100;
 }
 
 .zodiac-wheel-wrapper {
@@ -14,7 +14,13 @@
   width: clamp(15rem, 40vw, 30rem);
   aspect-ratio: 1;
   flex-shrink: 0;
-    padding: 0;
+  padding: 0;
+  transition: transform 0.7s ease;
+}
+
+/* hover effect for wheel */
+.zodiac-wheel-wrapper:hover {
+  transform: translateY(-15vh);
 }
 
 .compass-bg {
@@ -89,31 +95,6 @@
   width: 100%;
   height: 100%;
   transition: opacity 2s ease-in-out;
-}
-
-.constellation-controls {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  margin: 0.5rem 0 0 0;
-  justify-content: center;
-}
-
-.constellation-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: var(--arc-primary);
-  font-size: 1.25rem;
-  padding: 0;
-  z-index: 1000;
-}
-
-.constellation-counter {
-  font-size: 0.7rem;
-  color: var(--arc-primary);
-  opacity: 0.6;
-  min-width: 2rem;
 }
 
 .constellation-center {

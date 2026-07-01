@@ -3,7 +3,6 @@ import { useParams, Link } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
 import { FaHtml5, FaJsSquare, FaCss3Alt, FaWordpress, FaFigma } from "react-icons/fa";
 import { SiNextdotjs, SiTypescript, SiTailwindcss, SiSupabase, SiReact } from "react-icons/si";
-// import { SiAdobephotoshop, SiAdobeillustrator } from "react-icons/si";
 import ThemeToggle from "../components/themeToggle";
 import CelestialBackground from "../components/background";
 import "../styles/projectPage.css";
@@ -57,7 +56,6 @@ const projectsData = [
     tools: [
       <FaHtml5 key="html" />,
       <FaJsSquare key="js" />,
-    //   <SiAdobeillustrator key="ai" />,
       <FaWordpress key="wp" />,
       <FaFigma key="figma" />,
     ],
@@ -91,8 +89,6 @@ const projectsData = [
     description: "The Northern Shaolin Kung-Fu school website is being developed as a headless architecture, using WordPress as a backend CMS for content management and React on the frontend for a fast, dynamic user experience. Structured content such as class schedules, lineage history, instructor bios, and media galleries are managed via custom WordPress REST API endpoints and Advanced Custom Fields.",
     tools: [
       <FaHtml5 key="html" />,
-    //   <SiAdobeillustrator key="ai" />,
-    //   <SiAdobephotoshop key="ps" />,
       <FaCss3Alt key="css" />,
       <FaWordpress key="wp" />,
       <FaFigma key="figma" />,
