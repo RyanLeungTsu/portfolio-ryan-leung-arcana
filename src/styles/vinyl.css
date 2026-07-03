@@ -53,7 +53,7 @@
   filter: brightness(0.65);
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 64rem) {
   .vinyl-base {
     width: 11.25rem;
     height: 11.25rem;
@@ -74,12 +74,10 @@
   transition: transform 0.08s ease-out;
 }
 
-@media (min-width: 1024px) {
   .vinyl-disc-group {
     width: 10.625rem;
     height: 10.625rem;
   }
-}
 
 .vinyl-disc-group--spinning {
   animation-play-state: running;
@@ -159,7 +157,7 @@
   transition: transform 0.08s ease-out;
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 64rem) {
   .vinyl-album-cover {
     width: 11.25rem;
     height: 11.25rem;
@@ -185,11 +183,9 @@
 /* track title */
 .vinyl-track-info {
   position: absolute;
-  top: -1.4rem;
-  left: 0;
+  margin-top: -1rem ;
   width: 10rem;
   z-index: 4;
-  padding: 0;
   background: none;
   transition: transform 0.08s ease-out;
 }
@@ -201,21 +197,26 @@
   }
 }
 
+.vinyl-track-title-sub {
+  font-size: clamp(0.5rem, 4vw, 1rem);
+  margin: 0 auto;
+}
+
 .vinyl-track-title {
-  font-size: 3rem;
+  font-size: clamp(01rem, 4vw, 1.5rem);
   color: white;
   font-weight: 700;
   letter-spacing: 0.06em;
-  margin: 0;
+  margin: 0;;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  /* text-shadow:
+  text-shadow:
     0.04rem  0.04rem 0rem rgba(0, 0, 0, 1),
     0.08rem  0.08rem 0rem rgba(0, 0, 0, 0.9),
     0.13rem  0.13rem 0rem rgba(0, 0, 0, 0.7),
     0.18rem  0.18rem 0rem rgba(0, 0, 0, 0.5),
-    0.22rem  0.22rem 0rem rgba(0, 0, 0, 0.3); */
+    0.22rem  0.22rem 0rem rgba(0, 0, 0, 0.3);
 }
 
 /* listen along popup */
@@ -232,7 +233,7 @@
   animation: vinyl-popup-in 0.2s ease;
 }
 
-.vinyl-listen-label {
+.vinyl-listen-info {
   font-size: 0.7rem;
   opacity: 0.6;
   text-transform: uppercase;
@@ -295,7 +296,13 @@
   transform: translateY(0);
 }
 
-@media (min-width: 768px) {
+/* popup cta */
+.popup-cta {
+  font-size: clamp(0.75rem, 4vw, 1.25rem);
+  align-items: center;
+}
+
+@media (min-width: 64rem) {
   .vinyl-spotify-popup {
     width: 20rem;
   }
@@ -313,5 +320,12 @@
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@media (min-width: 120rem) {
+  .vinyl-widget {
+    scale: 1.5;
+    margin: 4.5rem;
   }
 }

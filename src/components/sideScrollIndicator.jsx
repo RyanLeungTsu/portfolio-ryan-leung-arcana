@@ -3,7 +3,7 @@ import "../styles/sideScroll.css";
 
 function Sidebar() {
   const [activeSection, setActiveSection] = useState("home");
-  const [arrowTop, setArrowTop] = useState(0);
+  const [IndicatorTop, setIndicatorTop] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -31,7 +31,7 @@ function Sidebar() {
   }, []);
 
   useEffect(() => {
-    const updateArrow = () => {
+    const updateIndicator = () => {
       const sidebar = document.querySelector(".sidebar ul");
       const liElements = Array.from(document.querySelectorAll(".sidebar li"));
 
@@ -45,12 +45,12 @@ function Sidebar() {
         const sidebarRect = sidebar.getBoundingClientRect();
         const liRect = activeLi.getBoundingClientRect();
         const offset = liRect.top - sidebarRect.top + 15;
-        setArrowTop(offset);
+        setIndicatorTop(offset);
       }
     };
 
-    updateArrow();
-    const timeout = setTimeout(updateArrow, 50);
+    updateIndicator();
+    const timeout = setTimeout(updateIndicator, 50);
 
     return () => clearTimeout(timeout);
   }, [activeSection]);
@@ -74,13 +74,15 @@ function Sidebar() {
           </a>
         </li>
       </ul>
-      <div
-        className="scroll-arrow"
-        style={{ top: `${arrowTop}px` }}
-        aria-hidden="true"
-      >
-        &rarr;
-      </div>
+<div
+  className="scroll-Indicator"
+  style={{ top: `${IndicatorTop}px` }}
+  aria-hidden="true"
+>
+<svg viewBox="0 0 100 100" width="50">
+    <path d="M50 10 L60 40 L90 50 L60 60 L50 90 L40 60 L10 50 L40 40 Z" fill="currentColor"/>
+  </svg>
+</div>
     </nav>
   );
 }

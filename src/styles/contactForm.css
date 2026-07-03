@@ -105,3 +105,13 @@
     max-width: 40vw;
   }
 }
+
+@media (min-width: 120rem) {
+  .contact-form {
+    max-width: 50vw;
+  }
+
+  textarea#message {
+    min-height: 15rem;
+  }
+}

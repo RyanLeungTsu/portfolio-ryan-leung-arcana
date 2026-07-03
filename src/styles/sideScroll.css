@@ -34,7 +34,7 @@
   text-decoration: none;
 }
 
-.scroll-arrow {
+.scroll-Indicator {
   display: none;
 }
 
@@ -79,13 +79,28 @@
     color: var(--text);
   }
 
-  .scroll-arrow {
+      .scroll-Indicator svg {
+    width: 30px;
+  }
+
+  .scroll-Indicator {
     display: block;
     position: fixed;
     transform: translateY(-50%);
-    left: -3rem;
-    font-size: 2rem;
+    left: -2.5rem;
+    font-size: 4rem;
     transition: top 0.4s ease-in-out;
     color: var(--arc-primary);
+  }
+}
+
+@media (min-width: 120em) {
+  .scroll-Indicator {
+    font-size: 7rem;
+        left: -3.5rem;
+  }
+
+    .scroll-Indicator svg {
+    width: 50px;
   }
 }

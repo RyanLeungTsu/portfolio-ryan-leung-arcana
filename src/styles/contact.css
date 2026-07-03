@@ -4,6 +4,7 @@
   box-sizing: border-box;
   border: clamp(0.5rem, 2vw, 2rem) solid white;
   margin: 0 auto;
+  padding: clamp(2rem, 5vw, 4rem);
 }
 
 .contact-wrapper {
@@ -15,7 +16,7 @@
   font-size: clamp(2rem, 4vw, 2rem);
   max-width: 90vw;
   text-align: center;
-    color: var(--text);
+  color: var(--text);
 }
 
 .contact-title {
@@ -34,3 +35,5 @@
     max-width: 40vw;
   }
 }
+
+

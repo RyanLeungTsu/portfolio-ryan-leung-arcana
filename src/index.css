@@ -40,6 +40,12 @@ body {
   }
 }
 
+section {
+  min-height: 100svh;
+  width: 100%;
+  justify-content: center;
+}
+
 /* Theme toggle colors */
 :root[data-theme="day"] {
   --text: #411f00;

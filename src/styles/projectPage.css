@@ -9,14 +9,14 @@
 }
 
 /* header area */
-.project-page__header {
+.project-page-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: clamp(2rem, 6vw, 4rem);
 }
 
-.project-page__back {
+.project-page-back {
   display: flex;
   align-items: center;
   color: var(--text);
@@ -25,34 +25,34 @@
   transition: opacity 0.2s;
 }
 
-.project-page__back:hover {
+.project-page-back:hover {
   opacity: 1;
 }
 
 /* column layout stylings */
-.project-page__main {
+.project-page-main {
   display: flex;
   flex-direction: column;
   gap: clamp(2rem, 6vw, 4rem);
   flex: 1;
 }
 
-@media (min-width: 768px) {
-  .project-page__main {
+@media (min-width: 48rem) {
+  .project-page-main {
     flex-direction: row;
     align-items: flex-start;
   }
 }
 
 /* left panel area */
-.project-page__left {
+.project-page-left {
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
   flex: 1;
 }
 
-.project-page__title {
+.project-page-title {
   font-size: clamp(2rem, 6vw, 3.5rem);
   font-weight: 700;
   letter-spacing: -0.02em;
@@ -61,7 +61,7 @@
   line-height: 1.1;
 }
 
-.project-page__subtitle {
+.project-page-subtitle {
   font-size: 0.85rem;
   opacity: 0.55;
   letter-spacing: 0.1em;
@@ -70,7 +70,7 @@
 }
 
 /* tool icons */
-.project-page__tools {
+.project-page-tools {
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;
@@ -79,14 +79,14 @@
   margin: 0;
 }
 
-.project-page__tool {
+.project-page-tool {
   font-size: 1.4rem;
   opacity: 0.75;
   color: var(--arc-primary);
   transition: opacity 0.2s;
 }
 
-.project-page__tool:hover {
+.project-page-tool:hover {
   opacity: 1;
 }
 
@@ -98,7 +98,7 @@
   margin: 0;
 }
 
-.project-page__link {
+.project-page-link {
   display: inline-block;
   padding: 0.6rem 1.4rem;
   border: 1px solid var(--arc-border);
@@ -110,18 +110,18 @@
   align-self: flex-start;
 }
 
-.project-page__link:hover {
+.project-page-link:hover {
   background: var(--arc-primary);
   color: #000;
   border-color: var(--arc-primary);
 }
 
 /* right panel area */
-.project-page__right {
+.project-page-right {
   flex: 1.2;
 }
 
-.project-page__image {
+.project-page-image {
   width: 100%;
   height: auto;
   display: block;
@@ -130,7 +130,7 @@
 }
 
 /* not found */
-.project-page__not-found {
+.project-page-not-found {
   display: flex;
   flex-direction: column;
   align-items: center;

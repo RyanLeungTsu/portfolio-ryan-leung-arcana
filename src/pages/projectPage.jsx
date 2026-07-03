@@ -103,7 +103,7 @@ function ProjectPage() {
 
   if (!project) {
     return (
-      <div className="project-page__not-found">
+      <div className="project-page-not-found">
         <p>Project not found.</p>
         <Link to="/">← Back home</Link>
       </div>
@@ -114,21 +114,21 @@ function ProjectPage() {
     <div className="project-page">
             <CelestialBackground />
 
-      <header className="project-page__header">
-        <Link to="/" className="project-page__back" aria-label="Back to home">
+      <header className="project-page-header">
+        <Link to="/" className="project-page-back" aria-label="Back to home">
           <FaArrowLeft />
         </Link>
         <ThemeToggle />
       </header>
 
-      <main className="project-page__main">
+      <main className="project-page-main">
 
-        <div className="project-page__left">
-          <h1 className="project-page__title">{project.title}</h1>
-          <p className="project-page__subtitle">{project.subtitle}</p>
-          <ul className="project-page__tools" role="list">
+        <div className="project-page-left">
+          <h1 className="project-page-title">{project.title}</h1>
+          <p className="project-page-subtitle">{project.subtitle}</p>
+          <ul className="project-page-tools" role="list">
             {project.tools.map((icon, i) => (
-              <li key={i} className="project-page__tool" role="listitem">
+              <li key={i} className="project-page-tool" role="listitem">
                 {icon}
               </li>
             ))}
@@ -138,18 +138,18 @@ function ProjectPage() {
             href={project.link}
             target="_blank"
             rel="noopener noreferrer"
-            className="project-page__link"
+            className="project-page-link"
           >
             Visit Site →
           </a>
         </div>
 
-        <div className="project-page__right">
+        <div className="project-page-right">
           <img
             srcSet={project.image.srcSet}
             sizes={project.image.sizes}
             alt={project.image.alt}
-            className="project-page__image"
+            className="project-page-image"
           />
         </div>
 

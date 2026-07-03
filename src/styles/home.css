@@ -1,6 +1,6 @@
 /* Hero Section */
 .hero-name {
-  font-size: clamp(4rem, 10vw, 10rem);
+  font-size: clamp(4rem, 12vw, 17rem);
   margin: 0;
 }
 
@@ -10,17 +10,15 @@
 }
 
 .hero-section {
-  min-height: 100svh;
-  max-width: 90vw;
+  max-width: 100%;
   margin: 0 auto;
-  margin: 0rem;
+  padding: 0 clamp(1rem, 5vw, 1, 5rem);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-sizing: border-box;
   overflow: visible;
-  gap: clamp(1rem, 10vw, 9rem);
-    color: var(--text);
+  gap: clamp(1rem, 6vw, 9rem);
+  color: var(--text);
 }
 
 .hero-section-title {
@@ -67,15 +65,13 @@
 }
 /* Project Section */
 .projects {
-  margin-bottom: 30rem;
-  margin-top: 30rem;
   position: relative;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   overflow: visible;
+  margin-bottom: 10%;
 }
-
 
 /* for zodiac wheel backdrop  */
 .projects > div:last-child {
@@ -94,6 +90,29 @@
 /* Desktop */
 @media (min-width: 64rem) {
   .projects > div:last-child {
-    margin-top: -90vh
+    margin-top: -90vh;
+  }
+
+  .hero-name {
+    margin-left: -10vw;
+  }
+
+  .hero-sub {
+    margin-left: -8.5vw;
+  }
+}
+
+/* Ultrawide screens */
+@media (min-width: 120rem) {
+  .projects > div:last-child {
+    margin-top: -70vh;
+  }
+
+  .hero-section {
+    scale: 1.15;
+  }
+
+  .projects {
+    scale: 1.25;
   }
 }
