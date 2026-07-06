@@ -4,9 +4,12 @@
   margin: 0;
 }
 
-.hero-sub {
-  font-size: clamp(1rem, 1.5vw, 1.5rem);
+.hero-about,
+.hero-intro {
+  font-family: 'Chillax', sans-serif;
+  font-size: clamp(0.75rem, 1.5vw, 1.5rem);
   opacity: 0.8;
+  line-height: 1.6;
 }
 
 .hero-section {
@@ -17,7 +20,7 @@
   align-items: center;
   justify-content: center;
   overflow: visible;
-  gap: clamp(1rem, 6vw, 9rem);
+  gap: clamp(1rem, 6vw, 8rem);
   color: var(--text);
 }
 
@@ -27,6 +30,27 @@
   justify-content: center;
   align-items: flex-start;
   gap: 1rem;
+  max-width: 50vw;
+}
+
+.hero-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.hero-content {
+  animation: fadeSwitch 0.3s ease;
+}
+
+.hero-buttons a {
+  text-decoration: none;
+  display: flex;
+}
+/* prevents layout jumping when switching tabs */
+.hero-content {
+  min-height: 9rem; 
 }
 
 .hero-btn {
@@ -54,8 +78,8 @@
   transform: translateY(-0.5rem);
   background: rgba(255, 255, 255, 0.1);
   box-shadow:
-    0 0 30px rgba(155, 120, 255, 0.4),
-    inset 0 0 20px rgba(255, 255, 255, 0.1);
+    0 0 30px var(--arc-primary),
+    inset 0 0 20px var(--arc-base);
 }
 
 .hero-card {
@@ -85,6 +109,15 @@
   .projects > div:last-child {
     margin-top: clamp(-25vh, -35vw, -20vh);
   }
+
+  .hero-section {
+    margin-left: -5rem;
+  }
+
+  .hero-about,
+  .hero-intro {
+  max-width: 80%;
+}
 }
 
 /* Desktop */
@@ -93,13 +126,7 @@
     margin-top: -90vh;
   }
 
-  .hero-name {
-    margin-left: -10vw;
-  }
 
-  .hero-sub {
-    margin-left: -8.5vw;
-  }
 }
 
 /* Ultrawide screens */

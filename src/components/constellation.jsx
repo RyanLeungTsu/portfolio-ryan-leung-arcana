@@ -425,7 +425,7 @@ function ConstellationsCycle() {
               y1={star1.y}
               x2={star2.x}
               y2={star2.y}
-              stroke="var(--arc-primary)"
+              stroke="var(--arc-quaternary)"
               strokeWidth="1"
               opacity="0.6"
             />
@@ -437,7 +437,7 @@ function ConstellationsCycle() {
             cx={star.x}
             cy={star.y}
             r="2"
-            fill="var(--arc-primary)"
+            fill="var(--arc-tertiary)"
           />
         ))}
       </svg>

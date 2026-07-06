@@ -6,6 +6,34 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: 'Chillax';
+  src: url('/src/assets/fonts/Chillax-Extralight.otf') format('opentype');
+  font-weight: 200;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Chillax';
+  src: url('/src/assets/fonts/Chillax-Light.otf') format('opentype');
+  font-weight: 300;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Chillax';
+  src: url('/src/assets/fonts/Chillax-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Chillax';
+  src: url('/src/assets/fonts/Chillax-Medium.otf') format('opentype');
+  font-weight: 500;
+  font-display: swap;
+}
+
 :root {
   /* font: 18px/145% system-ui, 'Segoe UI', Roboto, sans-serif; */
   --font-rune: "StarlightRune", serif;
@@ -17,7 +45,7 @@
   -moz-osx-font-smoothing: grayscale;
   scroll-behavior: smooth;
 
-  @media (max-width: 64rem) {
+  @media (min-width: 64rem) {
     font-size: 1rem;
   }
 }
@@ -25,6 +53,7 @@
 html,
 body {
   overflow-x: hidden;
+  scroll-snap-type: none;
 }
 
 body {
@@ -49,11 +78,11 @@ section {
 /* Theme toggle colors */
 :root[data-theme="day"] {
   --text: #411f00;
-  --arc-base: #FFC78E;
+  --arc-base: #ffc78e;
   --arc-primary: #e7a52c;
   --arc-secondary: #e8b84b;
   --arc-tertiary: #805812;
-  --arc-quaternary: #50C892;
+  --arc-quaternary: #50c892;
   --arc-border: #8b3a1a;
   --arc-ink: #2a1800;
   --arc-filter-frame: none;
@@ -65,8 +94,8 @@ section {
   --arc-base: #090e24;
   --arc-primary: #8aacff;
   --arc-secondary: #aac4ff;
-  --arc-tertiary: #6080d0;
-  --arc-quaternary: #50C892;
+  --arc-tertiary: #cad9ff;
+  --arc-quaternary: #50c892;
   --arc-border: #3a4a8a;
   --arc-ink: #b8c8ff;
   --arc-filter-frame: none;

@@ -122,12 +122,52 @@ const TarotFan = React.forwardRef(({ paused = false }, ref) => {
   const fanRef = useRef(null);
   const [currentIndex, setCurrentIndex] = useState(projectsData.length);
   const [isAnimating, setIsAnimating] = useState(false);
-    const [scrollDirection, setScrollDirection] = useState(null);
+  const [scrollDirection, setScrollDirection] = useState(null);
   const [windowWidth, setWindowWidth] = useState(
     typeof window !== "undefined" ? window.innerWidth : 0,
   );
+  const [visibleCount, setVisibleCount] = useState(5);
+  const [flippedIndices, setFlippedIndices] = useState(new Set());
   const touchStartRef = useRef(0);
   const touchEndRef = useRef(0);
+  const cardRefsRef = useRef({});
+  const observedRef = useRef(new Set());
+
+  const isMobile = windowWidth < 768;
+
+  useEffect(() => {
+    if (!isMobile) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const index = parseInt(entry.target.dataset.index);
+          if (entry.isIntersecting && !observedRef.current.has(index)) {
+            observedRef.current.add(index);
+            setFlippedIndices((prev) => {
+              const next = new Set(prev);
+              next.delete(index);
+              return next;
+            });
+          }
+        });
+      },
+      { threshold: 0.3 },
+    );
+
+    Object.values(cardRefsRef.current).forEach((ref) => {
+      if (ref) observer.observe(ref);
+    });
+
+    return () => observer.disconnect();
+  }, [isMobile]);
+
+  useEffect(() => {
+    if (!isMobile) return;
+    setFlippedIndices(
+      new Set(Array.from({ length: visibleCount }, (_, i) => i)),
+    );
+  }, [isMobile, visibleCount]);
 
   const getResponsiveValues = useCallback(() => {
     if (windowWidth < 768) {
@@ -171,18 +211,22 @@ const TarotFan = React.forwardRef(({ paused = false }, ref) => {
   const handleScroll = useCallback(
     (direction) => {
       if (paused) return;
-      setIsAnimating(true);
-      setScrollDirection(direction);
-      setCurrentIndex((prev) => {
-        if (direction === "next") {
-          return prev + 1;
-        } else {
-          return prev - 1;
-        }
-      });
-      setTimeout(() => setIsAnimating(false), 500);
+      if (isMobile) {
+        setVisibleCount((prev) => Math.min(prev + 3, projectsData.length));
+      } else {
+        setIsAnimating(true);
+        setScrollDirection(direction);
+        setCurrentIndex((prev) => {
+          if (direction === "next") {
+            return prev + 1;
+          } else {
+            return prev - 1;
+          }
+        });
+        setTimeout(() => setIsAnimating(false), 500);
+      }
     },
-    [paused],
+    [paused, isMobile],
   );
 
   React.useImperativeHandle(ref, () => ({
@@ -190,10 +234,12 @@ const TarotFan = React.forwardRef(({ paused = false }, ref) => {
   }));
 
   const handleTouchStart = (e) => {
+    if (isMobile) return;
     touchStartRef.current = e.changedTouches[0].clientX;
   };
 
   const handleTouchEnd = (e) => {
+    if (isMobile) return;
     touchEndRef.current = e.changedTouches[0].clientX;
     handleSwipe();
   };
@@ -211,59 +257,76 @@ const TarotFan = React.forwardRef(({ paused = false }, ref) => {
     }
   };
 
-const getCardStyle = useCallback(
-  (index) => {
-    const relativeIndex = index - currentIndex;
-    const { visibleCards, angleSpread } = responsiveValues;
-    const halfVisible = Math.floor(visibleCards / 2);
-
-    let normalizedIndex = relativeIndex;
-    if (normalizedIndex > halfVisible) {
-      normalizedIndex -= visibleCards;
-    }
-    if (normalizedIndex < -halfVisible) {
-      normalizedIndex += visibleCards;
-    }
-
-    if (Math.abs(normalizedIndex) > halfVisible) {
-      return { opacity: 0, pointerEvents: "none" };
-    }
-
-    let opacity = 1;
-    let opacityDelay = "0s";
-    
-    if (isAnimating) {
-      if (scrollDirection === "next" && normalizedIndex === -halfVisible) {
-        opacity = 0;
-        opacityDelay = "0.5s";
+  const getCardStyle = useCallback(
+    (index) => {
+      if (isMobile) {
+        return {
+          transform: "none",
+          opacity: index < visibleCount ? 1 : 0,
+          pointerEvents: index < visibleCount ? "auto" : "none",
+          transition: "opacity 0.3s ease",
+          zIndex: visibleCount - index,
+        };
       }
-      if (scrollDirection === "prev" && normalizedIndex === halfVisible) {
-        opacity = 0;
-        opacityDelay = "0.5s";
+
+      const relativeIndex = index - currentIndex;
+      const { visibleCards, angleSpread } = responsiveValues;
+      const halfVisible = Math.floor(visibleCards / 2);
+
+      let normalizedIndex = relativeIndex;
+      if (normalizedIndex > halfVisible) {
+        normalizedIndex -= visibleCards;
       }
-    }
+      if (normalizedIndex < -halfVisible) {
+        normalizedIndex += visibleCards;
+      }
 
-    const normalizedPos = (normalizedIndex + halfVisible) / visibleCards;
-    const arcDepth = Math.cos((normalizedPos - 0.5) * Math.PI);
-    const angle = normalizedIndex * angleSpread;
-    const rotation = angle;
-    const baseTranslateY = Math.abs(normalizedIndex) * 0.6;
-    const arcTranslateY = (1 - arcDepth) * 2;
-    const translateY = baseTranslateY + arcTranslateY;
-    const translateX = normalizedIndex * 7;
+      if (Math.abs(normalizedIndex) > halfVisible) {
+        return { opacity: 0, pointerEvents: "none" };
+      }
 
-    return {
-      transform: `translateX(${translateX}rem) rotateZ(${rotation}deg) translateY(${translateY}rem)`,
-      opacity: opacity,
-      transition: `transform 0.5s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.01s ${opacityDelay}`,
-      zIndex: visibleCards - Math.abs(normalizedIndex),
-    };
-  },
-  [responsiveValues, currentIndex, isAnimating, scrollDirection],
-);
+      let opacity = 1;
+      if (isAnimating) {
+        if (scrollDirection === "next" && normalizedIndex === -halfVisible) {
+          opacity = 0;
+        }
+        if (scrollDirection === "prev" && normalizedIndex === halfVisible) {
+          opacity = 0;
+        }
+      }
+
+      const normalizedPos = (normalizedIndex + halfVisible) / visibleCards;
+      const arcDepth = Math.cos((normalizedPos - 0.5) * Math.PI);
+      const angle = normalizedIndex * angleSpread;
+      const rotation = angle;
+      const baseTranslateY = Math.abs(normalizedIndex) * 0.6;
+      const arcTranslateY = (1 - arcDepth) * 2;
+      const translateY = baseTranslateY + arcTranslateY;
+      const translateX = normalizedIndex * 7;
+
+      return {
+        transform: `translateX(${translateX}rem) rotateZ(${rotation}deg) translateY(${translateY}rem)`,
+        opacity: opacity,
+        transition: `transform 0.5s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.01s ${opacity === 0 ? "0.5s" : "0s"}`,
+        zIndex: visibleCards - Math.abs(normalizedIndex),
+      };
+    },
+    [
+      responsiveValues,
+      currentIndex,
+      isAnimating,
+      scrollDirection,
+      isMobile,
+      visibleCount,
+    ],
+  );
 
   const shouldFlipCard = useCallback(
     (index) => {
+      if (isMobile) {
+        return flippedIndices.has(index);
+      }
+
       const relativeIndex = index - currentIndex;
       const { visibleCards } = responsiveValues;
       const halfVisible = Math.floor(visibleCards / 2);
@@ -278,10 +341,17 @@ const getCardStyle = useCallback(
 
       return Math.abs(normalizedIndex) === halfVisible;
     },
-    [responsiveValues, currentIndex],
+    [responsiveValues, currentIndex, isMobile, flippedIndices],
   );
 
   const visibleProjects = useMemo(() => {
+    if (isMobile) {
+      return projectsData.slice(0, visibleCount).map((project, idx) => ({
+        project,
+        actualIndex: idx,
+      }));
+    }
+
     const { visibleCards } = responsiveValues;
     const halfVisible = Math.floor(visibleCards / 2);
 
@@ -296,10 +366,12 @@ const getCardStyle = useCallback(
       });
     }
     return projects;
-  }, [currentIndex, responsiveValues]);
+  }, [currentIndex, responsiveValues, isMobile, visibleCount]);
 
   return (
     <div className="tarot-fan-section">
+      {isMobile && <h2 className="tarot-fan-title">Projects</h2>}
+
       <div className="fan-container">
         <div
           ref={fanRef}
@@ -307,17 +379,50 @@ const getCardStyle = useCallback(
           onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEnd}
         >
-          {visibleProjects.map(({ project, actualIndex }) => (
-            <CardWrapper
-              key={`${project.id}-${actualIndex}`}
-              project={project}
-              index={actualIndex}
-              getCardStyle={getCardStyle}
-              shouldFlipCard={shouldFlipCard}
-            />
-          ))}
+          {visibleProjects.map(({ project, actualIndex }) => {
+            if (isMobile) {
+              return (
+                <div
+                  key={`${project.id}-${actualIndex}`}
+                  ref={(el) => {
+                    if (el) cardRefsRef.current[actualIndex] = el;
+                  }}
+                  data-index={actualIndex}
+                >
+                  <CardWrapper
+                    project={project}
+                    index={actualIndex}
+                    getCardStyle={getCardStyle}
+                    shouldFlipCard={shouldFlipCard}
+                  />
+                </div>
+              );
+            }
+
+            return (
+              <CardWrapper
+                key={`${project.id}-${actualIndex}`}
+                project={project}
+                index={actualIndex}
+                getCardStyle={getCardStyle}
+                shouldFlipCard={shouldFlipCard}
+              />
+            );
+          })}
         </div>
       </div>
+
+      {isMobile && visibleCount < projectsData.length && (
+        <button className="fan-scroll-btn" onClick={() => handleScroll("next")}>
+          View More
+        </button>
+      )}
+
+      {isMobile && (
+        <div className="fan-counter">
+          {visibleCount} / {projectsData.length}
+        </div>
+      )}
     </div>
   );
 });

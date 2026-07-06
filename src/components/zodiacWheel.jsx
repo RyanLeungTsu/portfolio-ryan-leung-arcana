@@ -54,7 +54,7 @@ function ZodiacWheel({ onArrowClick }) {
   return (
     <div className="zodiac-wheel-container">
       <button
-        className="zodiac-arrow zodiac-arrow--left"
+        className="zodiac-arrow zodiac-arrow-left"
         onClick={() => onArrowClick("prev")}
         aria-label="Previous sign"
       >
@@ -86,7 +86,7 @@ function ZodiacWheel({ onArrowClick }) {
                 <Icon
                   size={24}
                   style={{
-                    color: "var(--arc-primary)",
+                    color: "var(--arc-tertiary)",
                     filter: "drop-shadow(0 0 1px var(--arc-primary))",
                     transform: `rotate(-${rotation}deg)`, // ← Counter-rotate
                   }}
@@ -102,7 +102,7 @@ function ZodiacWheel({ onArrowClick }) {
       </div>
 
       <button
-        className="zodiac-arrow zodiac-arrow--right"
+        className="zodiac-arrow zodiac-arrow-right"
         onClick={() => onArrowClick("next")}
         aria-label="Next sign"
       >

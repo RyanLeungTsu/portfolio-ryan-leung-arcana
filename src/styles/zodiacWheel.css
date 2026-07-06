@@ -176,69 +176,69 @@
   transition: all 0.15s;
 }
 
-.zodiac-arrow--left .zodiac-arrow-top {
+.zodiac-arrow-left .zodiac-arrow-top {
   transform: rotate(-45deg);
   transform-origin: bottom left;
 }
 
-.zodiac-arrow--left .zodiac-arrow-top::after {
+.zodiac-arrow-left .zodiac-arrow-top::after {
   left: 100%;
   right: 0;
   transition-delay: 0s;
 }
 
-.zodiac-arrow--left .zodiac-arrow-bottom {
+.zodiac-arrow-left .zodiac-arrow-bottom {
   transform: rotate(45deg);
   transform-origin: top left;
 }
 
-.zodiac-arrow--left .zodiac-arrow-bottom::after {
+.zodiac-arrow-left .zodiac-arrow-bottom::after {
+  left: 100%;
+  right: 0;
+  transition-delay: 0.1s;
+}
+
+.zodiac-arrow-left:hover .zodiac-arrow-bottom::after {
   left: 0;
   right: 100%;
-  transition-delay: 0.15s;
+  transition-delay: 0.1s;
 }
 
-.zodiac-arrow--left:hover .zodiac-arrow-top::after {
-  left: 0;
-  right: 0;
-  transition-delay: 0.15s;
-}
-
-.zodiac-arrow--left:hover .zodiac-arrow-bottom::after {
+.zodiac-arrow-left:hover .zodiac-arrow-bottom::after {
   left: 0;
   right: 0;
   transition-delay: 0s;
 }
 
-.zodiac-arrow--right .zodiac-arrow-top {
+.zodiac-arrow-right .zodiac-arrow-top {
   transform: rotate(45deg);
   transform-origin: bottom right;
 }
 
-.zodiac-arrow--right .zodiac-arrow-top::after {
+.zodiac-arrow-right .zodiac-arrow-top::after {
   left: 100%;
   right: 0;
   transition-delay: 0s;
 }
 
-.zodiac-arrow--right .zodiac-arrow-bottom {
+.zodiac-arrow-right .zodiac-arrow-bottom {
   transform: rotate(-45deg);
   transform-origin: top right;
 }
 
-.zodiac-arrow--right .zodiac-arrow-bottom::after {
+.zodiac-arrow-right .zodiac-arrow-bottom::after {
   left: 0;
   right: 100%;
-  transition-delay: 0.15s;
+  transition-delay: 0.1s;
 }
 
-.zodiac-arrow--right:hover .zodiac-arrow-top::after {
+.zodiac-arrow-right:hover .zodiac-arrow-top::after {
   left: 0;
   right: 0;
-  transition-delay: 0.15s;
+  transition-delay: 0.1s;
 }
 
-.zodiac-arrow--right:hover .zodiac-arrow-bottom::after {
+.zodiac-arrow-right:hover .zodiac-arrow-bottom::after {
   left: 0;
   right: 0;
   transition-delay: 0s;
