@@ -1,13 +1,16 @@
 /* Hero Section */
 .hero-name {
-  font-size: clamp(4rem, 12vw, 17rem);
-  margin: 0;
+  font-size: clamp(10rem, 12vw, 17rem);
+  margin: 0 auto;
+  text-align: center;
+  justify-content: center;
 }
 
 .hero-about,
 .hero-intro {
-  font-family: 'Chillax', sans-serif;
-  font-size: clamp(0.75rem, 1.5vw, 1.5rem);
+  font-family: "Chillax", sans-serif;
+  font-size: clamp(1.25rem, 1.25vw, 1.75rem);
+  text-align: center;
   opacity: 0.8;
   line-height: 1.6;
 }
@@ -15,8 +18,8 @@
 .hero-section {
   max-width: 100%;
   margin: 0 auto;
-  padding: 0 clamp(1rem, 5vw, 1, 5rem);
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   overflow: visible;
@@ -24,51 +27,44 @@
   color: var(--text);
 }
 
-.hero-section-title {
+.hero-section-wrapper {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: flex-start;
-  gap: 1rem;
-  max-width: 50vw;
+  align-items: center;
+  max-width: 80vw;
 }
 
 .hero-buttons {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column-reverse;
   gap: 1rem;
   margin-top: 2rem;
 }
 
 .hero-content {
   animation: fadeSwitch 0.3s ease;
+
 }
 
 .hero-buttons a {
   text-decoration: none;
   display: flex;
 }
-/* prevents layout jumping when switching tabs */
-.hero-content {
-  min-height: 9rem; 
-}
 
 .hero-btn {
   padding: 1rem 2rem;
   border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 999px;
-
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(12px);
-
   color: var(--text);
   font-size: 1rem;
   font-weight: 500;
   letter-spacing: 1px;
-
+  width: 100%;
   cursor: pointer;
   transition: all 0.3s ease;
-
   box-shadow:
     0 0 20px rgba(255, 255, 255, 0.08),
     inset 0 0 20px rgba(255, 255, 255, 0.05);
@@ -87,6 +83,10 @@
   flex-direction: column;
   justify-content: center;
 }
+
+  .hero-card-desktop {
+    display: none;
+  }
 /* Project Section */
 .projects {
   position: relative;
@@ -110,23 +110,66 @@
     margin-top: clamp(-25vh, -35vw, -20vh);
   }
 
-  .hero-section {
-    margin-left: -5rem;
+  .hero-card-mobile {
+    display: none;
   }
 
-  .hero-about,
-  .hero-intro {
-  max-width: 80%;
+    .hero-card-desktop {
+    display: block;
+  }
+
+  .hero-name {
+    margin-top: 40%;
+  }
+
+  .hero-section {
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hero-card {
+ margin: 0;
 }
 }
 
 /* Desktop */
-@media (min-width: 64rem) {
+@media (min-width: 70rem) {
   .projects > div:last-child {
     margin-top: -90vh;
   }
 
+  .hero-name {
+    margin-top: 0;
+  }
 
+  .hero-name,
+  .hero-about,
+  .hero-intro {
+    text-align: left;
+  }
+
+  .hero-section {
+    margin-left: -5rem;
+    flex-direction: row;
+  }
+
+  .hero-section-wrapper {
+    max-width: 50vw;
+  }
+
+  .hero-buttons {
+    flex-direction: row;
+    justify-content: flex-start;
+  }
+
+  .hero-btn {
+    width: auto;
+  }
+
+  .hero-about,
+  .hero-intro {
+    max-width: 80%;
+  }
 }
 
 /* Ultrawide screens */

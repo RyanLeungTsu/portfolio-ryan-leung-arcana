@@ -133,58 +133,70 @@
 }
 
 /* arrows for tarotFan.jsx */
-@keyframes zodiac-arrow-bounce {
+@keyframes zodiac-arrow-bounce-left {
   0%,
   100% {
-    transform: translateY(0);
+    transform: translateX(0);
   }
   50% {
-    transform: translateY(-0.5rem);
+    transform: translateX(-0.5rem);
   }
+}
+
+@keyframes zodiac-arrow-bounce-right {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(0.5rem);
+  }
+}
+
+.zodiac-arrow-left {
+  animation: zodiac-arrow-bounce-left 3s ease-in-out infinite;
+}
+
+.zodiac-arrow-right {
+  animation: zodiac-arrow-bounce-right 3s ease-in-out infinite;
 }
 
 .zodiac-arrow {
   cursor: pointer;
-  height: clamp(6rem, 12vw, 7.5rem);
   width: clamp(4rem, 8vw, 5rem);
+  height: clamp(6rem, 12vw, 7.5rem);
   background: none;
   border: none;
   padding: 0;
   display: none;
   position: relative;
   transition: transform 0.1s;
-  animation: zodiac-arrow-bounce 2s ease-in-out infinite;
 }
 
 .zodiac-arrow-top,
 .zodiac-arrow-bottom {
-  background-color: var(--arc-quaternary);
-  height: 0.25rem;
   position: absolute;
   top: 50%;
   width: 100%;
+  height: 0.25rem;
+  background: var(--arc-quaternary);
   overflow: hidden;
 }
 
 .zodiac-arrow-top::after,
 .zodiac-arrow-bottom::after {
-  background-color: var(--text);
   content: "";
-  height: 100%;
   position: absolute;
-  top: 0;
-  transition: all 0.15s;
+  inset: 0;
+  background: var(--text);
+  transform: scaleX(0);
+  transition: transform 0.18s ease;
 }
 
+/* left arrow */
 .zodiac-arrow-left .zodiac-arrow-top {
   transform: rotate(-45deg);
   transform-origin: bottom left;
-}
-
-.zodiac-arrow-left .zodiac-arrow-top::after {
-  left: 100%;
-  right: 0;
-  transition-delay: 0s;
 }
 
 .zodiac-arrow-left .zodiac-arrow-bottom {
@@ -192,33 +204,25 @@
   transform-origin: top left;
 }
 
+.zodiac-arrow-left .zodiac-arrow-top::after,
 .zodiac-arrow-left .zodiac-arrow-bottom::after {
-  left: 100%;
-  right: 0;
-  transition-delay: 0.1s;
+  transform-origin: right;
 }
 
 .zodiac-arrow-left:hover .zodiac-arrow-bottom::after {
-  left: 0;
-  right: 100%;
-  transition-delay: 0.1s;
-}
-
-.zodiac-arrow-left:hover .zodiac-arrow-bottom::after {
-  left: 0;
-  right: 0;
+  transform: scaleX(1);
   transition-delay: 0s;
 }
 
+.zodiac-arrow-left:hover .zodiac-arrow-top::after {
+  transform: scaleX(1);
+  transition-delay: 0.1s;
+}
+
+/* right arrow */
 .zodiac-arrow-right .zodiac-arrow-top {
   transform: rotate(45deg);
   transform-origin: bottom right;
-}
-
-.zodiac-arrow-right .zodiac-arrow-top::after {
-  left: 100%;
-  right: 0;
-  transition-delay: 0s;
 }
 
 .zodiac-arrow-right .zodiac-arrow-bottom {
@@ -226,22 +230,19 @@
   transform-origin: top right;
 }
 
+.zodiac-arrow-right .zodiac-arrow-top::after,
 .zodiac-arrow-right .zodiac-arrow-bottom::after {
-  left: 0;
-  right: 100%;
-  transition-delay: 0.1s;
-}
-
-.zodiac-arrow-right:hover .zodiac-arrow-top::after {
-  left: 0;
-  right: 0;
-  transition-delay: 0.1s;
+  transform-origin: left;
 }
 
 .zodiac-arrow-right:hover .zodiac-arrow-bottom::after {
-  left: 0;
-  right: 0;
+  transform: scaleX(1);
   transition-delay: 0s;
+}
+
+.zodiac-arrow-right:hover .zodiac-arrow-top::after {
+  transform: scaleX(1);
+  transition-delay: 0.1s;
 }
 
 .zodiac-arrow:active {

@@ -34,9 +34,18 @@ function Home() {
     <>
       {/* hero section */}
       <section ref={heroRef} className="hero-section" id="home">
-        <div className="hero-section-title">
+        <div className="hero-section-wrapper">
+          {/* hero title */}
           <h1 className="hero-name">Ryan Leung</h1>
-
+          {/* hero card for mobile layout */}
+          <div className="hero-card hero-card-mobile">
+            {heroInView && shouldAnimate ? (
+              <HeroCard />
+            ) : (
+              <HeroCard paused={true} />
+            )}
+          </div>
+          {/* hero about/intro */}
           <div className="hero-about">
             <div className="hero-content">
               {showAbout ? (
@@ -48,10 +57,10 @@ function Home() {
                 </p>
               ) : (
                 <p className="hero-intro">
-                  Hey, my names Ryan, a BCIT Software Systems Developer graduate.
-                  Welcome to my portfolio! Explore my latest work below, and
-                  let's connect if you have a project you'd like to bring to
-                  life.
+                  Hey, my names Ryan, a BCIT Software Systems Developer
+                  graduate. Welcome to my portfolio! Explore my latest work
+                  below, and let's connect if you have a project you'd like to
+                  bring to life.
                 </p>
               )}
             </div>
@@ -71,7 +80,7 @@ function Home() {
           </div>
         </div>
 
-        <div className="hero-card">
+        <div className="hero-card hero-card-desktop">
           {heroInView && shouldAnimate ? (
             <HeroCard />
           ) : (

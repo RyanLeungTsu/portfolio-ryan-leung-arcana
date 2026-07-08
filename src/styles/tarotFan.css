@@ -84,6 +84,23 @@
   display: none;
 }
 
+/* for mobile column div */
+@media (max-width: 47.99rem) {
+  .fan-fan > div {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .fan-card-wrapper {
+    position: relative;
+    width: clamp(15rem, 85vw, 22rem);
+    height: auto;
+    aspect-ratio: 0.625;
+    transform: none !important;
+  }
+}
+
 /* tablet stylings */
 @media (min-width: 48rem) {
   :root {
