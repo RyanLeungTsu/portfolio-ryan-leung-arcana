@@ -36,7 +36,10 @@ function Home() {
       <section ref={heroRef} className="hero-section" id="home">
         <div className="hero-section-wrapper">
           {/* hero title */}
-          <h1 className="hero-name">Ryan Leung</h1>
+          <div className="hero-title-wrapper">
+            <h1 className="hero-name">Ryan Leung</h1>
+            <sub className="mobile-sub">Web and Software Developer</sub>
+          </div>
           {/* hero card for mobile layout */}
           <div className="hero-card hero-card-mobile">
             {heroInView && shouldAnimate ? (

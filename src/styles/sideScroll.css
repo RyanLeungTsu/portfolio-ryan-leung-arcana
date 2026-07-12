@@ -1,12 +1,20 @@
 .sidebar {
   display: block;
+  min-height: 10vh;
   position: fixed;
+  background-color: var(--arc-border);
   bottom: 0;
   left: 0;
   right: 0;
-  z-index: 999;
+  pointer-events: none;
+  z-index: 999 !important;
   padding: 1rem;
   width: 100%;
+}
+
+.sidebar a,
+.sidebar button {
+  pointer-events: auto; 
 }
 
 .sidebar ul {
@@ -19,19 +27,20 @@
 }
 
 .sidebar li {
+    font-family: "Chillax", sans-serif;
   font-size: 1rem;
-  color: var(--arc-quaternary);
+  font-weight: 500;
+  color: var(--text);
   text-align: center;
 }
 
 .sidebar li.active {
   font-weight: bold;
-  color: var(--arc-quaternary);
 }
 
 .sidebar a {
-  color: var(--arc-quaternary);
   text-decoration: none;
+    color: var(--text);
 }
 
 .scroll-Indicator {
@@ -39,7 +48,7 @@
 }
 
 /* tablet */
-@media (min-width: 40em) {
+@media (min-width: 48em) {
   .sidebar li {
     font-size: 1.5rem;
     font-weight: 200;
@@ -49,6 +58,7 @@
 /* desktop */
 @media (min-width: 60em) {
   .sidebar {
+    background-color: transparent;
     position: fixed;
     top: 50%;
     right: 2.5rem;

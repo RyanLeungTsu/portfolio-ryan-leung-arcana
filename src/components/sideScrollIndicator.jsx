@@ -6,23 +6,19 @@ function Sidebar() {
   const [IndicatorTop, setIndicatorTop] = useState(0);
 
   useEffect(() => {
-    const handleScroll = () => {
-      const sections = Array.from(document.querySelectorAll("section"));
-      let closest = sections[0];
-      let closestDistance = Math.abs(sections[0].getBoundingClientRect().top);
+const handleScroll = () => {
+  const sections = Array.from(document.querySelectorAll("section[id]"));
+  const scrollMid = window.scrollY + window.innerHeight / 2;
 
-      sections.forEach((section) => {
-        const distance = Math.abs(section.getBoundingClientRect().top);
-        if (distance < closestDistance) {
-          closest = section;
-          closestDistance = distance;
-        }
-      });
+  let current = sections[0];
+  sections.forEach((section) => {
+    if (section.offsetTop <= scrollMid) {
+      current = section;
+    }
+  });
 
-      if (closest) {
-        setActiveSection(closest.id);
-      }
-    };
+  if (current) setActiveSection(current.id);
+};
 
     window.addEventListener("scroll", handleScroll);
     handleScroll();
@@ -32,19 +28,18 @@ function Sidebar() {
 
   useEffect(() => {
     const updateIndicator = () => {
-      const sidebar = document.querySelector(".sidebar ul");
+      const nav = document.querySelector(".sidebar");
       const liElements = Array.from(document.querySelectorAll(".sidebar li"));
 
-      if (!sidebar || !liElements.length) return;
+      if (!nav || !liElements.length) return;
 
       const sectionIds = ["home", "projects", "contact"];
       const liIndex = sectionIds.indexOf(activeSection);
 
       if (liIndex !== -1 && liElements[liIndex]) {
-        const activeLi = liElements[liIndex];
-        const sidebarRect = sidebar.getBoundingClientRect();
-        const liRect = activeLi.getBoundingClientRect();
-        const offset = liRect.top - sidebarRect.top + 15;
+        const navRect = nav.getBoundingClientRect();
+        const liRect = liElements[liIndex].getBoundingClientRect();
+        const offset = liRect.top - navRect.top + liRect.height / 2;
         setIndicatorTop(offset);
       }
     };
@@ -74,15 +69,18 @@ function Sidebar() {
           </a>
         </li>
       </ul>
-<div
-  className="scroll-Indicator"
-  style={{ top: `${IndicatorTop}px` }}
-  aria-hidden="true"
->
-<svg viewBox="0 0 100 100" width="50">
-    <path d="M50 10 L60 40 L90 50 L60 60 L50 90 L40 60 L10 50 L40 40 Z" fill="currentColor"/>
-  </svg>
-</div>
+      <div
+        className="scroll-Indicator"
+        style={{ top: `${IndicatorTop}px` }}
+        aria-hidden="true"
+      >
+        <svg viewBox="0 0 100 100" width="50">
+          <path
+            d="M50 10 L60 40 L90 50 L60 60 L50 90 L40 60 L10 50 L40 40 Z"
+            fill="currentColor"
+          />
+        </svg>
+      </div>
     </nav>
   );
 }

@@ -1,6 +1,6 @@
 /* widget */
 .vinyl-widget {
-  display: flex;
+  display: none;
   flex-direction: column;
   align-items: center;
   gap: 0.5rem;
@@ -9,6 +9,7 @@
 
 @media (min-width: 48rem) {
   .vinyl-widget {
+    display: flex;
     position: fixed;
     bottom: 1.5rem;
     left: 1.5rem;
@@ -74,10 +75,10 @@
   transition: transform 0.08s ease-out;
 }
 
-  .vinyl-disc-group {
-    width: 10.625rem;
-    height: 10.625rem;
-  }
+.vinyl-disc-group {
+  width: 10.625rem;
+  height: 10.625rem;
+}
 
 .vinyl-disc-group--spinning {
   animation-play-state: running;
@@ -183,7 +184,7 @@
 /* track title */
 .vinyl-track-info {
   position: absolute;
-  margin-top: -1rem ;
+  margin-top: -1rem;
   width: 10rem;
   z-index: 4;
   background: none;
@@ -198,6 +199,7 @@
 }
 
 .vinyl-track-title-sub {
+  font-family: "Chillax", sans-serif;
   font-size: clamp(0.5rem, 4vw, 1rem);
   margin: 0 auto;
 }
@@ -207,20 +209,21 @@
   color: white;
   font-weight: 700;
   letter-spacing: 0.06em;
-  margin: 0;;
+  margin: 0;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   text-shadow:
-    0.04rem  0.04rem 0rem rgba(0, 0, 0, 1),
-    0.08rem  0.08rem 0rem rgba(0, 0, 0, 0.9),
-    0.13rem  0.13rem 0rem rgba(0, 0, 0, 0.7),
-    0.18rem  0.18rem 0rem rgba(0, 0, 0, 0.5),
-    0.22rem  0.22rem 0rem rgba(0, 0, 0, 0.3);
+    0.04rem 0.04rem 0rem rgba(0, 0, 0, 1),
+    0.08rem 0.08rem 0rem rgba(0, 0, 0, 0.9),
+    0.13rem 0.13rem 0rem rgba(0, 0, 0, 0.7),
+    0.18rem 0.18rem 0rem rgba(0, 0, 0, 0.5),
+    0.22rem 0.22rem 0rem rgba(0, 0, 0, 0.3);
 }
 
 /* listen along popup */
 .vinyl-listen-popup {
+  color: white;
   width: 16.25rem;
   padding: 1rem;
   border-radius: 0.75rem;
@@ -234,6 +237,7 @@
 }
 
 .vinyl-listen-info {
+  font-family: "Chillax", sans-serif;
   font-size: 0.7rem;
   opacity: 0.6;
   text-transform: uppercase;
@@ -260,12 +264,13 @@
 }
 
 .vinyl-listen-btn {
+  font-family: "Chillax", sans-serif;
   display: inline-block;
   padding: 0.5rem 0.875rem;
   border-radius: 1.25rem;
   background: #1db954;
   color: #000;
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: 600;
   text-decoration: none;
   text-align: center;

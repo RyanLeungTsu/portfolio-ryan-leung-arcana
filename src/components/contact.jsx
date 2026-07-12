@@ -8,10 +8,10 @@ function Contact() {
       <div className="contact-wrapper">
         <div className="contact-body">
           <h1 className="contact-title">Get in Touch</h1>
-          <sub>
+          <p className="contact-body-text">
             Got a project in mind, or a question? Send me an e-mail! I'm always
             looking for more collaboration as well as meeting new people!
-          </sub>
+          </p>
         </div>
         <ContactForm />
       </div>
