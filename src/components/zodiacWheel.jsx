@@ -3,19 +3,21 @@ import arcDayCompass from "../assets/svg-components/misc/arc-day-compass.svg";
 import arcMoonCompass from "../assets/svg-components/misc/arc-moon-compass.svg";
 import ConstellationsCycle from "./constellation";
 import {
-  FaReact,
-  FaNode,
-  FaPython,
-  FaJsSquare,
+  FaHtml5,
   FaCss3Alt,
-  FaGitAlt,
-  FaDatabase,
-  FaFigma,
-  FaLinux,
-  FaDocker,
+  FaJsSquare,
+  FaReact,
   FaGithub,
-  FaTerminal,
+  FaFigma,
+  FaDocker,
 } from "react-icons/fa";
+import {
+  SiTypescript,
+  SiNodedotjs,
+  SiPhp,
+  SiWordpress,
+  SiMysql,
+} from "react-icons/si";
 import "../styles/zodiacWheel.css";
 
 function ZodiacWheel({ onArrowClick }) {
@@ -37,18 +39,18 @@ function ZodiacWheel({ onArrowClick }) {
   const compassSvg = theme === "day" ? arcDayCompass : arcMoonCompass;
 
   const techIcons = [
-    FaReact,
-    FaNode,
-    FaPython,
-    FaJsSquare,
+    FaHtml5,
     FaCss3Alt,
-    FaGitAlt,
-    FaDatabase,
-    FaFigma,
-    FaLinux,
-    FaDocker,
+    FaJsSquare,
+    SiTypescript,
+    FaReact,
+    SiNodedotjs,
+    SiPhp,
+    SiWordpress,
+    SiMysql,
     FaGithub,
-    FaTerminal,
+    FaFigma,
+    FaDocker,
   ];
 
   return (

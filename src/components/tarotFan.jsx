@@ -21,6 +21,9 @@ import northernShaolinImgLarge from "../assets/media/northern-shaolin-lrg.webp";
 import triviaImgSmall from "../assets/media/trivia-app-small.webp";
 import triviaImgMed from "../assets/media/trivia-app-med.webp";
 import triviaImgLarge from "../assets/media/trivia-app-lrg.webp";
+import kpcImgSmall from "../assets/media/kelvin-physio-small.webp";
+import kpcImgMed from "../assets/media/kelvin-physio-med.webp";
+import kpcImgLarge from "../assets/media/kelvin-physio-lrg.webp";
 
 const projectsData = [
   {
@@ -88,6 +91,23 @@ const projectsData = [
       alt: "Northern Shaolin project preview",
     },
     variation: 1,
+  },
+    {
+    id: "kelvin-physio",
+    number: "V",
+    title: "Kelvin Physio Clinic",
+    subtitle: "Wordpress Site · 2026",
+    description:
+      "Kelvin Physio clinic website",
+    tags: ["Wordpress", "JavaScript", "Figma"],
+    link: "/projects/kelvin-physio",
+    image: {
+      src: kpcImgMed,
+      srcSet: `${kpcImgSmall} 480w, ${kpcImgMed} 1920w, ${kpcImgLarge} 2080w`,
+      sizes: "(max-width: 480px) 100vw, (max-width: 1920px) 50vw, 33vw",
+      alt: "LuxeLine Automotives project preview",
+    },
+    variation: 2,
   },
 ];
 

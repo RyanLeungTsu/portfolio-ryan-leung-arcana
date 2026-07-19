@@ -14,6 +14,7 @@ import {
   SiTailwindcss,
   SiSupabase,
   SiReact,
+  SiPhp,
 } from "react-icons/si";
 import ThemeToggle from "../components/themeToggle";
 import CelestialBackground from "../components/background";
@@ -32,6 +33,9 @@ import shaolinLrg from "../assets/media/northern-shaolin-lrg.webp";
 import triviaSmall from "../assets/media/trivia-app-small.webp";
 import triviaMed from "../assets/media/trivia-app-med.webp";
 import triviaLrg from "../assets/media/trivia-app-lrg.webp";
+import kpcImgSmall from "../assets/media/kelvin-physio-small.webp";
+import kpcImgMed from "../assets/media/kelvin-physio-med.webp";
+import kpcImgLarge from "../assets/media/kelvin-physio-lrg.webp";
 
 const projectsData = [
   {
@@ -46,14 +50,14 @@ const projectsData = [
     description:
       "A full-stack web app for creating and playing custom Jeopardy-style quiz boards, built with Next.js and TypeScript on the frontend. UI is styled entirely with Tailwind CSS. State management is handled by Zustand. Media (images, audio, video) is stored in the browser's IndexedDB for guests and migrates to Supabase Storage on sign in. Board data persists to localStorage for guests and Supabase PostgreSQL for signed in users, with Google OAuth handled via Supabase Auth. Features include a drag-and-drop slide editor powered by react-rnd, board import/export via JSZip, a canvas-based animated day/night background, and a featured board system that lets me publish monthly boards for anyone to play without signing in.",
     tools: [
-      <FaHtml5 key="html" />,
-      <FaJsSquare key="js" />,
-      <FaFigma key="figma" />,
-      <SiNextdotjs key="next" />,
-      <SiTypescript key="ts" />,
-      <SiTailwindcss key="tailwind" />,
-      <SiSupabase key="supabase" />,
-      <SiReact key="react" />,
+      <FaHtml5 key="html" aria-label="HTML5" title="HTML5" />,
+      <FaJsSquare key="js" aria-label="JavaScript" title="JavaScript" />,
+      <FaFigma key="figma" aria-label="Figma" title="Figma" />,
+      <SiNextdotjs key="next" aria-label="Next.js" title="Next.js" />,
+      <SiTypescript key="ts" aria-label="TypeScript" title="TypeScript" />,
+      <SiTailwindcss key="tailwind" aria-label="Tailwind CSS" title="Tailwind CSS" />,
+      <SiSupabase key="supabase" aria-label="Supabase" title="Supabase" />,
+      <SiReact key="react" aria-label="React" title="React" />,
     ],
     link: "https://trivia-projects.vercel.app",
   },
@@ -69,10 +73,10 @@ const projectsData = [
     description:
       "This car dealership website is built on WordPress as the backend CMS, leveraging custom post types and taxonomies to manage vehicle listings, including attributes like make, model, fuel type, transmission, and price range. The frontend integrates a React-based filtering interface that communicates with the WordPress REST API or a custom GraphQL layer to fetch and display filtered vehicle data in real time.",
     tools: [
-      <FaHtml5 key="html" />,
-      <FaJsSquare key="js" />,
-      <FaWordpress key="wp" />,
-      <FaFigma key="figma" />,
+      <FaHtml5 key="html" aria-label="HTML5" title="HTML5" />,
+      <FaJsSquare key="js" aria-label="JavaScript" title="JavaScript" />,
+      <FaWordpress key="wp" aria-label="WordPress" title="WordPress" />,
+      <FaFigma key="figma" aria-label="Figma" title="Figma" />,
     ],
     link: "https://luxelineautomotives.bcitwebdeveloper.ca",
   },
@@ -87,7 +91,10 @@ const projectsData = [
     },
     description:
       "My Tokyo site is a city-focused webpage built using semantic HTML5 and modern CSS, designed to highlight the cultural landmarks, neighborhoods, and experiences unique to Tokyo. The layout is structured with header, main, section, and footer elements to ensure clear content organization and accessibility. I utilized flexbox and CSS to create a responsive, multi-column design that adapts smoothly across mobile, tablet, and desktop viewports using media queries.",
-    tools: [<FaHtml5 key="html" />, <FaCss3Alt key="css" />],
+    tools: [
+      <FaHtml5 key="html" aria-label="HTML5" title="HTML5" />,
+      <FaCss3Alt key="css" aria-label="CSS3" title="CSS3" />,
+    ],
     link: "https://ryanleungdev.com/country-website/",
   },
   {
@@ -102,10 +109,31 @@ const projectsData = [
     description:
       "The Northern Shaolin Kung-Fu school website is being developed as a headless architecture, using WordPress as a backend CMS for content management and React on the frontend for a fast, dynamic user experience. Structured content such as class schedules, lineage history, instructor bios, and media galleries are managed via custom WordPress REST API endpoints and Advanced Custom Fields.",
     tools: [
-      <FaHtml5 key="html" />,
-      <FaCss3Alt key="css" />,
-      <FaWordpress key="wp" />,
-      <FaFigma key="figma" />,
+      <FaHtml5 key="html" aria-label="HTML5" title="HTML5" />,
+      <FaCss3Alt key="css" aria-label="CSS3" title="CSS3" />,
+      <FaWordpress key="wp" aria-label="WordPress" title="WordPress" />,
+      <FaFigma key="figma" aria-label="Figma" title="Figma" />,
+    ],
+    link: "https://ryanleungdev.com/northern-shaolin-kungfu/",
+  },
+  {
+    id: "kelvin-physio",
+    title: "Kelvin Physiotherapy Clinic",
+    subtitle: "Wordpress · 2026",
+    image: {
+      srcSet: `${kpcImgSmall} 480w, ${kpcImgMed} 1920w, ${kpcImgLarge} 2080w`,
+      sizes: "(max-width: 480px) 480px, (max-width: 1920px) 1920px, 2080px",
+      alt: "Kelvin Physiotherapy Clinic Project Image",
+    },
+    description:
+      "Website made for Kelvin Physiotherapy Clinic, using WordPress as a backend CMS for content management and React on the frontend for a fast, dynamic user experience. Structured content such as rates, the companies mission, staff bios, and media galleries are managed via custom WordPress REST API endpoints and Advanced Custom Fields.",
+    tools: [
+      <FaJsSquare key="js" aria-label="JavaScript" title="JavaScript" />,
+      <SiPhp key="php" aria-label="PhP" title="PhP"/>,
+      <FaHtml5 key="html" aria-label="HTML5" title="HTML5"/>,
+      <FaCss3Alt key="css" aria-label="Css" title="Css" />,
+      <FaWordpress key="wp" aria-label="WordPress" title="WordPress" />,
+      <FaFigma key="figma" aria-label="Figma" title="Figma" />,
     ],
     link: "https://ryanleungdev.com/northern-shaolin-kungfu/",
   },

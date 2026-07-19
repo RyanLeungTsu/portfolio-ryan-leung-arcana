@@ -47,6 +47,10 @@
   max-width: 80vw;
 }
 
+  .hero-card-mobile {
+    
+  }
+
 .hero-buttons {
   display: flex;
   flex-direction: column-reverse;

@@ -1,4 +1,35 @@
-import React, { useState, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
+import {
+  FaHtml5,
+  FaCss3Alt,
+  FaJsSquare,
+  FaReact,
+  FaGithub,
+  FaFigma,
+  FaDocker,
+} from "react-icons/fa";
+import {
+  SiTypescript,
+  SiNodedotjs,
+  SiPhp,
+  SiWordpress,
+  SiMysql,
+} from "react-icons/si";
+
+const iconMap = {
+  HTML5: FaHtml5,
+  CSS3: FaCss3Alt,
+  JavaScript: FaJsSquare,
+  TypeScript: SiTypescript,
+  React: FaReact,
+  "Node.js": SiNodedotjs,
+  PHP: SiPhp,
+  WordPress: SiWordpress,
+  MySQL: SiMysql,
+  GitHub: FaGithub,
+  Figma: FaFigma,
+  Docker: FaDocker,
+};
 
 const normalizeConstellation = (stars) => {
   if (stars.length === 0) return stars;
@@ -24,8 +55,8 @@ const normalizeConstellation = (stars) => {
 // constellations
 const constellations = [
   {
-    name: "Aries",
-    subtitle: "The Ram",
+    name: "HTML5",
+    subtitle: "The Foundation",
     stars: normalizeConstellation([
       { x: 10, y: 20 },
       { x: 50, y: 30 },
@@ -39,8 +70,8 @@ const constellations = [
     ],
   },
   {
-    name: "Taurus",
-    subtitle: "The Bull",
+    name: "CSS3",
+    subtitle: "The Weaver",
     stars: normalizeConstellation([
       { x: 10, y: 20 },
       { x: 40, y: 45 },
@@ -66,8 +97,8 @@ const constellations = [
     ],
   },
   {
-    name: "Gemini",
-    subtitle: "The Twins",
+    name: "JavaScript",
+    subtitle: "The Spark",
     stars: normalizeConstellation([
       { x: 10, y: 40 },
       { x: 15, y: 30 },
@@ -96,8 +127,8 @@ const constellations = [
     ],
   },
   {
-    name: "Cancer",
-    subtitle: "The Crab",
+    name: "TypeScript",
+    subtitle: "The Sage",
     stars: normalizeConstellation([
       { x: 60, y: 10 },
       { x: 63, y: 35 },
@@ -113,8 +144,8 @@ const constellations = [
     ],
   },
   {
-    name: "Leo",
-    subtitle: "The Lion",
+    name: "React",
+    subtitle: "The Architect",
     stars: normalizeConstellation([
       { x: 20, y: 70 },
       { x: 35, y: 45 },
@@ -139,8 +170,8 @@ const constellations = [
     ],
   },
   {
-    name: "Virgo",
-    subtitle: "The Virgin",
+    name: "Node.js",
+    subtitle: "The Nexus",
     stars: normalizeConstellation([
       { x: 60, y: 5 },
       { x: 70, y: 15 },
@@ -175,8 +206,8 @@ const constellations = [
     ],
   },
   {
-    name: "Libra",
-    subtitle: "The Scales",
+    name: "PHP",
+    subtitle: "The Keeper",
     stars: normalizeConstellation([
       { x: 50, y: 5 },
       { x: 70, y: 30 },
@@ -198,8 +229,8 @@ const constellations = [
     ],
   },
   {
-    name: "Scorpius",
-    subtitle: "The Scorpion",
+    name: "Wordpress",
+    subtitle: "The Scribe",
     stars: normalizeConstellation([
       { x: 90, y: 20 },
       { x: 85, y: 15 },
@@ -233,8 +264,8 @@ const constellations = [
     ],
   },
   {
-    name: "Sagittarius",
-    subtitle: "The Archer",
+    name: "MySQL",
+    subtitle: "The Archive",
     stars: normalizeConstellation([
       { x: 35, y: 95 },
       { x: 40, y: 100 },
@@ -282,8 +313,8 @@ const constellations = [
     ],
   },
   {
-    name: "Capricornus",
-    subtitle: "The Goat",
+    name: "GitHub",
+    subtitle: "The Chronicle",
     stars: normalizeConstellation([
       { x: 10, y: 20 },
       { x: 15, y: 21 },
@@ -308,8 +339,8 @@ const constellations = [
     ],
   },
   {
-    name: "Aquarius",
-    subtitle: "The Water Bearer",
+    name: "Figma",
+    subtitle: "The Visionary",
     stars: normalizeConstellation([
       { x: 10, y: 90 },
       { x: 20, y: 75 },
@@ -341,8 +372,8 @@ const constellations = [
     ],
   },
   {
-    name: "Pisces",
-    subtitle: "The Fish",
+    name: "Docker",
+    subtitle: "The Voyager",
     stars: normalizeConstellation([
       { x: 0, y: 25 },
       { x: 5, y: 30 },
@@ -409,6 +440,8 @@ function ConstellationsCycle() {
       <h2 className="constellation-title" style={{ opacity: fadeIn ? 1 : 0 }}>
         {current.name} - {current.subtitle}
       </h2>
+
+      
 
       <svg
         className="constellation-svg"

@@ -10,6 +10,7 @@
   z-index: 999 !important;
   padding: 1rem;
   width: 100%;
+  box-shadow: 0 -0.5rem 2rem var(--arc-ink);
 }
 
 .sidebar a,
@@ -27,7 +28,7 @@
 }
 
 .sidebar li {
-    font-family: "Chillax", sans-serif;
+  letter-spacing: 0.2rem;
   font-size: 1rem;
   font-weight: 500;
   color: var(--text);
@@ -68,6 +69,7 @@
     z-index: 10;
     padding: 0;
     width: auto;
+      box-shadow: none;
   }
 
   .sidebar ul {
