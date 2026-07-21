@@ -150,7 +150,7 @@
 }
 
 /* Desktop */
-@media (min-width: 70rem) {
+@media (min-width: 70rem) and (orientation: landscape){
   .projects > div:last-child {
     margin-top: -90vh;
   }

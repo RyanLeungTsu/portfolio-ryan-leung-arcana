@@ -57,13 +57,14 @@
 
 .zodiac-icon {
   position: absolute;
-  width: clamp(1.5rem, 4vw, 2.5rem);
-  height: clamp(1.5rem, 4vw, 2.5rem);
+  width: clamp(1rem, 6vw, 6rem);
+  height: clamp(1rem, 6vw, 6rem);
   display: flex;
   align-items: center;
   justify-content: center;
   transform: translate(-50%, -50%);
 }
+
 
 .zodiac-icon svg {
   width: 100%;
@@ -92,7 +93,7 @@
   font-size: clamp(1rem, 4vw, 2rem);
   margin: 0;
   position: absolute;
-  top: 45%;
+  top: 22%;
   left: 50%;
   transform: translateX(-50%);
   transition: opacity 2s ease-in-out;
@@ -138,6 +139,16 @@
   width: clamp(8rem, 25vw, 14rem) !important;
   height: clamp(8rem, 25vw, 14rem) !important;
   overflow: visible;
+}
+
+/* constellation Icon */
+.constellation-icon {
+  opacity: 0;
+  transition: opacity 2s ease;
+}
+
+.constellation-icon.show {
+  opacity: 0.05;
 }
 
 /* arrows for tarotFan.jsx */
@@ -257,26 +268,64 @@
   transform: scale(0.9);
 }
 
-@media (min-width: 48rem) {
+/* tablet */
+@media (min-width: 40rem) {
   .zodiac-wheel-container {
     padding: clamp(1.5rem, 3vw, 2.5rem) 0;
   }
 
   .zodiac-wheel-wrapper {
+    margin-top: -40rem;
     width: clamp(20rem, 45vw, 32rem);
   }
 
   .zodiac-arrow {
+        margin-top: -40rem;
     display: block;
   }
 }
 
+/* desktop */
 @media (min-width: 64rem) {
   .zodiac-wheel-container {
     padding: clamp(2rem, 4vw, 3rem) 0;
   }
 
   .zodiac-wheel-wrapper {
+    margin: 0;
     width: clamp(24rem, 50vw, 36rem);
   }
+
+    .zodiac-arrow {
+     margin: 0;
+    display: block;
+  }
 }
+
+/* temp */
+/* .constellation-controls {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+
+  display: flex;
+  justify-content: space-between;
+
+  transform: translateY(-50%);
+  pointer-events: none;
+  z-index: 20;
+}
+
+.constellation-controls button {
+  pointer-events: auto;
+
+  width: 48px;
+  height: 48px;
+
+  border-radius: 50%;
+  border: 1px solid var(--arc-quaternary);
+  background: rgba(0, 0, 0, 0.35);
+  color: var(--arc-tertiary);
+  cursor: pointer;
+} */

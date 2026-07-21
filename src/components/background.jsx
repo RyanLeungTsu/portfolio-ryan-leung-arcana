@@ -494,6 +494,8 @@ function makeConstellationInstance(constellation, W, H) {
     targetOpacity: 0,
     fadeTimer: Math.random() * 6,
     randomOffset: Math.random() * 10,
+    vx: (Math.random() - 0.5) * 0.05,
+    vy: (Math.random() - 0.5) * 0.05,
   };
 }
 
@@ -570,7 +572,18 @@ function CelestialBackground({ paused = false }) {
       const constellationNames = CONSTELLATION_MAP[theme];
       constellationsRef.current = constellationNames.map((name) => {
         const constellation = constellations.find((c) => c.name === name);
-        return makeConstellationInstance(constellation, W, H);
+        const instance = makeConstellationInstance(constellation, W, H);
+
+        const pos = findConstellationPosition(
+          W,
+          H,
+          constellationsRef.current.concat(instance),
+        );
+
+        instance.x = pos.x;
+        instance.y = pos.y;
+
+        return instance;
       });
     }
 
@@ -613,7 +626,7 @@ function CelestialBackground({ paused = false }) {
           : { line: "rgba(202, 217, 255, 1)", star: "rgba(202, 217, 255, 1)" };
 
       ctx.save();
-      ctx.globalAlpha = c.opacity * 0.3;
+      ctx.globalAlpha = c.opacity * 0.05;
       ctx.translate(x, y);
       ctx.scale(scale, scale);
 
@@ -622,7 +635,7 @@ function CelestialBackground({ paused = false }) {
         const star2 = constellation.stars[line[1]];
         ctx.strokeStyle = colors.line;
         ctx.lineWidth = 1;
-        ctx.globalAlpha = c.opacity * 0.3;
+        ctx.globalAlpha = c.opacity * 0.05;
         ctx.beginPath();
         ctx.moveTo(star1.x, star1.y);
         ctx.lineTo(star2.x, star2.y);
@@ -630,18 +643,32 @@ function CelestialBackground({ paused = false }) {
       });
 
       constellation.stars.forEach((star, idx) => {
-        const blinkSpeed = 0.05 + idx * 0.017;
-        const blink = Math.sin(timeRef.current * blinkSpeed) * 0.5 + 0.5;
+        const blinkSpeed = 0.04 + Math.random() * 0.08;
+
+        star.phase ??= Math.random() * Math.PI * 2;
+        star.speed ??= blinkSpeed;
+
+        star.sparkle ??= 0;
+
+        if (Math.random() < 0.0015) {
+          star.sparkle = 1;
+        }
+
+        star.sparkle *= 0.94;
+
+        const blink =
+          Math.sin(timeRef.current * star.speed + star.phase) * 0.5 + 0.5;
         const glowIntensity = 0.3 + (idx % 7) * 0.1;
 
         ctx.fillStyle = colors.star;
-        ctx.globalAlpha = c.opacity * 0.7 * blink;
+        ctx.globalAlpha =
+          c.opacity * (0.55 + blink * 0.25 + star.sparkle * 0.2);
         ctx.beginPath();
         ctx.arc(star.x, star.y, 1, 0, Math.PI * 2);
         ctx.fill();
 
         ctx.fillStyle = colors.star;
-        ctx.globalAlpha = c.opacity * 0.2 * glowIntensity;
+        ctx.globalAlpha = c.opacity * 0.15 * glowIntensity;
         ctx.beginPath();
         ctx.arc(star.x, star.y, 3, 0, Math.PI * 2);
         ctx.fill();
@@ -650,14 +677,93 @@ function CelestialBackground({ paused = false }) {
       ctx.restore();
     }
 
+    function findConstellationPosition(W, H, consts) {
+      const margin = 180;
+      const centerRadius = Math.min(W, H) * 0.22;
+      const minDistance = 320;
+
+      for (let attempt = 0; attempt < 40; attempt++) {
+        let x, y;
+
+        // for cosntellations to gravitate towards edge
+        if (Math.random() < 0.90) {
+          const side = Math.floor(Math.random() * 4);
+
+          switch (side) {
+            case 0: 
+              x = Math.random() * W;
+              y = margin * Math.random();
+              break;
+
+            case 1: 
+              x = Math.random() * W;
+              y = H - margin * Math.random();
+              break;
+
+            case 2: 
+              x = margin * Math.random();
+              y = Math.random() * H;
+              break;
+
+            default: 
+              x = W - margin * Math.random();
+              y = Math.random() * H;
+          }
+        } else {
+          x = Math.random() * W;
+          y = Math.random() * H;
+        }
+
+        // constellations will not be incenter and grafvitate towards the edges more
+        const dx = x - W / 2;
+        const dy = y - H / 2;
+
+        if (Math.sqrt(dx * dx + dy * dy) < centerRadius) {
+          continue;
+        }
+
+        // avoids overlapping the other constellations
+        let valid = true;
+
+        for (const other of consts) {
+          if (other.opacity < 0.05) continue;
+
+          const ox = x - other.x;
+          const oy = y - other.y;
+
+          if (Math.sqrt(ox * ox + oy * oy) < minDistance) {
+            valid = false;
+            break;
+          }
+        }
+
+        if (valid) {
+          return { x, y };
+        }
+      }
+
+      return {
+        x: Math.random() * W,
+        y: Math.random() * H,
+      };
+    }
+
     function updateConstellations() {
       const consts = constellationsRef.current;
       // max constellations shown
-      const MAX_VISIBLE = 5;
+      const MAX_VISIBLE = 3;
       const MIN_VISIBLE = 2;
 
       consts.forEach((c) => {
         c.fadeTimer += 0.01;
+        c.x += c.vx;
+        c.y += c.vy;
+
+        if (c.x < -120) c.x = W + 120;
+        if (c.x > W + 120) c.x = -120;
+
+        if (c.y < -120) c.y = H + 120;
+        if (c.y > H + 120) c.y = -120;
         c.randomOffset = c.randomOffset || Math.random() * 10;
         c.state = c.state || "waiting";
       });
@@ -668,10 +774,21 @@ function CelestialBackground({ paused = false }) {
       let activeTransitions = 0;
 
       sorted.forEach((c, idx) => {
+        const cycle = 10 + c.randomOffset;
+        const phase = (c.fadeTimer % cycle) / cycle;
         if (idx < MAX_VISIBLE) {
           // random anims for fading in/out
-          const cycle = 5 + c.randomOffset;
-          const phase = (c.fadeTimer % cycle) / cycle;
+          if (c.opacity < 0.02 && c.state === "waiting") {
+            c.randomOffset = Math.random() * 20;
+            c.fadeTimer = Math.random() * 40;
+
+            const pos = findConstellationPosition(W, H, consts);
+            c.x = pos.x;
+            c.y = pos.y;
+
+            c.vx = (Math.random() - 0.5) * 0.05;
+            c.vy = (Math.random() - 0.5) * 0.05;
+          }
 
           if (phase < 0.4 && activeTransitions === 0) {
             c.state = "fadingIn";

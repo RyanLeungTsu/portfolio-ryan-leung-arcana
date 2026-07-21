@@ -69,11 +69,13 @@ function ZodiacWheel({ onArrowClick }) {
 
         <div className="zodiac-icons-ring">
           {techIcons.map((Icon, i) => {
-            const angle = (i * 30 + 15 - 90) * (Math.PI / 180);
+            const angle = i * 30 + 15;
+            const radians = (angle - 90) * (Math.PI / 180);
+
             const radius = 42;
-            const x = 50 + radius * Math.cos(angle);
-            const y = 50 + radius * Math.sin(angle);
-            const rotation = i * 30 + 15 + 90;
+
+            const x = 50 + radius * Math.cos(radians);
+            const y = 50 + radius * Math.sin(radians);
 
             return (
               <div
@@ -82,17 +84,22 @@ function ZodiacWheel({ onArrowClick }) {
                 style={{
                   left: `${x}%`,
                   top: `${y}%`,
-                  transform: `translate(-50%, -50%) rotate(${rotation}deg)`,
                 }}
               >
-                <Icon
-                  size={24}
+                <div
+                  className="zodiac-icon-rotation"
                   style={{
-                    color: "var(--arc-tertiary)",
-                    filter: "drop-shadow(0 0 1px var(--arc-primary))",
-                    transform: `rotate(-${rotation}deg)`,
+                    transform: `rotate(${angle}deg)`,
                   }}
-                />
+                >
+                  <Icon
+                    size={36}
+                    style={{
+                      color: "var(--arc-tertiary)",
+                      filter: "drop-shadow(0 0 1px var(--arc-primary))",
+                    }}
+                  />
+                </div>
               </div>
             );
           })}

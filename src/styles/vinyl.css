@@ -7,9 +7,20 @@
   margin: 0 auto;
 }
 
-@media (min-width: 48rem) {
+@media (min-width: 30rem) and (max-width: 49.9rem)  {
   .vinyl-widget {
     display: flex;
+    position: fixed;
+    bottom: 15%;
+    left: 1rem;
+    z-index: 100;
+  }
+}
+
+
+@media (min-width: 50rem) and (orientation: landscape) {
+  .vinyl-widget {
+        display: flex;
     position: fixed;
     bottom: 1.5rem;
     left: 1.5rem;
@@ -19,6 +30,13 @@
     padding: 2rem;
     bottom: calc(1.5rem - 1rem);
     left: calc(1.5rem - 1rem);
+  }
+}
+
+@media (min-width: 120rem) {
+  .vinyl-widget {
+    scale: 1.5;
+    margin: 4.5rem;
   }
 }
 
@@ -82,15 +100,6 @@
 
 .vinyl-disc-group--spinning {
   animation-play-state: running;
-}
-
-@keyframes vinyl-spin {
-  from {
-    transform: translateY(-50%) rotate(0deg);
-  }
-  to {
-    transform: translateY(-50%) rotate(360deg);
-  }
 }
 
 .vinyl-disc-img {
@@ -281,6 +290,12 @@
   background: #1ed760;
 }
 
+@media (min-width: 64rem) {
+  .vinyl-listen-popup {
+    width: 17.5rem;
+  }
+}
+
 /* embed popup */
 .vinyl-spotify-popup {
   width: 18.75rem;
@@ -301,22 +316,28 @@
   transform: translateY(0);
 }
 
+@media (min-width: 64rem) {
+  .vinyl-spotify-popup {
+    width: 20rem;
+  }
+}
+
 /* popup cta */
 .popup-cta {
   font-size: clamp(0.75rem, 4vw, 1.25rem);
   align-items: center;
 }
 
-@media (min-width: 64rem) {
-  .vinyl-spotify-popup {
-    width: 20rem;
+/* animations */
+@keyframes vinyl-spin {
+  from {
+    transform: translateY(-50%) rotate(0deg);
   }
-  .vinyl-listen-popup {
-    width: 17.5rem;
+  to {
+    transform: translateY(-50%) rotate(360deg);
   }
 }
 
-/* animations */
 @keyframes vinyl-popup-in {
   from {
     opacity: 0;
@@ -325,12 +346,5 @@
   to {
     opacity: 1;
     transform: translateY(0);
-  }
-}
-
-@media (min-width: 120rem) {
-  .vinyl-widget {
-    scale: 1.5;
-    margin: 4.5rem;
   }
 }
