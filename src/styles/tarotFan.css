@@ -54,6 +54,7 @@
   align-items: center;
   justify-content: center;
   transform: none;
+  transform-style: preserve-3d;
 }
 
 /* Card flip animation */

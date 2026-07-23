@@ -92,13 +92,12 @@ const projectsData = [
     },
     variation: 1,
   },
-    {
+  {
     id: "kelvin-physio",
     number: "V",
     title: "Kelvin Physio Clinic",
     subtitle: "Wordpress Site · 2026",
-    description:
-      "Kelvin Physio clinic website",
+    description: "Kelvin Physio clinic website",
     tags: ["Wordpress", "JavaScript", "Figma"],
     link: "/projects/kelvin-physio",
     image: {
@@ -180,7 +179,7 @@ const TarotFan = React.forwardRef(({ paused = false }, ref) => {
     });
 
     return () => observer.disconnect();
-  }, [isMobile]);
+  }, [isMobile, visibleCount]);
 
   useEffect(() => {
     if (!isMobile) return;
@@ -327,7 +326,7 @@ const TarotFan = React.forwardRef(({ paused = false }, ref) => {
       return {
         transform: `translateX(${translateX}rem) rotateZ(${rotation}deg) translateY(${translateY}rem)`,
         opacity: opacity,
-        transition: `transform 0.5s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.01s ${opacity === 0 ? "0.5s" : "0s"}`,
+        transition: `transform 0.5s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.01s ${opacity === 0 ? "0.7s" : "0s"}`,
         zIndex: visibleCards - Math.abs(normalizedIndex),
       };
     },
@@ -369,6 +368,7 @@ const TarotFan = React.forwardRef(({ paused = false }, ref) => {
       return projectsData.slice(0, visibleCount).map((project, idx) => ({
         project,
         actualIndex: idx,
+        slot: idx, 
       }));
     }
 
@@ -383,6 +383,7 @@ const TarotFan = React.forwardRef(({ paused = false }, ref) => {
       projects.push({
         project: projectsData[idx],
         actualIndex: currentIndex + i,
+        slot: i, 
       });
     }
     return projects;
@@ -399,11 +400,11 @@ const TarotFan = React.forwardRef(({ paused = false }, ref) => {
           onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEnd}
         >
-          {visibleProjects.map(({ project, actualIndex }) => {
+          {visibleProjects.map(({ project, actualIndex, slot }) => {
             if (isMobile) {
               return (
                 <div
-                  key={`${project.id}-${actualIndex}`}
+                  key={`slot-${slot}`}
                   ref={(el) => {
                     if (el) cardRefsRef.current[actualIndex] = el;
                   }}

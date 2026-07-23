@@ -5,26 +5,38 @@ function Sidebar() {
   const [activeSection, setActiveSection] = useState("home");
   const [IndicatorTop, setIndicatorTop] = useState(0);
 
-  useEffect(() => {
-const handleScroll = () => {
-  const sections = Array.from(document.querySelectorAll("section[id]"));
-  const scrollMid = window.scrollY + window.innerHeight / 2;
+ useEffect(() => {
+  let ticking = false;
 
-  let current = sections[0];
-  sections.forEach((section) => {
-    if (section.offsetTop <= scrollMid) {
-      current = section;
-    }
-  });
+  const handleScroll = () => {
+    if (ticking) return;
+    ticking = true;
 
-  if (current) setActiveSection(current.id);
-};
+    requestAnimationFrame(() => {
+      const sections = Array.from(document.querySelectorAll("section[id]"));
+      const scrollMid = window.scrollY + window.innerHeight / 2;
 
-    window.addEventListener("scroll", handleScroll);
-    handleScroll();
+      let current = sections[0];
+      sections.forEach((section) => {
+        if (section.offsetTop <= scrollMid) {
+          current = section;
+        }
+      });
 
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+      if (current) setActiveSection(current.id);
+      ticking = false;
+    });
+  };
+
+  window.addEventListener("scroll", handleScroll, { passive: true });
+  window.addEventListener("resize", handleScroll, { passive: true });
+  handleScroll();
+
+  return () => {
+    window.removeEventListener("scroll", handleScroll);
+    window.removeEventListener("resize", handleScroll);
+  };
+}, []);
 
   useEffect(() => {
     const updateIndicator = () => {

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { AnimContext } from "./AnimContext";
+import { AnimContext } from "./animContext";
 
 export function AnimProvider({ children }) {
   const [isPageVisible, setIsPageVisible] = useState(() =>
@@ -22,7 +22,7 @@ export function AnimProvider({ children }) {
   useEffect(() => {
     const media = window.matchMedia("(prefers-reduced-motion: reduce)");
     const handleMotion = (e) => setReducedMotion(e.matches);
-    
+
     if (media.addEventListener) {
       media.addEventListener("change", handleMotion);
       return () => media.removeEventListener("change", handleMotion);

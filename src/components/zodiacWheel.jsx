@@ -65,44 +65,46 @@ function ZodiacWheel({ onArrowClick }) {
       </button>
 
       <div className="zodiac-wheel-wrapper">
-        <img src={compassSvg} alt="compass" className="compass-bg" />
+        <div className="zodiac-wheel-spinner">
+          <img src={compassSvg} alt="compass" className="compass-bg" />
 
-        <div className="zodiac-icons-ring">
-          {techIcons.map((Icon, i) => {
-            const angle = i * 30 + 15;
-            const radians = (angle - 90) * (Math.PI / 180);
+          <div className="zodiac-icons-ring">
+            {techIcons.map((Icon, i) => {
+              const angle = i * 30 + 15;
+              const radians = (angle - 90) * (Math.PI / 180);
 
-            const radius = 42;
+              const radius = 42;
 
-            const x = 50 + radius * Math.cos(radians);
-            const y = 50 + radius * Math.sin(radians);
+              const x = 50 + radius * Math.cos(radians);
+              const y = 50 + radius * Math.sin(radians);
 
-            return (
-              <div
-                key={i}
-                className="zodiac-icon"
-                style={{
-                  left: `${x}%`,
-                  top: `${y}%`,
-                }}
-              >
+              return (
                 <div
-                  className="zodiac-icon-rotation"
+                  key={i}
+                  className="zodiac-icon"
                   style={{
-                    transform: `rotate(${angle}deg)`,
+                    left: `${x}%`,
+                    top: `${y}%`,
                   }}
                 >
-                  <Icon
-                    size={36}
+                  <div
+                    className="zodiac-icon-rotation"
                     style={{
-                      color: "var(--arc-tertiary)",
-                      filter: "drop-shadow(0 0 1px var(--arc-primary))",
+                      transform: `rotate(${angle}deg)`,
                     }}
-                  />
+                  >
+                    <Icon
+                      size={36}
+                      style={{
+                        color: "var(--arc-tertiary)",
+                        filter: "drop-shadow(0 0 1px var(--arc-primary))",
+                      }}
+                    />
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
 
         <div className="constellation-center">

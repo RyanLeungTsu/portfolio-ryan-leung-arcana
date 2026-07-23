@@ -93,7 +93,7 @@ function HeroCard({ paused = false }) {
   }, []);
 
   return (
-    <section className="hero-section" aria-label="Hero">
+    <section className="hero-card-section" aria-label="Hero">
       <div className="hero-layout">
         <div className="hero-card-scene">
           <div

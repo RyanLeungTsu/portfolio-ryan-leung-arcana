@@ -9,6 +9,16 @@
   z-index: 100;
 }
 
+.zodiac-wheel-spinner {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  animation: zodiac-wheel-spin 120s linear infinite;
+}
+
+
 .zodiac-wheel-wrapper {
   position: relative;
   width: clamp(15rem, 40vw, 30rem);
@@ -30,9 +40,7 @@
   top: 0;
   left: 0;
   z-index: 1;
-    padding: 0;
-  /* spinning anim */
-  animation: zodiac-wheel-spin 120s linear infinite;
+  padding: 0;
 }
 
 .zodiac-icons-ring {
@@ -42,9 +50,7 @@
   top: 0;
   left: 0;
   z-index: 2;
-    padding: 0;
-  /* spinning anim */
-  animation: zodiac-wheel-spin 120s linear infinite;
+  padding: 0;
 }
 
 .zodiac-icon {

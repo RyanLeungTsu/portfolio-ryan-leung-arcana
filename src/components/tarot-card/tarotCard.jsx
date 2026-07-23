@@ -237,20 +237,22 @@ function TarotCard({
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
 
+    if (isDay) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      return;
+    }
+
     function draw() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      if (theme === "night") {
-        starsRef.current.forEach((s) => {
-          s.t += s.spd;
-          // random blinking for stars
-          ctx.globalAlpha = 0.1 + 0.9 * ((Math.sin(s.t) + 1) / 2);
-          ctx.fillStyle = s.col;
-          ctx.beginPath();
-          ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-          ctx.fill();
-        });
-        ctx.globalAlpha = 1;
-      }
+      starsRef.current.forEach((s) => {
+        s.t += s.spd;
+        ctx.globalAlpha = 0.1 + 0.9 * ((Math.sin(s.t) + 1) / 2);
+        ctx.fillStyle = s.col;
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fill();
+      });
+      ctx.globalAlpha = 1;
       animRef.current = requestAnimationFrame(draw);
     }
 
