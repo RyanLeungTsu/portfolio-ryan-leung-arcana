@@ -642,11 +642,11 @@ function CelestialBackground({ paused = false }) {
         ctx.stroke();
       });
 
+      // tiwnkle effect
       constellation.stars.forEach((star, idx) => {
-        const blinkSpeed = 0.04 + Math.random() * 0.08;
-
         star.phase ??= Math.random() * Math.PI * 2;
-        star.speed ??= blinkSpeed;
+        star.speed ??= 0.02 + Math.random() * 0.05;
+        star.phase += star.speed;
 
         star.sparkle ??= 0;
 
@@ -656,8 +656,7 @@ function CelestialBackground({ paused = false }) {
 
         star.sparkle *= 0.94;
 
-        const blink =
-          Math.sin(timeRef.current * star.speed + star.phase) * 0.5 + 0.5;
+        const blink = Math.sin(star.phase) * 0.5 + 0.5;
         const glowIntensity = 0.3 + (idx % 7) * 0.1;
 
         ctx.fillStyle = colors.star;
@@ -850,16 +849,20 @@ function CelestialBackground({ paused = false }) {
       ctx.fillStyle = `rgb(${base[0]},${base[1]},${base[2]})`;
       ctx.fillRect(0, 0, W, H);
 
-      // glow behind the blobs
       ctx.globalCompositeOperation = "source-over";
       blobs.forEach((b) => {
         const [r, g, bl] = palette[b.colorIndex % palette.length];
         const { cx, cy } = buildShapePath(b, t);
-        const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, b.r * 2);
+        const glowR = b.r * 2.4;
+        const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, glowR);
         grad.addColorStop(0, `rgba(${r},${g},${bl},0.18)`);
-        grad.addColorStop(0.5, `rgba(${r},${g},${bl},0.07)`);
+        grad.addColorStop(0.35, `rgba(${r},${g},${bl},0.1)`);
+        grad.addColorStop(0.7, `rgba(${r},${g},${bl},0.03)`);
         grad.addColorStop(1, `rgba(${r},${g},${bl},0)`);
         ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.arc(cx, cy, glowR, 0, Math.PI * 2);
+        ctx.closePath();
         ctx.fill();
       });
 

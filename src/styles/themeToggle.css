@@ -1,14 +1,14 @@
 /* toggle button for dark/light theme */
 .toggleBtn {
   position: fixed;
-  bottom: 7rem;
+  bottom: 8rem;
   right: 1.3rem;
-  width: 4rem;
-  height: 4rem;
+  width: clamp(3.5rem, 5vw, 5rem);
+  height: clamp(3.5rem, 5vw, 5rem);
   border-radius: 50%;
   border: 1px solid var(--arc-border);
   background-color: rgba(0, 0, 0, 0.1);
-  color: var(--arc-primary);;
+  color: var(--arc-primary);
   display: flex;
   align-items: center;
   justify-content: center;

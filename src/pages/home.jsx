@@ -52,7 +52,7 @@ function Home() {
           <div className="hero-about">
             <div className="hero-content">
               {showAbout ? (
-                <p className="hero-about">
+                <p className="hero-about-text">
                   I am a full-stack developer who loves turning complex problems
                   into clean, efficient code. I'm driven by a passion for
                   continuous learning and building software that delivers great

@@ -48,6 +48,7 @@ function ContactForm() {
     setStatus(null);
 
     try {
+      // change once on live
       const response = await fetch("http://localhost:3001/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },

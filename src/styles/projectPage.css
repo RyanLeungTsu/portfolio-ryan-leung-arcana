@@ -10,6 +10,12 @@
   color: var(--text);
 }
 
+@media (min-width: 48rem) {
+  .project-page {
+    max-width: 90vw;
+  }
+}
+
 /* header area */
 .project-page-header {
   display: flex;
@@ -95,6 +101,12 @@
   margin: 0;
 }
 
+@media (min-width: 120rem) {
+  .project-description {
+    font-size: 2rem;
+  }
+}
+
 .project-page-link {
   font-family: "Chillax", sans-serif;
   display: inline-block;
@@ -144,12 +156,6 @@
   color: var(--text);
 }
 
-@media (min-width: 48rem) {
-  .project-page {
-    max-width: 90vw;
-  }
-}
-
 @media (min-width: 70rem) {
   .project-page-main {
     flex-direction: row;
@@ -164,11 +170,5 @@
   }
   .project-page-right {
     text-align: left;
-  }
-}
-
-@media (min-width: 120rem) {
-  .project-description {
-    font-size: 2rem;
   }
 }

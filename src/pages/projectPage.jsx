@@ -135,7 +135,7 @@ const projectsData = [
       <FaWordpress key="wp" aria-label="WordPress" title="WordPress" />,
       <FaFigma key="figma" aria-label="Figma" title="Figma" />,
     ],
-    link: "https://ryanleungdev.com/northern-shaolin-kungfu/",
+    link: "https://kelvinphysio.ca",
   },
 ];
 

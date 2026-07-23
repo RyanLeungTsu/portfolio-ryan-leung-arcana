@@ -8,6 +8,30 @@
   padding: clamp(1.5rem, 3vw, 4rem);
 }
 
+/* tablet */
+@media (min-width: 48rem) {
+  .contact-form {
+    max-width: 60vw;
+  }
+}
+
+/* desktop */
+@media (min-width: 64rem) {
+  .contact-form {
+    max-width: 40vw;
+  }
+}
+
+@media (min-width: 120rem) {
+  .contact-form {
+    max-width: 50vw;
+  }
+
+  textarea#message {
+    min-height: 15rem;
+  }
+}
+
 .form-group {
   display: flex;
   flex-direction: column;
@@ -91,28 +115,4 @@
 .submit-btn:disabled {
   opacity: 0.6;
   cursor: not-allowed;
-}
-
-/* tablet */
-@media (min-width: 48rem) {
-  .contact-form {
-    max-width: 60vw;
-  }
-}
-
-/* desktop */
-@media (min-width: 64rem) {
-  .contact-form {
-    max-width: 40vw;
-  }
-}
-
-@media (min-width: 120rem) {
-  .contact-form {
-    max-width: 50vw;
-  }
-
-  textarea#message {
-    min-height: 15rem;
-  }
 }

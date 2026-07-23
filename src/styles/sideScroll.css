@@ -35,6 +35,14 @@
   text-align: center;
 }
 
+/* tablet */
+@media (min-width: 48em) {
+  .sidebar li {
+    font-size: 1.5rem;
+    font-weight: 200;
+  }
+}
+
 .sidebar li.active {
   font-weight: bold;
 }
@@ -46,14 +54,6 @@
 
 .scroll-Indicator {
   display: none;
-}
-
-/* tablet */
-@media (min-width: 48em) {
-  .sidebar li {
-    font-size: 1.5rem;
-    font-weight: 200;
-  }
 }
 
 /* desktop */

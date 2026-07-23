@@ -19,17 +19,6 @@
   color: var(--text);
 }
 
-.contact-title {
-  margin-bottom: 0.25rem;
-  font-size: clamp(3.75rem, 8vw, 5rem);
-}
-
-.contact-body-text {
-  margin-top: 0;
-    font-family: "Chillax", sans-serif;
-}
-
-
 @media (min-width: 48rem) {
   .contact-body {
     max-width: 70vw;
@@ -42,4 +31,12 @@
   }
 }
 
+.contact-title {
+  margin-bottom: 0.25rem;
+  font-size: clamp(3.75rem, 8vw, 5rem);
+}
 
+.contact-body-text {
+  margin-top: 0;
+    font-family: "Chillax", sans-serif;
+}

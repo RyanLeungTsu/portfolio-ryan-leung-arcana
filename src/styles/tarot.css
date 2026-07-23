@@ -14,6 +14,24 @@
   transform: translate3d(0, 0, 0);
 }
 
+@media (min-width: 30rem) {
+  .tarot-wrap {
+    --card-w: 55vw;
+  }
+}
+
+@media (min-width: 48rem) {
+  .tarot-wrap {
+    --card-w: 15rem;
+  }
+}
+
+@media (min-width: 64rem) {
+  .tarot-wrap {
+    --card-w: 17.5rem;
+  }
+}
+
 .tarot-base,
 .tarot-bg,
 .tarot-image,
@@ -35,24 +53,6 @@
   overflow: hidden;
   pointer-events: none;
   border-radius: 0.1rem;
-}
-
-@media (min-width: 480px) {
-  .tarot-wrap {
-    --card-w: 55vw;
-  }
-}
-
-@media (min-width: 768px) {
-  .tarot-wrap {
-    --card-w: 240px;
-  }
-}
-
-@media (min-width: 1024px) {
-  .tarot-wrap {
-    --card-w: 280px;
-  }
 }
 
 .tarot-wrap.is-flipped {
@@ -237,15 +237,6 @@ a.tarot-front {
   pointer-events: none;
 }
 
-@keyframes tarot-drift {
-  from {
-    transform: translateX(-110%);
-  }
-  to {
-    transform: translateX(110%);
-  }
-}
-
 /* tarot card back */
 .tarot-back-icons-wrapper {
   position: absolute;
@@ -311,4 +302,13 @@ a.tarot-front {
 
 .tarot-eye-btn:hover {
   background: rgba(191, 191, 191, 0.15);
+}
+
+@keyframes tarot-drift {
+  from {
+    transform: translateX(-110%);
+  }
+  to {
+    transform: translateX(110%);
+  }
 }

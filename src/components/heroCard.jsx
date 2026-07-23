@@ -44,7 +44,6 @@ function HeroCard({ paused = false }) {
       isSpinningRef.current = true;
       setIsSpinning(true);
 
-      // Uses requestAnimationFrame for smoother animation
       animFrameRef.current = setTimeout(() => {
         isSpinningRef.current = false;
         setIsSpinning(false);
@@ -70,7 +69,7 @@ function HeroCard({ paused = false }) {
       <img
         src={profile1med}
         srcSet={`${profile1small} 480w, ${profile1med} 800w, ${profile1lrg} 1200w`}
-        sizes="(max-width: 30rem) 30rem, (max-width: 50rem) 5rem, 70rem"
+        sizes="(max-width: 30rem) 30rem, (max-width: 50rem) 50rem, 70rem"
         alt="Ryan Leung"
         style={{
           width: "85%",

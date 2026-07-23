@@ -17,7 +17,7 @@
   font-size: 2rem;
 }
 
-.hero-about,
+.hero-about-text,
 .hero-intro {
   font-family: "Chillax", sans-serif;
   font-size: clamp(1.25rem, 4vw, 1.75rem);
@@ -56,10 +56,6 @@
   flex-direction: column-reverse;
   gap: 1rem;
   margin-top: 2rem;
-}
-
-.hero-content {
-  animation: fadeSwitch 0.3s ease;
 }
 
 .hero-buttons a {

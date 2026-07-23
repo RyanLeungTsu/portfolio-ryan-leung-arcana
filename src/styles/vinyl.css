@@ -7,7 +7,7 @@
   margin: 0 auto;
 }
 
-@media (min-width: 30rem) and (max-width: 49.9rem)  {
+/* @media (min-width: 40rem) and (max-width: 49.9rem)  {
   .vinyl-widget {
     display: flex;
     position: fixed;
@@ -15,12 +15,12 @@
     left: 1rem;
     z-index: 100;
   }
-}
+} */
 
 
-@media (min-width: 50rem) and (orientation: landscape) {
+@media (min-width: 60rem) {
   .vinyl-widget {
-        display: flex;
+    display: flex;
     position: fixed;
     bottom: 1.5rem;
     left: 1.5rem;
