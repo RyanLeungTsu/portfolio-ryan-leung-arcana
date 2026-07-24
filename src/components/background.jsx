@@ -463,6 +463,7 @@ const PALETTES = {
     [138, 172, 255], // --arc-primary
     [170, 196, 255], // --arc-secondary
     [96, 128, 208], // --arc-tertiary
+    [80, 200, 145], // --arc-quaternary
     [30, 40, 100], // dark border variant
     [20, 10, 80], // deep navy
     [60, 80, 180], // mid blue
@@ -686,26 +687,26 @@ function CelestialBackground({ paused = false }) {
         let x, y;
 
         // for cosntellations to gravitate towards edge
-        if (Math.random() < 0.90) {
+        if (Math.random() < 0.9) {
           const side = Math.floor(Math.random() * 4);
 
           switch (side) {
-            case 0: 
+            case 0:
               x = Math.random() * W;
               y = margin * Math.random();
               break;
 
-            case 1: 
+            case 1:
               x = Math.random() * W;
               y = H - margin * Math.random();
               break;
 
-            case 2: 
+            case 2:
               x = margin * Math.random();
               y = Math.random() * H;
               break;
 
-            default: 
+            default:
               x = W - margin * Math.random();
               y = Math.random() * H;
           }
@@ -828,9 +829,11 @@ function CelestialBackground({ paused = false }) {
       const targetVig = VIGNETTE_COLORS[theme];
       const transitionSpeed = TRANSITION_SPEED;
 
-      currentPaletteRef.current = currentPaletteRef.current.map((c, i) =>
-        lerpColor(c, targetPalette[i], transitionSpeed),
-      );
+      currentPaletteRef.current = currentPaletteRef.current.map((c, i) => {
+        const target =
+          targetPalette[i] ?? targetPalette[i % targetPalette.length];
+        return lerpColor(c, target, transitionSpeed);
+      });
       currentBaseRef.current = lerpColor(
         currentBaseRef.current,
         targetBase,
@@ -923,9 +926,6 @@ function CelestialBackground({ paused = false }) {
         drawConstellation(c, ctx, theme);
       });
     }
-
-    // for pausing the anim when not in vioewport
-    let paused = false;
 
     function loopEffect() {
       if (!paused) {
