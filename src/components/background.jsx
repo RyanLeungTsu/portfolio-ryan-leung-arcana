@@ -2,7 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import "../styles/background.css";
 
 function getTheme() {
-  return document.documentElement.dataset.theme || "day";
+  const t = document.documentElement.dataset.theme;
+  return t === "day" || t === "night" ? t : "day";
 }
 // using perm for smoother noise
 function fade(t) {

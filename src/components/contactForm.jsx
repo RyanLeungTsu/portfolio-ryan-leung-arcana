@@ -1,11 +1,14 @@
 import { useState } from "react";
 import "../styles/contactForm.css";
 
+const API_BASE = import.meta.env.VITE_API_BASE_URL;
+
 function ContactForm() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     message: "",
+    website: "",
   });
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState(null);
@@ -37,7 +40,13 @@ function ContactForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+    // check for bots, as bots fill all forms
+    if (formData.website) {
+      setStatus("success");
+      setFormData({ name: "", email: "", message: "", website: "" });
+      return;
+    }
+
     const newErrors = validateForm();
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
@@ -48,8 +57,7 @@ function ContactForm() {
     setStatus(null);
 
     try {
-      // change once on live
-      const response = await fetch("http://localhost:3001/api/contact", {
+      const response = await fetch(`${API_BASE}/api/contact`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -61,7 +69,7 @@ function ContactForm() {
 
       if (response.ok) {
         setStatus("success");
-        setFormData({ name: "", email: "", message: "" });
+        setFormData({ name: "", email: "", message: "", website: "" });
         setErrors({});
       } else {
         setStatus("error");
@@ -119,9 +127,26 @@ function ContactForm() {
         {errors.message && <span className="error-text">{errors.message}</span>}
       </div>
 
+      <div
+        style={{ position: "absolute", left: "-9999px", top: "-9999px" }}
+        aria-hidden="true"
+      >
+        <label htmlFor="website">Website</label>
+        <input
+          type="text"
+          id="website"
+          name="website"
+          value={formData.website}
+          onChange={handleChange}
+          tabIndex="-1"
+          autoComplete="off"
+        />
+      </div>
+
       {status === "success" && (
         <div className="success-message">
-          ✓ Message received! I'll get back to you soon! In the mean time check out my projects
+          ✓ Message received! I'll get back to you soon! In the mean time check
+          out my projects
         </div>
       )}
       {status === "error" && (
@@ -130,11 +155,7 @@ function ContactForm() {
         </div>
       )}
 
-      <button
-        type="submit"
-        disabled={loading}
-        className="submit-btn"
-      >
+      <button type="submit" disabled={loading} className="submit-btn">
         {loading ? "Sending..." : "Send Message"}
       </button>
     </form>

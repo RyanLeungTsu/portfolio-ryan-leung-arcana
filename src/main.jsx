@@ -7,7 +7,9 @@ import App from "./App.jsx";
 import "./index.css";
 
 // for persisting the theme changes to avoid random mismatches
-const savedTheme = localStorage.getItem("theme") || "night";
+const VALID_THEMES = ["day", "night"];
+const storedTheme = localStorage.getItem("theme");
+const savedTheme = VALID_THEMES.includes(storedTheme) ? storedTheme : "night";
 document.documentElement.setAttribute("data-theme", savedTheme);
 
 ReactDOM.createRoot(document.getElementById("root")).render(

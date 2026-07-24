@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
   FaHtml5,
   FaCss3Alt,
@@ -13,16 +13,13 @@ import { SiTypescript, SiNodedotjs, SiPhp, SiMysql } from "react-icons/si";
 
 const normalizeConstellation = (stars) => {
   if (stars.length === 0) return stars;
-
   const minX = Math.min(...stars.map((s) => s.x));
   const maxX = Math.max(...stars.map((s) => s.x));
   const minY = Math.min(...stars.map((s) => s.y));
   const maxY = Math.max(...stars.map((s) => s.y));
-
   const width = maxX - minX || 1;
   const height = maxY - minY || 1;
   const maxDim = Math.max(width, height);
-
   const targetSize = 110;
   const scale = targetSize / maxDim;
 
@@ -500,43 +497,13 @@ const constellations = [
   },
 ];
 
-function ConstellationsCycle() {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [fadeIn, setFadeIn] = useState(true);
+function ConstellationsCycle({ activeIndex, fadeIn }) {
+  const current = constellations[activeIndex];
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setFadeIn(false);
-      setTimeout(() => {
-        setCurrentIndex((i) => (i + 1) % constellations.length);
-        setFadeIn(true);
-      }, 2000);
-    }, 12000);
-
-    return () => clearInterval(interval);
-  }, []);
-  // {
-  //   /* TEMP CONTROLS */
-  // }
-  // const changeConstellation = (direction) => {
-  //   setFadeIn(false);
-
-  //   setTimeout(() => {
-  //     setCurrentIndex((prev) => {
-  //       if (direction === "next") {
-  //         return (prev + 1) % constellations.length;
-  //       }
-
-  //       return (prev - 1 + constellations.length) % constellations.length;
-  //     });
-
-  //     setFadeIn(true);
-  //   }, 300);
-  // };
-  // {
-  //   /* TEMP CONTROLS */
-  // }
-  const current = constellations[currentIndex];
+  if (!current) {
+    console.log("BAD ACTIVE INDEX:", activeIndex);
+    return null;
+  }
 
   const iconMap = {
     HTML5: FaHtml5,
@@ -557,14 +524,6 @@ function ConstellationsCycle() {
 
   return (
     <div className="constellation-wrapper" style={{ position: "relative" }}>
-      {/* TEMP CONTROLS */}
-      {/* <div className="constellation-controls">
-        <button onClick={() => changeConstellation("prev")}>←</button>
-
-        <button onClick={() => changeConstellation("next")}>→</button>
-      </div> */}
-      {/* TEMP CONTROLS */}
-
       <h2 className="constellation-title" style={{ opacity: fadeIn ? 1 : 0 }}>
         {current.name} - {current.subtitle}
       </h2>
@@ -579,7 +538,7 @@ function ConstellationsCycle() {
             transform: "translate(-50%, -50%)",
             zIndex: 10,
             pointerEvents: "none",
-            color: "var(--arc-tertiary)",
+            color: "var(--arc-ink)",
           }}
         >
           <IconComponent size={140} />
@@ -591,10 +550,9 @@ function ConstellationsCycle() {
         viewBox="0 0 100 100"
         style={{ opacity: fadeIn ? 1 : 0 }}
       >
-        {current.lines.map((line, idx) => {
+        {(current.lines ?? []).map((line, idx) => {
           const star1 = current.stars[line[0]];
           const star2 = current.stars[line[1]];
-
           return (
             <line
               key={`line-${idx}`}
@@ -602,14 +560,13 @@ function ConstellationsCycle() {
               y1={star1.y}
               x2={star2.x}
               y2={star2.y}
-              stroke="var(--arc-quaternary)"
+              stroke="var(--arc-ink)"
               strokeWidth="1"
               opacity="0.4"
             />
           );
         })}
-
-        {current.stars.map((star, idx) => (
+        {(current.stars ?? []).map((star, idx) => (
           <circle
             key={`star-${idx}`}
             cx={star.x}

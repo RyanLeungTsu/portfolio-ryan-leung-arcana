@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useAnim } from "./useAnim";
 
 const POLL_MS = 5000;
+const API_BASE = import.meta.env.VITE_API_BASE_URL;
 
 // playlists array from spotify (these are playlists that can be fetched)
 const ALLOWED_PLAYLISTS = [
@@ -33,7 +34,10 @@ const ALLOWED_PLAYLISTS = [
 // fetches currently palying
 async function fetchNowPlaying() {
   try {
-    const res = await fetch("/api/now-playing");
+    // uses hsotarmada cpanel node.js setup
+    const res = await fetch(`${API_BASE}/api/now-playing?t=${Date.now()}`, {
+      cache: "no-store",
+    });
     if (!res.ok) return null;
     return await res.json();
   } catch {

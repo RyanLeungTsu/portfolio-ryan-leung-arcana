@@ -10,7 +10,8 @@ import profile1lrg from "../assets/media/profile1lrg.webp";
 const FLIP_INTERVAL = 7000;
 
 function getTheme() {
-  return document.documentElement.dataset.theme || "night";
+  const t = document.documentElement.dataset.theme;
+  return t === "day" || t === "night" ? t : "day";
 }
 
 function HeroCard({ paused = false }) {
